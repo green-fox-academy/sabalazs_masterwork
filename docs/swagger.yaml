@@ -1,0 +1,98 @@
+openapi: 3.0.0
+info:
+  title: Bakery App API
+  description: Simple API for the Bakery App
+  version: 1.0.0
+tags:
+  - name: User authentication
+    description: Users are participants by default
+paths:
+  /auth/register:
+    post:
+      tags:
+        - User authentication
+      description: Registers new user
+      requestBody:
+        description: User to register
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+      responses:
+        '201':
+          description: 'User has been created, returning the id of the new user.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: ID of the created user
+        '400':
+          description: invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '409':
+          description: Email is already registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+  /auth/login:
+    post:
+      tags:
+        - User authentication
+      description: Login user
+      requestBody:
+        description: User to login
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+      responses:
+        '201':
+          description: 'User has been created, returning the id of the new user.'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: ID of the created user
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_response'
+components:
+  schemas:
+    user:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          example: email@email.com
+        password:
+          type: string
+          format: password
+          example: supersecretpassword
+    error_response:
+      type: object
+      properties:
+        message:
+          type: string
+          description: error message

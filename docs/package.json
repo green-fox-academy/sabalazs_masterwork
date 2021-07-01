@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "nodemon -e yaml src/index.js"
   },
   "name": "docs",
   "version": "1.0.0",

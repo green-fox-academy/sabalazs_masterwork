@@ -1,9 +1,9 @@
 # Bakery Ordering App
-Masterwork for GFA Full-stack training. It's a simple app for a Bakery and it's customers to manage pre-orders.
+Masterwork for GFA Full-stack training. It's a simple app for a Bakery and it's customers to place and manage pre-orders.
 
 ## Description
 
-Customers can register, then place pre-orders for available products, and can view the status of their previous orders. The administrators can edit available products, and accept, or reject pre-orders from customers.
+Customers can register, then place pre-orders for available products, and view the status of their previous orders. The administrators can edit available products, and accept, or reject pre-orders from customers.
 
 ## Getting Started
 

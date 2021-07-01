@@ -1,22 +1,36 @@
 openapi: 3.0.0
 info:
   title: Bakery App API
-  description: Simple API for the Bakery App
+  description: Simple API for the Bakery App. Resources: users, products, orders
   version: 1.0.0
 tags:
-  - name: User authentication
+  - name: Authentication
+  - name: Users
+  - name: Products
+  - name: Orders
 paths:
-  /auth/register:
+  /users:
     post:
       tags:
-        - User authentication
-      description: Registers new user
+        - Users
+      summary: Add a new user
       requestBody:
-        description: User to register
+        description: User info
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/user'
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: email@email.com
+                password:
+                  type: string
+                  format: password
+                  example: supersecretpassword
       responses:
         '201':
           description: 'User has been created, returning the id of the new user.'
@@ -27,71 +41,249 @@ paths:
                 properties:
                   id:
                     type: string
+                    format: uuid
                     description: ID of the created user
         '400':
-          description: invalid input
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error_response'
+          $ref: '#/components/responses/InvalidInput'
         '409':
-          description: Email is already registered
+          $ref: '#/components/responses/UserExists'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /products:
+    post:
+      tags:
+        - Products
+      summary: Add a new product
+      requestBody:
+        description: Product info
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - price
+              properties:
+                name:
+                  type: string
+                  example: Vajas croissant
+                price:
+                  type: number
+                  example: 800
+      responses:
+        '201':
+          description: 'Product has been created, returning the id of the new product.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/error_response'
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: ID of the created product
+        '400':
+          $ref: '#/components/responses/InvalidInput'
+        '401':
+          $ref: '#/components/responses/AuthenticationError'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '409':
+          $ref: '#/components/responses/ProductExists'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - bakery_auth: []
+  /orders:
+    post:
+      tags:
+        - Orders
+      summary: Create a new order
+      requestBody:
+        description: Order info
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer:
+                  type: object
+                  schema:
+                    $ref: '#/components/schemas/user'
+                items:
+                  type: array
+                  items:
+                    type: object
+                    schema:
+                      $ref: '#/components/schemas/orderItem'
+      responses:
+        '201':
+          description: 'Order has been placed returning the id of the new order'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: ID of the order
+        '400':
+          $ref: '#/components/responses/InvalidInput'
+        '401':
+          $ref: '#/components/responses/AuthenticationError'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - bakery_auth: []
+    get:
+      tags:
+        - Orders
+      summary: Get a list of orders
+      responses:
+        '201':
+          description: 'Returning the list of orders'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  schema:
+                    $ref: '#/components/schemas/order'
+        '400':
+          $ref: '#/components/responses/InvalidInput'
+        '401':
+          $ref: '#/components/responses/AuthenticationError'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      security:
+        - bakery_auth: []
   /auth/login:
     post:
       tags:
-        - User authentication
+        - Authentication
       description: Login user
       requestBody:
         description: User to login
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/user'
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: email@email.com
+                password:
+                  type: string
+                  format: password
+                  example: supersecretpassword
       responses:
         '201':
-          description: 'User has been created, returning the id of the new user.'
+          description: 'Successful login, returning user.'
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: ID of the created user
-        '400':
-          description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error_response'
+                $ref: '#/components/schemas/user'
         '401':
-          description: Invalid credentials
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/error_response'
+          $ref: '#/components/responses/LoginFailed'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
 components:
+  securitySchemes:
+    bakery_auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     user:
       type: object
-      required:
-        - email
-        - password
       properties:
+        id:
+          type: string
+          format: uuid
+          example: id
+        firstname:
+          type: string
+          example: John
+        lastname:
+          type: string
+          example: Doe
         email:
           type: string
-          example: email@email.com
-        password:
+          example: john.doe@email.com
+        role:
           type: string
-          format: password
-          example: supersecretpassword
+          enum: [customer, admin]
+          example: customer
+    product:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: id
+        name:
+          type: string
+          example: Vajas croissant
+        price:
+          type: number
+          example: 800
+    order:
+      type: object
+      properties:
+        customer:
+          type: object
+          schema:
+            $ref: '#/components/schemas/user'
+        items:
+          type: array
+          items:
+            type: object
+            schema:
+              $ref: '#/components/schemas/orderItem'
+        sum:
+          type: number
+        status:
+          type: string
+          enum: [pending, accepted, refused, fulfilled]
+        datePosted:
+          type: string
+          format: date
+    orderItem:
+      type: object
+      properties:
+        product:
+          type: object
+          schema:
+            $ref: '#/components/schemas/product'
+        quantity:
+          type: number
     error_response:
       type: object
       properties:
         message:
           type: string
           description: error message
+  responses:
+    AuthenticationError:
+      description: Access token is missing or invalid
+    LoginFailed:
+      description: Login failed, invalid credentials.
+    InternalServerError:
+      description: Internal server error. Something has gone terribly wrong. :(
+    InvalidInput:
+      description: Invalid input
+    Forbidden:
+      description: Forbidden
+    ProductExists:      
+      description: Product name is already registered
+    UserExists:      
+      description: Email is already registered

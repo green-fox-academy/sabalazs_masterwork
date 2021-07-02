@@ -47,8 +47,6 @@ paths:
           $ref: '#/components/responses/InvalidInput'
         '409':
           $ref: '#/components/responses/UserExists'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
   /products:
     post:
       tags:
@@ -90,8 +88,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '409':
           $ref: '#/components/responses/ProductExists'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
       security:
         - bakery_auth: []
   /orders:
@@ -134,8 +130,6 @@ paths:
           $ref: '#/components/responses/AuthenticationError'
         '403':
           $ref: '#/components/responses/Forbidden'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
       security:
         - bakery_auth: []
     get:
@@ -159,8 +153,6 @@ paths:
           $ref: '#/components/responses/AuthenticationError'
         '403':
           $ref: '#/components/responses/Forbidden'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
       security:
         - bakery_auth: []
   /auth/login:
@@ -194,8 +186,6 @@ paths:
                 $ref: '#/components/schemas/user'
         '401':
           $ref: '#/components/responses/LoginFailed'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
 components:
   securitySchemes:
     bakery_auth:

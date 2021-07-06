@@ -2,7 +2,7 @@
   "scripts": {
     "start": "nodemon -e yaml src/index.js"
   },
-  "name": "docs",
+  "name": "bakery-docs",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",

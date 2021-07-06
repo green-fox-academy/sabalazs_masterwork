@@ -1,0 +1,9 @@
+node_modules/
+output/
+logs/
+.env*
+yarn-error.log
+dist
+coverage
+.yarn/
+.pnp.js

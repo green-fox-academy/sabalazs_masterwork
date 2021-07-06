@@ -1,29 +1,35 @@
 # Bakery Ordering App
-Masterwork for GFA Full-stack training. It's a simple app for a Bakery and it's customers to place and manage pre-orders.
+Masterwork for GFA Full-stack training. It's a simple full-stack application for a Bakery and it's customers to place and manage pre-orders.
+
+## Table of contents
+* [Description](#description)
+* [Technologies](#technologies)
+* [Getting Started](#getting-started)
+* [Authors](#authors)
+* [License](#license)
 
 ## Description
 
 Customers can register, then place pre-orders for available products, and view the status of their previous orders. The administrators can edit available products, and accept, or reject pre-orders from customers.
 
+## Technologies
+### Backend
+- Node
+- Express
+- MongoDB
+### Frontend
+- React
+
 ## Getting Started
 
-### Dependencies
+Instructions regarding dependencies, installation and execution of frontend, backend and documentation are found in separate README.md files in the corresponding folders:
+- [Frontend](frontend/README.md)
+- [Backend](backend/README.md)
+- [Documentation](docs/README.md)
 
-* MongoDB
-* Node
+## Resources
 
-### Installing
-
-* How/where to download your program
-* Any modifications needed to be made to files/folders
-
-### Executing program
-
-* How to run the program
-* Step-by-step bullets
-```
-code blocks for commands
-``
+## Features
 
 ## Authors
 

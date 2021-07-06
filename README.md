@@ -17,8 +17,12 @@ Customers can register, then place pre-orders for available products, and view t
 - Node
 - Express
 - MongoDB
+- Jason Web Token
 ### Frontend
 - React
+
+### API documentation
+- Swagger
 
 ## Getting Started
 
@@ -27,9 +31,10 @@ Instructions regarding dependencies, installation and execution of frontend, bac
 - [Backend](backend/README.md)
 - [Documentation](docs/README.md)
 
-## Resources
-
-## Features
+## Resources (API endpoints)
+- Users ( `/users` )
+- Products ( `/products` )
+- Orders ( `/orders` )
 
 ## Authors
 

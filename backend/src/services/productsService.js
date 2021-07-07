@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import Product from '../models/Product';
 
-export const ProductsService = {
+export const productsService = {
 
   async createNew(product) {
     await this.validate(product);

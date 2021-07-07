@@ -13,5 +13,6 @@ export const ordersService = {
 
   async validate(order) {
     //TODO
+    return;
   },
 };

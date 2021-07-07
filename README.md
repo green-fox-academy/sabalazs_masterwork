@@ -1,5 +1,5 @@
 # Bakery Ordering App
-Masterwork for GFA Full-stack training. It's a simple full-stack application for a Bakery and it's customers to place and manage pre-orders.
+Masterwork for GFA Full-stack training. It's a simple full-stack application for a Bakery and it's customers to place and manage pre-orders. [Link to original repository on Github](https://github.com/green-fox-academy/sabalazs_masterwork)
 
 ## Table of contents
 * [Description](#description)

@@ -54,4 +54,5 @@ The model User is for the users collection in the database.
 */
 const User = mongoose.model('User', UserSchema);
 
+export { UserSchema };
 export default User;

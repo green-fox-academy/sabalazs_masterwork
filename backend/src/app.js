@@ -3,10 +3,20 @@ import morgan from 'morgan';
 
 import logger from './logger';
 import errorHandler from './middlewares/error-handler';
+import { ordersController } from './controllers';
 
+const cors = require('cors');
 const app = express();
+const router = express.Router();
 
 app.use(morgan('combined', { stream: logger.stream }));
+
+router.use(cors());
+router.use(express.json());
+
+router.post('/orders', ordersController.createNew);
+
+app.use('/api', router);
 
 app.use(errorHandler);
 

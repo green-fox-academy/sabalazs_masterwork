@@ -1,14 +1,14 @@
 import mongoose from 'mongoose';
-import User from './User';
-import OrderItem from './OrderItem';
+import { UserSchema } from './User';
+import { OrderItemSchema } from './OrderItem';
 
 const OrderSchema = new mongoose.Schema({
     customer: {
-        type: User,
+        type: UserSchema,
         required: true,
     },
     items: {
-        type: [OrderItem],
+        type: [OrderItemSchema],
         required: true,
     },
     // TODO: sum validation

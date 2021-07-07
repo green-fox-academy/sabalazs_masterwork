@@ -3,6 +3,7 @@ Masterwork for GFA Full-stack training. It's a simple full-stack application for
 
 ## Table of contents
 * [Description](#description)
+* [Features](#features)
 * [Technologies](#technologies)
 * [Getting Started](#getting-started)
 * [Authors](#authors)
@@ -44,11 +45,6 @@ Instructions regarding dependencies, installation and execution of frontend, bac
 - [Frontend](frontend/README.md)
 - [Backend](backend/README.md)
 - [API Documentation](api-documentation/README.md)
-
-## Resources (API endpoints)
-- Users ( `/users` )
-- Products ( `/products` )
-- Orders ( `/orders` )
 
 ## Authors
 

@@ -10,7 +10,20 @@ Masterwork for GFA Full-stack training. It's a simple full-stack application for
 
 ## Description
 
-Customers can register, then place pre-orders for available products, and view the status of their previous orders. The administrators can edit available products, and accept, or reject pre-orders from customers.
+Customers can register, then place pre-orders for available products, and view the status of their previous orders. The administrators can edit products, and accept, or reject pre-orders from customers.
+
+## Features
+### Customers can:
+- register, log in and log out
+- see a list of available products
+- place orders
+- see a list of their previously placed orders
+### Administrators can:
+- log in and log out
+- see a list of all products
+- edit a product
+- see a list of all orders
+- change the status of an order
 
 ## Technologies
 ### Backend
@@ -18,6 +31,7 @@ Customers can register, then place pre-orders for available products, and view t
 - Express
 - MongoDB
 - Jason Web Token
+- Docker
 ### Frontend
 - React
 
@@ -29,7 +43,7 @@ Customers can register, then place pre-orders for available products, and view t
 Instructions regarding dependencies, installation and execution of frontend, backend and documentation are found in separate README.md files in the corresponding folders:
 - [Frontend](frontend/README.md)
 - [Backend](backend/README.md)
-- [Documentation](docs/README.md)
+- [API Documentation](api-documentation/README.md)
 
 ## Resources (API endpoints)
 - Users ( `/users` )

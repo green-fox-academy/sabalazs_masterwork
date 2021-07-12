@@ -3,6 +3,7 @@ import morgan from 'morgan';
 
 import logger from './logger';
 import errorHandler from './middlewares/error-handler';
+import { usersController } from './controllers';
 import { ordersController } from './controllers';
 import { productsController } from './controllers';
 
@@ -15,6 +16,7 @@ app.use(morgan('combined', { stream: logger.stream }));
 router.use(cors());
 router.use(express.json());
 
+router.post('/users', usersController.createNew);
 router.post('/orders', ordersController.createNew);
 router.post('/products', productsController.createNew);
 

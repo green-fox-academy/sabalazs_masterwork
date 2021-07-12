@@ -3,9 +3,12 @@ import morgan from 'morgan';
 
 import logger from './logger';
 import errorHandler from './middlewares/error-handler';
-import { usersController } from './controllers';
-import { ordersController } from './controllers';
-import { productsController } from './controllers';
+import {
+    usersController,
+    ordersController,
+    productsController,
+    authController
+} from './controllers';
 
 const cors = require('cors');
 const app = express();
@@ -19,6 +22,7 @@ router.use(express.json());
 router.post('/users', usersController.createNew);
 router.post('/orders', ordersController.createNew);
 router.post('/products', productsController.createNew);
+router.post('/auth', authController.login);
 
 app.use('/api', router);
 

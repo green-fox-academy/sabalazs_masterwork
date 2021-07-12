@@ -31,7 +31,7 @@ Customers can register, then place pre-orders for available products, and view t
 - Node
 - Express
 - MongoDB
-- Jason Web Token
+- Json Web Token
 - Docker
 ### Frontend
 - React

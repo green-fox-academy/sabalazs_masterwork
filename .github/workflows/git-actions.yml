@@ -1,12 +1,7 @@
 name: GitHub Actions Backend CI
-on:
-  push:
-    paths:
-      - 'backend/**'
-
+on: [push]
 jobs:
   build:
-
     runs-on: ubuntu-latest
     env:
       MONGO_HOST: ${{ secrets.MONGO_HOST }}
@@ -14,12 +9,10 @@ jobs:
       MONGO_DB: ${{ secrets.MONGO_DB }}
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
       JWT_EXPIRE: ${{ secrets.JWT_EXPIRE }}
-
     strategy:
       matrix:
         node-version: [15.x]
         mongodb-version: ['4.4']
-
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}

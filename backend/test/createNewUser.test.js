@@ -15,7 +15,7 @@ afterEach(async () => {
 
 describe('POST /api/users - Registration with ', () => {
 
-  test('valid data should respond with 201', async () => {
+  test('valid data should respond with 201, and id', async () => {
     const data = {
       email: 'example@example.com',
       password: 'Asdfghjkl',
@@ -26,7 +26,23 @@ describe('POST /api/users - Registration with ', () => {
       .send(data)
       .expect(201)
       .then((response) => {
-        expect(response).toBeTruthy();
+        expect(response.body.id).toBeTruthy();
+      });
+  });
+
+  test('valid data should create a document in db', async () => {
+    const data = {
+      email: 'example@example.com',
+      password: 'Asdfghjkl',
+    };
+
+    await request(app)
+      .post('/api/users')
+      .send(data)
+
+    await User.findOne({ email: data.email })
+      .then((result) => {
+        expect(result).toBeTruthy();
       });
   });
 
@@ -101,19 +117,19 @@ describe('POST /api/users - Registration with ', () => {
       .then((response) => {
         expect(response.body.message).toBe("Validation error: Password must be at least 8 characters long.");
       });
-    });
-    
-    test('an email already registered, should respond with 400, and and corresponding error message', async () => {
-      const data = {
-        email: 'example@example.com',
-        password: 'Asdfghjkl',
-      };
-      
-      await request(app)
+  });
+
+  test('an email already registered, should respond with 400, and and corresponding error message', async () => {
+    const data = {
+      email: 'example@example.com',
+      password: 'Asdfghjkl',
+    };
+
+    await request(app)
       .post('/api/users')
       .send(data);
 
-      await request(app)
+    await request(app)
       .post('/api/users')
       .send(data)
       .then((response) => {

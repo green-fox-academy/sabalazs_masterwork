@@ -1,0 +1,39 @@
+name: GitHub Actions Backend CI
+on:
+  push:
+    paths:
+      - 'backend/**'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      MONGO_HOST: ${{ secrets.MONGO_HOST }}
+      MONGO_LOCAL_PORT: ${{ secrets.MONGO_LOCAL_PORT }}
+      MONGO_DB: ${{ secrets.MONGO_DB }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      JWT_EXPIRE: ${{ secrets.JWT_EXPIRE }}
+
+    strategy:
+      matrix:
+        node-version: [15.x]
+        mongodb-version: ['4.4']
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          check-latest: true
+      - name: Start MongoDB v${{ matrix.mongodb-version }}
+        uses: supercharge/mongodb-github-action@1.6.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+      - name: Install Dependencies
+        run: yarn install
+        working-directory: ./backend
+      - name: Run Tests
+        run: yarn test:ci
+        working-directory: ./backend

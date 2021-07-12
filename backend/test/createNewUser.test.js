@@ -101,5 +101,23 @@ describe('POST /api/users - Registration with ', () => {
       .then((response) => {
         expect(response.body.message).toBe("Validation error: Password must be at least 8 characters long.");
       });
+    });
+    
+    test('an email already registered, should respond with 400, and and corresponding error message', async () => {
+      const data = {
+        email: 'example@example.com',
+        password: 'Asdfghjkl',
+      };
+      
+      await request(app)
+      .post('/api/users')
+      .send(data);
+
+      await request(app)
+      .post('/api/users')
+      .send(data)
+      .then((response) => {
+        expect(response.body.message).toBe("Validation error: Email is already registered.");
+      });
   });
 });

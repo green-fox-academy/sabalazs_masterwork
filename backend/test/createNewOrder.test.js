@@ -1,16 +1,14 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
 import app from '../src/app';
-import Order from '../src/models/Order';
-import User from '../src/models/Order';
-import Product from '../src/models/Order';
 import connectDB from '../src/db';
+import Order from '../src/models/Order';
 
 beforeEach(() => {
     connectDB();
 });
 
-afterEach(async () => { 
+afterEach(async () => {
     await mongoose.connection.db.dropDatabase();
 });
 
@@ -31,7 +29,7 @@ describe('POST /api/orders - Creating new order ', () => {
         const product = {
             "name": "Vajas croissant 2",
             "price": 800
-          };
+        };
         let productId;
         await request(app)
             .post('/api/products')
@@ -50,13 +48,22 @@ describe('POST /api/orders - Creating new order ', () => {
             ],
             "sum": 800
         };
+        console.log(order);
 
+        let orderId;
         await request(app)
             .post('/api/orders')
             .send(order)
             .expect(201)
             .then((response) => {
-                expect(response.body.id).toBeTruthy();
+                orderId = response.body.id;
+                expect(orderId).toBeTruthy();
+            });
+
+        await Order.findOne({ _id: orderId })
+            .then((result) => {
+                console.log(result);
+                expect(result).toBeTruthy();
             });
     });
 

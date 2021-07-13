@@ -13,13 +13,21 @@ afterEach(async () => {
     await mongoose.connection.close();
 });
 
+const user = {
+    email: 'example2@example.com',
+    password: 'Asdfghjkl',
+};
+const product = {
+    "name": "Vajas croissant 2",
+    "price": 800
+};
+const quantity = 1;
+const correctSum = quantity * product.price;
+const incorrectSum = 0;
+
 describe('POST /api/orders - Creating new order with', () => {
 
     test('valid data should respond with 201, and id and save order to db', async () => {
-        const user = {
-            email: 'example2@example.com',
-            password: 'Asdfghjkl',
-        };
         let userId;
         await request(app)
             .post('/api/users')
@@ -27,10 +35,7 @@ describe('POST /api/orders - Creating new order with', () => {
             .then((response) => {
                 userId = response.body.id;
             });
-        const product = {
-            "name": "Vajas croissant 2",
-            "price": 800
-        };
+        
         let productId;
         await request(app)
             .post('/api/products')
@@ -38,18 +43,17 @@ describe('POST /api/orders - Creating new order with', () => {
             .then((response) => {
                 productId = response.body.id;
             });
-
         const order = {
             "customer": userId,
             "items": [
                 {
                     "product": productId,
-                    "quantity": 1
+                    "quantity": quantity
                 }
             ],
-            "sum": 800
+            "sum": correctSum
         };
-
+    
         let orderId;
         await request(app)
             .post('/api/orders')
@@ -59,7 +63,7 @@ describe('POST /api/orders - Creating new order with', () => {
                 orderId = response.body.id;
                 expect(orderId).toBeTruthy();
             });
-
+    
         await Order.findOne({ _id: orderId })
             .populate('customer')
             .populate('items.product')
@@ -74,10 +78,6 @@ describe('POST /api/orders - Creating new order with', () => {
     });
 
     test('invalid order sum should respond with 400, and corresponding error message', async () => {
-        const user = {
-            email: 'example2@example.com',
-            password: 'Asdfghjkl',
-        };
         let userId;
         await request(app)
             .post('/api/users')
@@ -85,10 +85,6 @@ describe('POST /api/orders - Creating new order with', () => {
             .then((response) => {
                 userId = response.body.id;
             });
-        const product = {
-            "name": "Vajas croissant 2",
-            "price": 800
-        };
         let productId;
         await request(app)
             .post('/api/products')
@@ -102,10 +98,10 @@ describe('POST /api/orders - Creating new order with', () => {
             "items": [
                 {
                     "product": productId,
-                    "quantity": 1
+                    "quantity": quantity
                 }
             ],
-            "sum": 0
+            "sum": incorrectSum
         };
 
         await request(app)

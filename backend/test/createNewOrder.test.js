@@ -10,6 +10,7 @@ beforeEach(() => {
 
 afterEach(async () => {
     await mongoose.connection.db.dropDatabase();
+    await mongoose.connection.close();
 });
 
 describe('POST /api/orders - Creating new order with', () => {

@@ -21,6 +21,7 @@ router.use(express.json());
 
 router.post('/users', usersController.createNew);
 router.post('/orders', ordersController.createNew);
+router.get('/orders', ordersController.getList);
 router.post('/products', productsController.createNew);
 router.post('/auth', authController.login);
 

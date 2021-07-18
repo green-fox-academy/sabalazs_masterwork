@@ -18,7 +18,7 @@ const user = {
     password: 'Asdfghjkl',
 };
 const product = {
-    "name": "Vajas croissant 2",
+    "name": "Vajas croissant 3",
     "price": 800
 };
 const quantity = 1;

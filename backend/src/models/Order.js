@@ -31,6 +31,10 @@ const OrderSchema = new mongoose.Schema({
     datePosted: Date,
 });
 
+OrderSchema.pre('save', async function (next) {
+    this.datePosted = new Date();
+  });
+
 const Order = mongoose.model('Order', OrderSchema);
 
 export default Order;

@@ -4,7 +4,6 @@ import Product, { ProductSchema } from '../models/Product';
 import ValidationError from '../utils/ValidationError';
 
 export const ordersService = {
-
   async createNew(order) {
     await this.validate(order);
     const result = await Order.create(order);
@@ -12,7 +11,20 @@ export const ordersService = {
       id: result._id,
     };
   },
-
+  async getList(sortBy, sortDirection, pageNumber, itemsPerPage) {
+    const result = await Order
+      .find()
+      .sort([[ sortBy, sortDirection ]])
+      .skip(pageNumber * itemsPerPage)
+      .limit(Number(itemsPerPage))
+      .populate('customer', 'email')
+      .populate('items.product', 'name');
+    return result;
+  },
+  async getNumberOfDocs() {
+    const result = await Order.find().countDocuments();
+    return result;
+  },
   async validate(order) {
     if (!order.customer) {
       throw new ValidationError('Missing customer.');

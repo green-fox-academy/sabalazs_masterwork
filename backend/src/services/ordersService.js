@@ -14,7 +14,6 @@ export const ordersService = {
   },
 
   async validate(order) {
-    //TODO
     if (!order.customer) {
       throw new ValidationError('Missing customer.');
     }

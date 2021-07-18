@@ -18,7 +18,6 @@ const OrderSchema = new mongoose.Schema({
         }],
         required: true,
     },
-    // TODO: sum validation
     sum: {
         type: Number,
         required: true,

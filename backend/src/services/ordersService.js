@@ -12,13 +12,32 @@ export const ordersService = {
     };
   },
   async getList(sortBy, sortDirection, pageNumber, itemsPerPage) {
-    const result = await Order
+  /*  const result = await Order
       .find()
-      .sort([[ sortBy, sortDirection ]])
+      .populate('items.product', 'name')
+      .populate({
+        path: 'customer',
+        select: 'email',
+        options: { sort: { [sortBy]: [sortDirection] } }
+      })
       .skip(pageNumber * itemsPerPage)
-      .limit(Number(itemsPerPage))
-      .populate('customer', 'email')
-      .populate('items.product', 'name');
+      .limit(Number(itemsPerPage)); */
+    const result = await Order
+    .aggregate([
+      {
+        $lookup:
+          {
+            from: "users",
+            localField: "customer",
+            foreignField: "_id",
+            as: "customer"
+          }
+     },
+     { $unwind: '$customer' },
+     { $sort : { [sortBy]: sortDirection } },
+     { $skip: pageNumber * itemsPerPage },
+     { $limit : itemsPerPage },
+    ]);
     return result;
   },
   async getNumberOfDocs() {

@@ -12,16 +12,6 @@ export const ordersService = {
     };
   },
   async getList(sortBy, sortDirection, pageNumber, itemsPerPage) {
-  /*  const result = await Order
-      .find()
-      .populate('items.product', 'name')
-      .populate({
-        path: 'customer',
-        select: 'email',
-        options: { sort: { [sortBy]: [sortDirection] } }
-      })
-      .skip(pageNumber * itemsPerPage)
-      .limit(Number(itemsPerPage)); */
     const result = await Order
     .aggregate([
       {

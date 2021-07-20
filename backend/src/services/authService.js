@@ -3,7 +3,6 @@ import AuthenticationError from '../utils/AuthenticationError';
 
 export const authService = {
   async login(email, password) {
-
     const user = await User.findOne({ email }).select('+password');
     if (!user) {
       throw new AuthenticationError('Email is not recognized.');

@@ -12,6 +12,6 @@ export const productsService = {
   },
 
   async validate(product) {
-    //TODO
+    // TODO
   },
 };

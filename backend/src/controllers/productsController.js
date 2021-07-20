@@ -9,5 +9,5 @@ export const productsController = {
     } catch (err) {
       next(err);
     }
-  }
+  },
 };

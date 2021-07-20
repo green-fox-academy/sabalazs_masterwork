@@ -13,22 +13,35 @@ export const ordersService = {
   },
   async getList(sortBy, sortDirection, pageNumber, itemsPerPage) {
     const result = await Order
-    .aggregate([
-      {
-        $lookup:
+      .aggregate([
+        {
+          $lookup:
           {
-            from: "users",
-            localField: "customer",
-            foreignField: "_id",
-            as: "customer"
-          }
-     },
-     { $unwind: '$customer' },
-     { $sort : { [sortBy]: sortDirection } },
-     { $skip: pageNumber * itemsPerPage },
-     { $limit : itemsPerPage },
-    ]);
+            from: 'users',
+            localField: 'customer',
+            foreignField: '_id',
+            as: 'customer',
+          },
+        },
+        { $unwind: '$customer' },
+        { $sort: { [sortBy]: sortDirection } },
+        { $skip: pageNumber * itemsPerPage },
+        { $limit: itemsPerPage },
+      ]);
     return result;
+  },
+  async updateOne(orderId, data) {
+    const order = await Order.findById(orderId);
+    if (!order) {
+      throw new ValidationError('Invalid order ID.');
+    }
+    if (!['pending', 'accepted', 'refused', 'fulfilled'].includes(data.status)) {
+      throw new ValidationError('Invalid order status.');
+    }
+    order.status = data.status;
+    await order.save();
+    const updatedOrder = await Order.findById(orderId);
+    return updatedOrder;
   },
   async getNumberOfDocs() {
     const result = await Order.find().countDocuments();

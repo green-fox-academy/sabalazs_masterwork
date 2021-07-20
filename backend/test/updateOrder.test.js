@@ -6,8 +6,9 @@ import Order from '../src/models/Order';
 import User from '../src/models/User';
 import Product from '../src/models/Product';
 
-let userId; let productId; let
-  orderId;
+let userId;
+let productId;
+let orderId;
 beforeEach(async () => {
   connectDB();
   userId = await User.create({

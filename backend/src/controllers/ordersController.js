@@ -19,8 +19,8 @@ export const ordersController = {
         sortBy,
         parseInt(sortDirection),
         parseInt(pageNumber),
-        parseInt(itemsPerPage)
-        );
+        parseInt(itemsPerPage),
+      );
       const numberOfDoc = await ordersService.getNumberOfDocs();
       res.status(200).json({ orders, numberOfDoc });
     } catch (err) {
@@ -30,9 +30,17 @@ export const ordersController = {
   async updateOne(req, res, next) {
     const update = req.body;
     const { orderId } = req.params;
-    console.log(orderId);
     try {
       const data = await ordersService.updateOne(orderId, update);
+      res.status(200).json(data);
+    } catch (err) {
+      next(err);
+    }
+  },
+  async deleteOne(req, res, next) {
+    const { orderId } = req.params;
+    try {
+      const data = await ordersService.deleteOne(orderId);
       res.status(200).json(data);
     } catch (err) {
       next(err);

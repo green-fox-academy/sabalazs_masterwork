@@ -43,6 +43,13 @@ export const ordersService = {
     const updatedOrder = await Order.findById(orderId);
     return updatedOrder;
   },
+  async deleteOne(orderId) {
+    const data = await Order.findOneAndDelete({ _id: orderId });
+    if (!data) {
+      throw new ValidationError('Invalid order ID.');
+    }
+    return data;
+  },
   async getNumberOfDocs() {
     const result = await Order.find().countDocuments();
     return result;

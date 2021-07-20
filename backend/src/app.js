@@ -23,6 +23,7 @@ router.post('/users', usersController.createNew);
 router.post('/orders', ordersController.createNew);
 router.get('/orders', ordersController.getList);
 router.put('/orders/:orderId', ordersController.updateOne);
+router.delete('/orders/:orderId', ordersController.deleteOne);
 
 router.post('/products', productsController.createNew);
 

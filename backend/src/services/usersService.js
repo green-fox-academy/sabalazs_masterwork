@@ -12,6 +12,39 @@ export const usersService = {
       id: result._id,
     };
   },
+  async getList(roleToFilterBy, sortBy, sortDirection, pageNumber, itemsPerPage) {
+    const result = await User
+      .find(roleToFilterBy ? { role: roleToFilterBy } : {})
+      .sort({ [sortBy]: sortDirection })
+      .skip(itemsPerPage * pageNumber)
+      .limit(Number(itemsPerPage));
+    return result;
+  },
+  async getNumberOfDocs() {
+    const result = await User.find().countDocuments();
+    return result;
+  },
+  async getOne(id) {
+    const user = await User.findOne({ _id: id });
+    return user;
+  },
+  async updateOne(id, updatedUser) {
+    const user = await User.findById(id);
+    const fieldsToBeUpdated = Object.keys(updatedUser);
+    fieldsToBeUpdated.forEach((field) => {
+      user[field] = updatedUser[field];
+    });
+    await user.save();
+    const result = await User.findById(id);
+    return result;
+  },
+  async deleteOne(userId) {
+    const data = await User.findOneAndDelete({ _id: userId });
+    if (!data) {
+      throw new ValidationError('Invalid user ID.');
+    }
+    return data;
+  },
   async validate(user) {
     if (!user.password) {
       throw new ValidationError('Missing password field.');
@@ -29,7 +62,7 @@ export const usersService = {
       throw new ValidationError('Password must be at least 8 characters long.');
     }
     if (user.password === user.password.toUpperCase()
-        || user.password === user.password.toLowerCase()) {
+      || user.password === user.password.toLowerCase()) {
       throw new ValidationError('Password must contain both lower case and upper case characters.');
     }
   },

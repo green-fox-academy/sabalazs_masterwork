@@ -19,6 +19,10 @@ router.use(cors());
 router.use(express.json());
 
 router.post('/users', usersController.createNew);
+router.get('/users', usersController.getList);
+router.get('/users/:userId', usersController.getOne);
+router.put('/users/:userId', usersController.updateOne);
+router.delete('/users/:userId', usersController.deleteOne);
 
 router.post('/orders', ordersController.createNew);
 router.get('/orders', ordersController.getList);

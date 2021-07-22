@@ -30,6 +30,10 @@ router.put('/orders/:orderId', ordersController.updateOne);
 router.delete('/orders/:orderId', ordersController.deleteOne);
 
 router.post('/products', productsController.createNew);
+router.get('/products', productsController.getList);
+router.get('/products/:productId', productsController.getOne);
+router.put('/products/:productId', productsController.updateOne);
+router.delete('/products/:productId', productsController.deleteOne);
 
 router.post('/auth', authController.login);
 

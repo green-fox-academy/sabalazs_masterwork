@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import Product from '../models/Product';
+import ValidationError from '../utils/ValidationError';
 
 export const productsService = {
 
@@ -45,6 +46,14 @@ export const productsService = {
   },
 
   async validate(product) {
-    // TODO
+    if (!product.name) {
+      throw new ValidationError('Missing name field.');
+    }
+    if (!(product.price >= 0)) {
+      throw new ValidationError('Missing or invalid price field.');
+    }
+    if (await Product.exists({ name: product.name })) {
+      throw new ValidationError('A product with the same name already exists.', 409);
+    }
   },
 };

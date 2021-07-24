@@ -12,7 +12,7 @@ beforeEach(async () => {
   const product = await Product.create({
     name: 'Vajas croissant',
     price: 800,
-});
+  });
   productId = product.id;
   const admin = {
     email: 'xyz@xyz.xyz',
@@ -32,7 +32,7 @@ afterEach(async () => {
 });
 
 describe('DELETE /api/products/:productId - ', () => {
-  test('given valid product ID, it deletes the user', async () => {    
+  test('given valid product ID, it deletes the user', async () => {
     expect(await Product.findById(productId)).toBeTruthy();
     await request(app)
       .delete(`/api/products/${productId}`)

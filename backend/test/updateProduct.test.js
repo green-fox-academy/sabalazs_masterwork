@@ -12,7 +12,7 @@ beforeEach(async () => {
   const product = await Product.create({
     name: 'Vajas croissant',
     price: 800,
-});
+  });
   productId = product.id;
   const admin = {
     email: 'xyz@xyz.xyz',
@@ -37,7 +37,7 @@ describe('PUT /api/products/:productId - ', () => {
       .put(`/api/products/${productId}`)
       .set('Authorization', `Bearer ${token}`)
       .send({
-        price: 1500
+        price: 1500,
       })
       .expect(200)
       .then((response) => {

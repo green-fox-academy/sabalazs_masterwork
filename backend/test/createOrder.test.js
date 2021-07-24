@@ -58,7 +58,6 @@ describe('POST /api/orders - Creating new order with', () => {
       .populate('customer')
       .populate('items.product')
       .then((result) => {
-        console.log(JSON.stringify(result));
         expect(result).toBeTruthy();
         expect(result.customer.email).toEqual('firstuser@email.xyz');
         expect(result.items.length).toEqual(order.items.length);

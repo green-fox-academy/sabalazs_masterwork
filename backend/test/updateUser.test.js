@@ -10,7 +10,7 @@ beforeEach(async () => {
   connectDB();
   const user = await User.create({
     email: 'firstuser@email.xyz',
-    password: 'Password123'
+    password: 'Password123',
   });
   userId = user.id;
   const admin = {

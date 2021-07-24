@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken';
 import AuthenticationError from '../utils/AuthenticationError';
 
 export default function tokenCheck(req, res, next) {
-  console.log('foo');
   let token;
   if (req.headers.authorization) {
     token = req.headers.authorization.split(' ')[1];

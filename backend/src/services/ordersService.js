@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import Order from '../models/Order';
-import Product, { ProductSchema } from '../models/Product';
+import Product from '../models/Product';
 import ValidationError from '../utils/ValidationError';
 
 export const ordersService = {

@@ -36,7 +36,7 @@ describe('DELETE /api/users/:userId - ', () => {
       .delete(`/api/users/${userId}`)
       .set('Authorization', `Bearer ${token}`)
       .expect(200)
-      .then(async (response) => {
+      .then(async () => {
         expect(await User.findById(userId)).toBeFalsy();
       });
   });

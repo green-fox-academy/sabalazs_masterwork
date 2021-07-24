@@ -70,7 +70,7 @@ describe('GET /api/users - ', () => {
       .expect(401)
       .then((response) => {
         const data = response.body;
-        expect(data.message).toEqual("Authentication error: No token found.");
+        expect(data.message).toEqual('Authentication error: No token found.');
       });
   });
   test('with customer token, returns Forbidden', async () => {
@@ -90,7 +90,7 @@ describe('GET /api/users - ', () => {
       .expect(403)
       .then((response) => {
         const data = response.body;
-        expect(data.message).toEqual("Authorization error: Unauthorized");
+        expect(data.message).toEqual('Authorization error: Unauthorized');
       });
   });
 });

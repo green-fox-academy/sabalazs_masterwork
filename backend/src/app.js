@@ -9,6 +9,8 @@ import {
   productsController,
   authController,
 } from './controllers';
+import tokenCheck from './middlewares/tokenCheck';
+import roleCheck from './middlewares/roleCheck';
 
 const cors = require('cors');
 
@@ -19,21 +21,21 @@ router.use(cors());
 router.use(express.json());
 
 router.post('/users', usersController.createNew);
-router.get('/users', usersController.getList);
-router.get('/users/:userId', usersController.getOne);
-router.put('/users/:userId', usersController.updateOne);
-router.delete('/users/:userId', usersController.deleteOne);
+router.get('/users', tokenCheck, roleCheck, usersController.getList);
+router.get('/users/:userId', tokenCheck, roleCheck, usersController.getOne);
+router.put('/users/:userId', tokenCheck, roleCheck, usersController.updateOne);
+router.delete('/users/:userId', tokenCheck, roleCheck, usersController.deleteOne);
 
 router.post('/orders', ordersController.createNew);
-router.get('/orders', ordersController.getList);
-router.put('/orders/:orderId', ordersController.updateOne);
-router.delete('/orders/:orderId', ordersController.deleteOne);
+router.get('/orders', tokenCheck, roleCheck, ordersController.getList);
+router.put('/orders/:orderId', tokenCheck, roleCheck, ordersController.updateOne);
+router.delete('/orders/:orderId', tokenCheck, roleCheck, ordersController.deleteOne);
 
-router.post('/products', productsController.createNew);
+router.post('/products', tokenCheck, roleCheck, productsController.createNew);
 router.get('/products', productsController.getList);
 router.get('/products/:productId', productsController.getOne);
-router.put('/products/:productId', productsController.updateOne);
-router.delete('/products/:productId', productsController.deleteOne);
+router.put('/products/:productId', tokenCheck, roleCheck, productsController.updateOne);
+router.delete('/products/:productId', tokenCheck, roleCheck, productsController.deleteOne);
 
 router.post('/auth', authController.login);
 

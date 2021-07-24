@@ -19,6 +19,7 @@ const product = {
   price: 800,
 };
 const numberOfTestItems = 20;
+let token;
 
 beforeEach(async () => {
   connectDB();
@@ -37,6 +38,16 @@ beforeEach(async () => {
       sum: (i + 1) * product.price,
     });
   }
+  const admin = {
+    email: 'xyz@xyz.xyz',
+    password: 'Password123456789',
+    role: 'admin',
+  };
+  await User.create(admin);
+  token = await request(app)
+    .post('/api/auth')
+    .send(admin)
+    .then(async (response) => response.body.token);
 });
 
 afterEach(async () => {
@@ -48,6 +59,7 @@ describe('GET /api/orders - Gets', () => {
   test('first page of orders with default order and pagination', async () => {
     await request(app)
       .get('/api/orders')
+      .set('Authorization', `Bearer ${token}`)
       .expect(200)
       .then((response) => {
         const data = response.body;
@@ -64,6 +76,7 @@ describe('GET /api/orders - Gets', () => {
   test('orders sorted by email, descending', async () => {
     await request(app)
       .get('/api/orders?sortBy=customer.email&sortDirection=-1')
+      .set('Authorization', `Bearer ${token}`)
       .expect(200)
       .then((response) => {
         const data = response.body;
@@ -82,6 +95,7 @@ describe('GET /api/orders - Gets', () => {
   test('second page of orders sorted by sum, ascending, with a limit of 5', async () => {
     await request(app)
       .get('/api/orders?sortBy=sum&sortDirection=1&pageNumber=1&itemsPerPage=5')
+      .set('Authorization', `Bearer ${token}`)
       .expect(200)
       .then((response) => {
         const data = response.body;

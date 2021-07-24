@@ -3,9 +3,23 @@ import mongoose from 'mongoose';
 import app from '../src/app';
 import connectDB from '../src/db';
 import Order from '../src/models/Order';
+import User from '../src/models/User';
+import Product from '../src/models/Product';
 
-beforeEach(() => {
+let userId;
+let productId;
+beforeEach(async () => {
   connectDB();
+  const user = await User.create({
+    email: 'firstuser@email.xyz',
+    password: 'Password123',
+  });
+  userId = user.id;
+  const product = await Product.create({
+    name: 'Vajas croissant',
+    price: 800,
+  });
+  productId = product.id;
 });
 
 afterEach(async () => {
@@ -13,35 +27,12 @@ afterEach(async () => {
   await mongoose.connection.close();
 });
 
-const user = {
-  email: 'example2@example.com',
-  password: 'Asdfghjkl',
-};
-const product = {
-  name: 'Vajas croissant 3',
-  price: 800,
-};
 const quantity = 1;
-const correctSum = quantity * product.price;
+const correctSum = quantity * 800;
 const incorrectSum = 0;
 
 describe('POST /api/orders - Creating new order with', () => {
   test('valid data should respond with 201, and id and save order to db', async () => {
-    let userId;
-    await request(app)
-      .post('/api/users')
-      .send(user)
-      .then((response) => {
-        userId = response.body.id;
-      });
-
-    let productId;
-    await request(app)
-      .post('/api/products')
-      .send(product)
-      .then((response) => {
-        productId = response.body.id;
-      });
     const order = {
       customer: userId,
       items: [
@@ -69,7 +60,7 @@ describe('POST /api/orders - Creating new order with', () => {
       .then((result) => {
         console.log(JSON.stringify(result));
         expect(result).toBeTruthy();
-        expect(result.customer.email).toEqual(user.email);
+        expect(result.customer.email).toEqual('firstuser@email.xyz');
         expect(result.items.length).toEqual(order.items.length);
         expect(result.items[0].name).toEqual(order.items[0].name);
         expect(result.items[0].sum).toEqual(order.items[0].sum);
@@ -77,21 +68,6 @@ describe('POST /api/orders - Creating new order with', () => {
   });
 
   test('invalid order sum should respond with 400, and corresponding error message', async () => {
-    let userId;
-    await request(app)
-      .post('/api/users')
-      .send(user)
-      .then((response) => {
-        userId = response.body.id;
-      });
-    let productId;
-    await request(app)
-      .post('/api/products')
-      .send(product)
-      .then((response) => {
-        productId = response.body.id;
-      });
-
     const order = {
       customer: userId,
       items: [

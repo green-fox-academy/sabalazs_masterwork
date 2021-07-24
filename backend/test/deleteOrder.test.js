@@ -9,6 +9,7 @@ import Product from '../src/models/Product';
 let userId;
 let productId;
 let order;
+let token;
 beforeEach(async () => {
   connectDB();
   userId = await User.create({
@@ -29,6 +30,16 @@ beforeEach(async () => {
     ],
     sum: 800,
   });
+  const admin = {
+    email: 'xyz@xyz.xyz',
+    password: 'Password123456789',
+    role: 'admin',
+  };
+  await User.create(admin);
+  token = await request(app)
+    .post('/api/auth')
+    .send(admin)
+    .then(async (response) => response.body.token);
 });
 
 afterEach(async () => {
@@ -40,6 +51,7 @@ describe('DELETE /api/orders/:orderId - ', () => {
   test('given valid order ID, it deletes the order', async () => {
     await request(app)
       .delete(`/api/orders/${order._id}`)
+      .set('Authorization', `Bearer ${token}`)
       .expect(200)
       .then(async (response) => {
         const updatedOrder = response.body;

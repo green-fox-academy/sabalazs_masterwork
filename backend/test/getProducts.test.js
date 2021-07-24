@@ -4,21 +4,20 @@ import app from '../src/app';
 import connectDB from '../src/db';
 import Product from '../src/models/Product';
 
-
 beforeEach(async () => {
   connectDB();
   await Product.create({
     name: 'Vajas croissant 1',
     price: 1000,
-});
+  });
   await Product.create({
     name: 'Vajas croissant 2',
     price: 200,
-});
+  });
   await Product.create({
     name: 'Vajas croissant 3',
     price: 800,
-});
+  });
 });
 
 afterEach(async () => {

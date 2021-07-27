@@ -1,4 +1,4 @@
-export default function requestToBackend(method, endpoint, bodyContent = {}, token) {
+export default function fetchBackend(method, endpoint, bodyContent = {}, token) {
     const {
         REACT_APP_HOST,
         REACT_APP_PORT,

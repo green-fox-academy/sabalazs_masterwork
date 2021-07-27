@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useReducer } from "react";
 import "./App.css";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import Header from "./components/Header";
 export const AuthContext = React.createContext();
+
 const initialState = {
-  isAuthenticated: false,
-  user: null,
-  token: null,
+  isAuthenticated: !!localStorage.getItem('user'),
+  user: JSON.parse(localStorage.getItem('user')) || null,
+  token: JSON.parse(localStorage.getItem('token')) || null,
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -32,8 +33,8 @@ const reducer = (state, action) => {
   }
 };
 function App() {
-  const [state, dispatch] = React.useReducer(reducer, initialState);
-return (
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return (
     <AuthContext.Provider
       value={{
         state,

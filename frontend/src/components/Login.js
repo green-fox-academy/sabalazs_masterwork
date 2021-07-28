@@ -6,6 +6,7 @@ import fetchBackend from '../utils/fetchBackend';
 import jwt from 'jsonwebtoken';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { Link, useHistory } from 'react-router-dom';
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -19,6 +20,7 @@ const LoginSchema = Yup.object().shape({
 export const Login = () => {
     const [formError, setFormError] = useState('');
     const { dispatch } = useContext(AuthContext);
+    const history = useHistory();
     const handleSubmit = (values, { setSubmitting, resetForm, setStatus }) => {
         fetchBackend(
             'POST',
@@ -42,7 +44,8 @@ export const Login = () => {
                 type: 'LOGIN',
                 payload: payload
             });
-            resetForm();
+            resetForm();            
+            history.push("/order");
         }).catch(error => {
             setFormError('');
             if (error.message === 'Authentication error: Invalid password.') {
@@ -91,7 +94,7 @@ export const Login = () => {
                                         />
                                     </div>
                                     <div className='form-group mb-3'>
-                                        <label htmlFor='password' className='text-start'>Password:</label>
+                                        <label htmlFor='password'>Password:</label>
                                         <Field
                                             type='password'
                                             name='password'
@@ -111,13 +114,15 @@ export const Login = () => {
                                     >
                                         Log in
                                     </button>
-                                    <button
-                                        type='button'
-                                        className='btn btn-outline-primary w-100 my-2 mx-auto'
-                                        disabled={isSubmitting}
-                                    >
-                                        Sign up
-                                    </button>
+                                    <Link to='/signup'>
+                                        <button
+                                            type='button'
+                                            className='btn btn-outline-primary w-100 my-2 mx-auto'
+                                            disabled={isSubmitting}
+                                        >
+                                            Sign up
+                                        </button>
+                                    </Link>
                                 </Form>
                             </Card>
                         )}

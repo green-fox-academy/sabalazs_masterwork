@@ -1,9 +1,14 @@
-import React, { useReducer } from "react";
+import React, { useReducer, createContext } from "react";
 import "./App.css";
 import Login from "./components/Login";
-import Home from "./components/Home";
-import Header from "./components/Header";
-export const AuthContext = React.createContext();
+import Order from "./components/Order";
+import PasswordReset from "./components/PasswordReset";
+import PreviousOrders from "./components/PreviousOrders";
+import { SignUp } from "./components/SignUp";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import PrivateRoute from './components/PrivateRoute';
+
+export const AuthContext = createContext();
 
 const initialState = {
   isAuthenticated: !!localStorage.getItem('user'),
@@ -26,7 +31,8 @@ const reducer = (state, action) => {
       return {
         ...state,
         isAuthenticated: false,
-        user: null
+        user: null,
+        token: null
       };
     default:
       return state;
@@ -35,14 +41,24 @@ const reducer = (state, action) => {
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
-    <AuthContext.Provider
-      value={{
-        state,
-        dispatch
-      }}
-    >
-      <div className="App">{!state.isAuthenticated ? <Login /> : <Home />}</div>
-    </AuthContext.Provider>
+
+    <Router>
+      <AuthContext.Provider
+        value={{
+          state,
+          dispatch
+        }}
+      >
+        <Switch>
+          <PrivateRoute path="/order" component={Order} />
+          <PrivateRoute path="/previous-orders" component={PreviousOrders} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/login" component={Login} />
+          <Route path="/password-reset" component={PasswordReset} />
+        </Switch>
+      </AuthContext.Provider>
+    </Router>
+
   );
 }
 export default App;

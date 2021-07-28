@@ -72,7 +72,7 @@ export const SignUp = () => {
                         {({ touched, errors, isSubmitting }) => (
                             <Card className="p-3 my-3">
                                 <div className="w-100 text-center mb-2">
-                                    <Image className="align-self-center" src={logo} />
+                                    <Image className="align-self-center" src={logo} fluid/>
                                 </div>
                                 {formSuccess
                                     ?

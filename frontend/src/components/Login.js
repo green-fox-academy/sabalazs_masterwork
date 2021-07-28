@@ -72,7 +72,7 @@ export const Login = () => {
                             <Card className="p-3 my-3">
                                 <Form>
                                     <div className="w-100 text-center mb-2">
-                                        <Image className="align-self-center" src={logo} />
+                                        <Image className="align-self-center" src={logo} fluid />
                                     </div>
                                     <h2 className="text-center mb-4">Log In</h2>
                                     {formError &&

@@ -41,7 +41,6 @@ function App() {
         dispatch
       }}
     >
-      <Header />
       <div className="App">{!state.isAuthenticated ? <Login /> : <Home />}</div>
     </AuthContext.Provider>
   );

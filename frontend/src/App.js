@@ -26,7 +26,8 @@ const reducer = (state, action) => {
         isAuthenticated: true,
         user: action.payload.user,
         token: action.payload.token,
-        alert: null
+        alert: null,
+        cart: []
       };
     case "LOGOUT":
       localStorage.clear();
@@ -35,7 +36,8 @@ const reducer = (state, action) => {
         isAuthenticated: false,
         user: null,
         token: null,
-        alert: null
+        alert: null,
+        cart: []
       };
     case "CLEAR_ERROR":
       return {
@@ -50,6 +52,14 @@ const reducer = (state, action) => {
           message: action.payload.message
         }
       };
+    case "ADD_TO_CART":
+      return {
+        ...state,
+        cart: [
+          ...state.cart,
+          action.payload
+        ]
+      }
     default:
       return state;
   }

@@ -3,6 +3,7 @@ import { Container, ListGroup, ListGroupItem } from "react-bootstrap";
 import fetchBackend from '../utils/fetchBackend';
 import ProductList from "./ProductList";
 import { AuthContext } from '../App';
+import Cart from './Cart';
 
 export const Order = () => {
 
@@ -35,22 +36,8 @@ export const Order = () => {
 
     return (
         <>
-            <h1>Rendelés</h1>
-            {
-                state.cart?.length > 0 &&
-                <Container>
-                    <ListGroup>
-                        {
-                            state.cart.map((orderItem) => (
-                                <ListGroupItem>
-                                    {orderItem.quantity} db {orderItem.name}
-                                </ListGroupItem>
-                            )
-                            )
-                        }
-                    </ListGroup>
-                </Container>
-            }
+            <h1 className='text-center'>Mit ennél szívesen?</h1>
+            {state.cart?.length > 0 && <Cart cart={state.cart} />}
             <Container>
                 <ProductList products={products} />
             </Container>

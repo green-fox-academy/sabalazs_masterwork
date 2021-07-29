@@ -14,7 +14,8 @@ const initialState = {
   isAuthenticated: !!localStorage.getItem('user'),
   user: JSON.parse(localStorage.getItem('user')) || null,
   token: JSON.parse(localStorage.getItem('token')) || null,
-  error: null
+  cart: JSON.parse(localStorage.getItem('cart')) || [],
+  alert: null
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -26,8 +27,7 @@ const reducer = (state, action) => {
         isAuthenticated: true,
         user: action.payload.user,
         token: action.payload.token,
-        alert: null,
-        cart: []
+        alert: null
       };
     case "LOGOUT":
       localStorage.clear();
@@ -52,7 +52,8 @@ const reducer = (state, action) => {
           message: action.payload.message
         }
       };
-    case "ADD_TO_CART":
+    case "ADD_TO_CART":      
+      localStorage.setItem("cart", JSON.stringify( [...state.cart, action.payload] ));
       return {
         ...state,
         cart: [

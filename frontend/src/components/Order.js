@@ -36,7 +36,7 @@ export const Order = () => {
 
     return (
         <>
-            <h1 className='text-center'>Mit ennél szívesen?</h1>
+            <h1 className='text-center my-5'>Mit szeretnél enni?</h1>
             {state.cart?.length > 0 && <Cart cart={state.cart} />}
             <Container>
                 <ProductList products={products} />

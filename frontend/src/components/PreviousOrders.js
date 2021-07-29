@@ -1,4 +1,4 @@
 export const PreviousOrders = () => {
-    return (<><h1>PreviousOrders</h1></>);
+    return (<><h1>Korábbi rendeléseim</h1></>);
 };
 export default PreviousOrders;

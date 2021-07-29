@@ -3,7 +3,7 @@ export const Header = () => {
   return (
     <nav id="navigation">
       <h1 href="#" className="logo">
-        BAKERY
+        La Marienda Pékség
       </h1>
     </nav>
   );

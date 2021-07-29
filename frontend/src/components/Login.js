@@ -10,11 +10,10 @@ import { Link, useHistory } from 'react-router-dom';
 
 const LoginSchema = Yup.object().shape({
     email: Yup.string()
-        .email('Invalid email address format')
-        .required('Email is required'),
+        .email('Hibás email cím formátum')
+        .required('Hiányzik az email cím'),
     password: Yup.string()
-        .min(3, 'Password must be 3 characters at minimum')
-        .required('Password is required')
+        .required('Hiányzik a jelszó')
 });
 
 export const Login = () => {
@@ -74,17 +73,17 @@ export const Login = () => {
                                     <div className="w-100 text-center mb-2">
                                         <Image className="align-self-center" src={logo} fluid />
                                     </div>
-                                    <h2 className="text-center mb-4">Log In</h2>
+                                    <h2 className="text-center mb-4">Bejelentkezés</h2>
                                     {formError &&
                                         <Alert variant='danger'>
                                             {formError}
                                         </Alert>}
                                     <div className='form-group mb-3'>
-                                        <label htmlFor='email'>Email:</label>
+                                        <label htmlFor='email'>Email cím:</label>
                                         <Field
                                             type='email'
                                             name='email'
-                                            placeholder='Enter email'
+                                            placeholder='Email cím'
                                             className={`form-control ${touched.email && errors.email ? 'is-invalid' : ''}`}
                                         />
                                         <ErrorMessage
@@ -94,11 +93,11 @@ export const Login = () => {
                                         />
                                     </div>
                                     <div className='form-group mb-3'>
-                                        <label htmlFor='password'>Password:</label>
+                                        <label htmlFor='password'>Jelszó:</label>
                                         <Field
                                             type='password'
                                             name='password'
-                                            placeholder='Enter password'
+                                            placeholder='Jelszó'
                                             className={`form-control ${touched.password && errors.password ? 'is-invalid' : ''}`}
                                         />
                                         <ErrorMessage
@@ -112,7 +111,7 @@ export const Login = () => {
                                         className='btn btn-primary w-100 my-2 mx-auto'
                                         disabled={isSubmitting}
                                     >
-                                        Log in
+                                        Bejelentkezés
                                     </button>
                                     <Link to='/signup'>
                                         <button
@@ -120,7 +119,7 @@ export const Login = () => {
                                             className='btn btn-outline-primary w-100 my-2 mx-auto'
                                             disabled={isSubmitting}
                                         >
-                                            Sign up
+                                            Regisztráció
                                         </button>
                                     </Link>
                                 </Form>

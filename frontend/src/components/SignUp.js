@@ -9,18 +9,18 @@ import { Link, useHistory } from 'react-router-dom';
 export const SignUp = () => {
     const SignUpSchema = Yup.object().shape({
         email: Yup.string()
-            .email('Invalid email address format')
-            .required('Email is required'),
+            .email('Hibás email cím formátum')
+            .required('Hiányzó email cím'),
         password: Yup.string()
-            .min(8, 'Password must be 8 characters at minimum')
+            .min(8, 'A jelszónak legalább 8 karakterből kell állnia')
             .matches(
                 /^(?=.*[a-z])(?=.*[A-Z])/,
-                "Must contain at least one upper case and one lower case character"
+                "A jelszónak tartalmaznia kell legalább egy nagy és legalább egy kis betűt"
             )
-            .required('Password is required'),
+            .required('Hiányzó jelszó'),
         passwordConfirm: Yup.string()
-            .required('Password is required')
-            .oneOf([Yup.ref("password"), null], "Passwords don't match")
+            .required('Hiányzó jelszó')
+            .oneOf([Yup.ref("password"), null], "A két jelszó nem egyezik")
     });
 
     const history = useHistory();
@@ -41,7 +41,7 @@ export const SignUp = () => {
                 throw new Error(error);
             }
             setFormError('');
-            setFormSuccess('Thanks for signing up! Please wait to be redirected to the login page...');
+            setFormSuccess('Köszönjük a regisztrációt! Most átírányítunk a bejelentkezésre...');
             resetForm();
             setTimeout(() => {
                 history.push("/login");
@@ -50,14 +50,10 @@ export const SignUp = () => {
             console.log(error.message);
             setFormError('');
             if (error.message === 'Validation error: Email is already registered.') {
-                setFormError('Email is already registered.');
+                setFormError('Az email cím már regisztrálva van.');
                 return;
             }
-            if (error.message === 'Authentication error: Email is not recognized.') {
-                setFormError('Email is not registered.');
-                return;
-            }
-            setFormError('Oops, something went wrong. Please try again later.');
+            setFormError('Upsz, valami elromlott. Kérjük nézz vissza később.');
         }).finally(() => setSubmitting(false));
     };
     return (
@@ -81,17 +77,17 @@ export const SignUp = () => {
                                     </Alert>
                                     :
                                     <Form>
-                                        <h2 className="text-center mb-4">Sign Up</h2>
+                                        <h2 className="text-center mb-4">Regisztráció</h2>
                                         {formError &&
                                             <Alert variant='danger'>
                                                 {formError}
                                             </Alert>}
                                         <div className='form-group mb-3'>
-                                            <label htmlFor='email'>Email:</label>
+                                            <label htmlFor='email'>Email cím:</label>
                                             <Field
                                                 type='email'
                                                 name='email'
-                                                placeholder='Enter email'
+                                                placeholder='Email cím'
                                                 className={`form-control ${touched.email && errors.email ? 'is-invalid' : ''}`}
                                             />
                                             <ErrorMessage
@@ -101,11 +97,11 @@ export const SignUp = () => {
                                             />
                                         </div>
                                         <div className='form-group mb-3'>
-                                            <label htmlFor='password'>Password:</label>
+                                            <label htmlFor='password'>Jelszó:</label>
                                             <Field
                                                 type='password'
                                                 name='password'
-                                                placeholder='Enter password'
+                                                placeholder='Jelszó'
                                                 className={`form-control ${touched.password && errors.password ? 'is-invalid' : ''}`}
                                             />
                                             <ErrorMessage
@@ -115,11 +111,11 @@ export const SignUp = () => {
                                             />
                                         </div>
                                         <div className='form-group mb-3'>
-                                            <label htmlFor='passwordConfirm' className='text-start'>Confirm password:</label>
+                                            <label htmlFor='passwordConfirm' className='text-start'>Jelszó megerősítés:</label>
                                             <Field
                                                 type='password'
                                                 name='passwordConfirm'
-                                                placeholder='Re-enter password'
+                                                placeholder='Jelszó ismét'
                                                 className={`form-control ${touched.passwordConfirm && errors.passwordConfirm ? 'is-invalid' : ''}`}
                                             />
                                             <ErrorMessage
@@ -133,7 +129,7 @@ export const SignUp = () => {
                                             className='btn btn-primary w-100 my-2 mx-auto'
                                             disabled={isSubmitting}
                                         >
-                                            Sign up
+                                            Regisztráció
                                         </button>
                                         <Link to='/login'>
                                             <button
@@ -141,7 +137,7 @@ export const SignUp = () => {
                                                 className='btn btn-outline-primary w-100 my-2 mx-auto'
                                                 disabled={isSubmitting}
                                             >
-                                                Back to log in
+                                                Vissza a bejelentkezéshez
                                             </button>
                                         </Link>
                                     </Form>}

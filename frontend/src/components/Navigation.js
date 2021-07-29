@@ -12,7 +12,6 @@ export default function Navigation() {
 
   async function handleLogout() {
     try {
-      throw new Error();
       dispatch({
         type: 'LOGOUT'
       });

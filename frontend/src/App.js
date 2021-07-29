@@ -52,15 +52,20 @@ const reducer = (state, action) => {
           message: action.payload.message
         }
       };
-    case "ADD_TO_CART":      
+    case "ADD_TO_CART":
       localStorage.setItem("cart", JSON.stringify( [...state.cart, action.payload] ));
       return {
         ...state,
-        cart: [
-          ...state.cart,
-          action.payload
-        ]
-      }
+        cart: [...state.cart, action.payload]
+      };
+    case "REMOVE_FROM_CART":
+      let newCart = [...state.cart]; 
+      newCart.splice(action.payload.index, 1)
+      localStorage.setItem("cart", JSON.stringify( [...newCart] ));
+      return {
+        ...state,
+        cart: [...newCart]
+      };
     default:
       return state;
   }

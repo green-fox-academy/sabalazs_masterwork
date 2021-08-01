@@ -11,23 +11,44 @@ export const ordersService = {
       id: result._id,
     };
   },
-  async getList(sortBy, sortDirection, pageNumber, itemsPerPage) {
-    const result = await Order
-      .aggregate([
-        {
-          $lookup:
+  async getList(userId, sortBy, sortDirection, pageNumber, itemsPerPage) {
+    let result;
+    if (userId) {
+      result = await Order
+        .find({ customer: userId })
+        .aggregate([
           {
-            from: 'users',
-            localField: 'customer',
-            foreignField: '_id',
-            as: 'customer',
+            $lookup:
+            {
+              from: 'users',
+              localField: 'customer',
+              foreignField: '_id',
+              as: 'customer',
+            },
           },
-        },
-        { $unwind: '$customer' },
-        { $sort: { [sortBy]: sortDirection } },
-        { $skip: pageNumber * itemsPerPage },
-        { $limit: itemsPerPage },
-      ]);
+          { $unwind: '$customer' },
+          { $sort: { [sortBy]: sortDirection } },
+          { $skip: pageNumber * itemsPerPage },
+          { $limit: itemsPerPage },
+        ]);
+    } else {
+      result = await Order
+        .aggregate([
+          {
+            $lookup:
+            {
+              from: 'users',
+              localField: 'customer',
+              foreignField: '_id',
+              as: 'customer',
+            },
+          },
+          { $unwind: '$customer' },
+          { $sort: { [sortBy]: sortDirection } },
+          { $skip: pageNumber * itemsPerPage },
+          { $limit: itemsPerPage },
+        ]);
+    }
     return result;
   },
   async updateOne(orderId, data) {
@@ -50,8 +71,13 @@ export const ordersService = {
     }
     return data;
   },
-  async getNumberOfDocs() {
-    const result = await Order.find().countDocuments();
+  async getNumberOfDocs(userId) {
+    let result;
+    if (userId) {
+      result = await Order.find({ customer: userId }).countDocuments();
+    } else {
+      result = await Order.find().countDocuments();
+    }
     return result;
   },
   async validate(order) {

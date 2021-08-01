@@ -27,7 +27,7 @@ router.put('/users/:userId', tokenCheck, roleCheck, usersController.updateOne);
 router.delete('/users/:userId', tokenCheck, roleCheck, usersController.deleteOne);
 
 router.post('/orders', tokenCheck, ordersController.createNew);
-router.get('/orders/:userId', tokenCheck, ordersController.getList);
+router.get('/orders/', tokenCheck, ordersController.getList);
 router.put('/orders/:orderId', tokenCheck, roleCheck, ordersController.updateOne);
 router.delete('/orders/:orderId', tokenCheck, roleCheck, ordersController.deleteOne);
 

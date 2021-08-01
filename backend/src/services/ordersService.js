@@ -11,11 +11,11 @@ export const ordersService = {
       id: result._id,
     };
   },
-  async getList(userId, sortBy, sortDirection, pageNumber, itemsPerPage) {
+  async getList(user, sortBy, sortDirection, pageNumber, itemsPerPage) {
+    console.log(user);
     let result;
-    if (userId) {
+    if (user.role === 'admin') {
       result = await Order
-        .find({ customer: userId })
         .aggregate([
           {
             $lookup:
@@ -30,10 +30,14 @@ export const ordersService = {
           { $sort: { [sortBy]: sortDirection } },
           { $skip: pageNumber * itemsPerPage },
           { $limit: itemsPerPage },
-        ]);
+        ]);      
     } else {
+      console.log(await Order.find({ customer: user.id }));
+      //console.log(await Order.aggregate([{ $match: { $expr: { customer: user.id } } }]));
+      //console.log(await Order.aggregate([{ $match: { customer: user.id } }]));
       result = await Order
         .aggregate([
+          //{ $match: { customer: user.id } },
           {
             $lookup:
             {
@@ -71,12 +75,13 @@ export const ordersService = {
     }
     return data;
   },
-  async getNumberOfDocs(userId) {
+  async getNumberOfDocs(user) {
+    console.log(user);
     let result;
-    if (userId) {
-      result = await Order.find({ customer: userId }).countDocuments();
-    } else {
+    if (user.role === 'admin') {
       result = await Order.find().countDocuments();
+    } else {
+      result = await Order.find({ customer: user.id }).countDocuments();
     }
     return result;
   },

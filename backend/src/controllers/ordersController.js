@@ -15,16 +15,16 @@ export const ordersController = {
     const {
       sortBy = 'datePosted', sortDirection = '1', pageNumber = '0', itemsPerPage = '20',
     } = req.query;
-    const { userId } = req.params;
+    const { user } = req;
     try {
       const orders = await ordersService.getList(
-        userId,
+        user,
         sortBy,
         parseInt(sortDirection),
         parseInt(pageNumber),
         parseInt(itemsPerPage),
       );
-      const numberOfDoc = await ordersService.getNumberOfDocs(userId);
+      const numberOfDoc = await ordersService.getNumberOfDocs(user);
       res.status(200).json({ orders, numberOfDoc });
     } catch (err) {
       next(err);

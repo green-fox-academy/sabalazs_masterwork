@@ -10,6 +10,9 @@ export const Order = () => {
     const [products, setProducts] = useState([]);
     const { dispatch, state } = useContext(AuthContext);
     useEffect(() => {
+        dispatch({
+            type: 'CLEAR_FEEDBACK'
+        });
         fetchBackend(
             'GET',
             'api/products'

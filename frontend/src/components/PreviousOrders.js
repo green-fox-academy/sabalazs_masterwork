@@ -2,15 +2,21 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Container, ListGroup, ListGroupItem } from "react-bootstrap";
 import fetchBackend from '../utils/fetchBackend';
 import { AuthContext } from '../App';
+import OrdersTable from './OrdersTable';
 
 export const PreviousOrders = () => {
 
     const [orders, setOrders] = useState([]);
-    const { dispatch } = useContext(AuthContext);
+    const { dispatch, state } = useContext(AuthContext);
     useEffect(() => {
+        dispatch({
+            type: 'CLEAR_FEEDBACK'
+        });
         fetchBackend(
             'GET',
-            'api/orders'
+            `api/orders`,
+            undefined,
+            state.token
         ).then(async (response) => {
             const data = await response.json();
             if (!response.ok) {
@@ -18,8 +24,9 @@ export const PreviousOrders = () => {
                 throw new Error(error);
             }
             setOrders(data.orders);
-            console.log(data.products);
+            console.log(data.orders);
         }).catch(error => {
+            console.log(error);
             return dispatch({
                 type: 'SET_FEEDBACK',
                 payload: {
@@ -33,6 +40,7 @@ export const PreviousOrders = () => {
     return (
         <Container>
             <h1>Korábbi rendeléseim</h1>
+            <OrdersTable orders={orders}/>
         </Container>
     );
 };

@@ -9,23 +9,20 @@ export const Order = () => {
 
     const [products, setProducts] = useState([]);
     const { dispatch, state } = useContext(AuthContext);
-    console.log(state.cart);
     useEffect(() => {
         fetchBackend(
             'GET',
             'api/products'
         ).then(async (response) => {
             const data = await response.json();
-            console.log(data);
             if (!response.ok) {
                 const error = (data && data.message) || response.status;
                 throw new Error(error);
             }
             setProducts(data.products);
         }).catch(error => {
-            console.log(error);
             return dispatch({
-                type: 'SET_ERROR',
+                type: 'SET_FEEDBACK',
                 payload: {
                     variant: 'danger',
                     message: 'Hoppá, valami elromlott. :( '
@@ -37,7 +34,7 @@ export const Order = () => {
     return (
         <>
             <h1 className='text-center my-5'>Mit szeretnél enni?</h1>
-            {state.cart?.length > 0 && <Cart cart={state.cart} />}
+            {state.cart?.length > 0 && <Cart />}
             <Container>
                 <ProductList products={products} />
             </Container>

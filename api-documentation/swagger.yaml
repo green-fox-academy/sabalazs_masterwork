@@ -213,16 +213,14 @@ paths:
             schema:
               type: object
               properties:
-                customer:
-                  type: object
-                  schema:
-                    $ref: '#/components/schemas/user'
                 items:
                   type: array
                   items:
                     type: object
                     schema:
                       $ref: '#/components/schemas/orderItem'
+                sum:
+                  type: number
       responses:
         201:
           description: 'Order has been placed returning the id of the new order'

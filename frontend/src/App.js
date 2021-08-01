@@ -39,12 +39,12 @@ const reducer = (state, action) => {
         alert: null,
         cart: []
       };
-    case "CLEAR_ERROR":
+    case "CLEAR_FEEDBACK":
       return {
         ...state,
         alert: null
       };
-    case "SET_ERROR":
+    case "SET_FEEDBACK":
       return {
         ...state,
         alert: {
@@ -65,6 +65,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         cart: [...newCart]
+      };
+    case "EMPTY_CART":
+      localStorage.setItem("cart", JSON.stringify( [] ));
+      return {
+        ...state,
+        cart: []
       };
     default:
       return state;

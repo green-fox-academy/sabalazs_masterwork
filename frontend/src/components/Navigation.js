@@ -18,7 +18,7 @@ export default function Navigation() {
       history.push('/login');
     } catch (err) {
       dispatch({
-        type: 'SET_ERROR',
+        type: 'SET_FEEDBACK',
         payload: {
           variant: 'danger',
           message: 'Hoppá, valami elromlott. :( '

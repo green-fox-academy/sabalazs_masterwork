@@ -8,12 +8,12 @@ export default function Feedback() {
 
     return (
         <Container>
-            <Col xs={12} sm={8} md={6} xl={4} className="m-auto">
+            <Col xs={12} sm={12} md={10} xl={8} className="m-auto">
                 <Alert
                     variant={state.alert.variant}
                     className="m-2"
                     onClose={() => dispatch({
-                        type: 'CLEAR_ERROR'
+                        type: 'CLEAR_FEEDBACK'
                     })}
                     dismissible
                 >

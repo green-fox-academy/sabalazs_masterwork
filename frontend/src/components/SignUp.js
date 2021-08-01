@@ -47,7 +47,6 @@ export const SignUp = () => {
                 history.push("/login");
             }, 3000);
         }).catch(error => {
-            console.log(error.message);
             setFormError('');
             if (error.message === 'Validation error: Email is already registered.') {
                 setFormError('Az email cím már regisztrálva van.');

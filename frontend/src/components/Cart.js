@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Container, ListGroup, ListGroupItem, Col, Button, Row } from "react-bootstrap";
 import { v4 as uuidv4 } from 'uuid';
 import { Trash } from 'react-bootstrap-icons';
@@ -10,6 +10,12 @@ export const Cart = () => {
 
     const { dispatch, state } = useContext(AuthContext);
     const { cart, token } = state;
+    const [sum, setSum] = useState(0);
+
+    useEffect(() => {
+        const newSum = cart.reduce((accumulator, item) => accumulator + (item.price * item.quantity), 0);
+        setSum(newSum);
+    }, [cart]);
 
     function handleDelete(index) {
         dispatch({
@@ -19,11 +25,14 @@ export const Cart = () => {
     }
     function handleSubmit() {
         try {
-            console.log(cart);
+            console.log(cart, sum);
             fetchBackend(
                 'POST',
                 'api/orders',
-                { items: cart },
+                {
+                    items: cart,
+                    sum: sum
+                },
                 token
             ).then(async (response) => {
                 const data = await response.json();
@@ -81,11 +90,14 @@ export const Cart = () => {
                             )
                         }
                     </ListGroup>
+                    <Row>
+                        <span className="text-center my-2">Összesen: {sum},- Ft</span>
+                    </Row>
                 </Col>
             </Row>
             <Row>
                 <Col xs={12} sm={8} md={6} xl={4} className="m-auto">
-                    <Button size="lg" variant="success" className="w-100 my-2" onClick={handleSubmit}>
+                    <Button size="lg" variant="success" className="w-100 mt-2 mb-4" onClick={handleSubmit}>
                         Küldés
                     </Button>
                 </Col>

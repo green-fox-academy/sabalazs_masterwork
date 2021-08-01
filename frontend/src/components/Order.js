@@ -20,6 +20,7 @@ export const Order = () => {
                 throw new Error(error);
             }
             setProducts(data.products);
+            console.log(data.products);
         }).catch(error => {
             return dispatch({
                 type: 'SET_FEEDBACK',

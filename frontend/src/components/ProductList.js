@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Card, Col, Form, Row } from 'react-bootstrap';
+import { Card, Col, Form, Row, Container } from 'react-bootstrap';
 import ProductCard from './ProductCard';
 import { AuthContext } from '../App';
 
@@ -13,14 +13,14 @@ export default function ProductList({ products }) {
         setSearchTerm(event.currentTarget.value);
     }
     return (
-        <>
+        <Container>
             <Row>
                 <Col xs={12} sm={8} md={6} xl={4} className="m-auto">
                     <Form.Control
                         type="text"
                         placeholder="Keresés..."
                         onChange={handleSearchChange}
-                        className="my-3"
+                        className="my-1"
                     />
                 </Col>
             </Row>
@@ -37,6 +37,6 @@ export default function ProductList({ products }) {
                             );
                     })}
             </Row>
-        </>
+        </Container>
     )
 }

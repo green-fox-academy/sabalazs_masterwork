@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Card, Row, Container, Button, InputGroup, FormControl } from 'react-bootstrap';
 import { AuthContext } from '../App';
+import { CartPlus } from 'react-bootstrap-icons';
 
 export default function ProductCard({ product }) {
 
@@ -9,7 +10,7 @@ export default function ProductCard({ product }) {
     const { dispatch } = useContext(AuthContext);
 
     function handleQuantityChange(e) {
-        setQuantity(e.currentTarget.value);
+        setQuantity(parseInt(e.currentTarget.value));
     }
     function handleAddCart(e) {
         dispatch({
@@ -17,7 +18,8 @@ export default function ProductCard({ product }) {
             payload: {
                 product: product._id,
                 quantity: quantity,
-                name: product.name
+                name: product.name,
+                price: product.price
             }
         });
         setQuantity(1);
@@ -33,6 +35,11 @@ export default function ProductCard({ product }) {
                         <h6 className="p-2 w-100 text-center">
                             {product.name}
                         </h6>
+                    </Row>
+                    <Row>
+                        <span className="w-100 text-center">
+                            {product.price},- Ft
+                        </span>
                     </Row>
                     <Row className="my-auto">
                         <img
@@ -56,7 +63,8 @@ export default function ProductCard({ product }) {
                                 className="w-50"
                                 onClick={handleAddCart}
                             >
-                                Kosárba
+                                <CartPlus className="d-xs-block d-md-none" />
+                                <span className="d-none d-md-block">Kosárba</span>
                             </Button>
                         </InputGroup>
                     </Row>

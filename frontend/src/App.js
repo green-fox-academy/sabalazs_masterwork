@@ -1,12 +1,15 @@
 import React, { useReducer, createContext } from "react";
 import "./App.css";
 import Login from "./components/Login";
-import Order from "./components/Order";
+import PlaceOrder from "./components/PlaceOrder";
 import PasswordReset from "./components/PasswordReset";
 import PreviousOrders from "./components/PreviousOrders";
 import { SignUp } from "./components/SignUp";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from './components/PrivateRoute';
+import AdminOrders from "./components/AdminOrders";
+import AdminProducts from "./components/AdminProducts";
+import Dashboard from "./components/Dashboard";
 
 export const AuthContext = createContext();
 
@@ -76,7 +79,7 @@ const reducer = (state, action) => {
       return state;
   }
 };
-function App() {
+export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
 
@@ -88,16 +91,16 @@ function App() {
         }}
       >
         <Switch>
-          <PrivateRoute path="/order" component={Order} />
+          <PrivateRoute path="/order" component={PlaceOrder} />
           <PrivateRoute path="/previous-orders" component={PreviousOrders} />
+          <PrivateRoute path="/admin/orders" component={AdminOrders} />
+          <PrivateRoute path="/admin/products" component={AdminProducts} />
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={Login} />
           <Route path="/password-reset" component={PasswordReset} />
-          <PrivateRoute path="/" component={Order} />
+          <PrivateRoute path="/" component={Dashboard} />
         </Switch>
       </AuthContext.Provider>
     </Router>
-
   );
 }
-export default App;

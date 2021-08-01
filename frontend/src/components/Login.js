@@ -44,7 +44,7 @@ export const Login = () => {
                 payload: payload
             });
             resetForm();            
-            history.push("/order");
+            history.push("/");
         }).catch(error => {
             setFormError('');
             if (error.message === 'Authentication error: Invalid password.') {

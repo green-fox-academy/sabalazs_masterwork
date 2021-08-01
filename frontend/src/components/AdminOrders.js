@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Container, ListGroup, ListGroupItem } from "react-bootstrap";
 import fetchBackend from '../utils/fetchBackend';
-import ProductList from "./ProductList";
 import { AuthContext } from '../App';
-import Cart from './Cart';
+import AdminOrdersTable from './AdminOrdersTable';
 
-export const Order = () => {
+export default function AdminOrders () {
 
-    const [products, setProducts] = useState([]);
+    const [orders, setOrders] = useState([]);
     const { dispatch, state } = useContext(AuthContext);
     useEffect(() => {
         dispatch({
@@ -15,16 +14,19 @@ export const Order = () => {
         });
         fetchBackend(
             'GET',
-            'api/products'
+            `api/orders`,
+            undefined,
+            state.token
         ).then(async (response) => {
             const data = await response.json();
             if (!response.ok) {
                 const error = (data && data.message) || response.status;
                 throw new Error(error);
             }
-            setProducts(data.products);
-            console.log(data.products);
+            setOrders(data.orders);
+            console.log(data.orders);
         }).catch(error => {
+            console.log(error);
             return dispatch({
                 type: 'SET_FEEDBACK',
                 payload: {
@@ -36,13 +38,9 @@ export const Order = () => {
     }, []);
 
     return (
-        <>
-            <h1 className='text-center my-5'>Mit szeretnél enni?</h1>
-            {state.cart?.length > 0 && <Cart />}
-            <Container>
-                <ProductList products={products} />
-            </Container>
-        </>
+        <Container>
+            <h1>Rendelések</h1>
+            <AdminOrdersTable orders={orders}/>
+        </Container>
     );
 };
-export default Order;

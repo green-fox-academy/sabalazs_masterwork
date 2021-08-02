@@ -1,4 +1,5 @@
-export default function fetchBackend(method, endpoint, bodyContent, token) {
+export default function fetchBackend(method, endpoint, bodyContent) {
+    const token = JSON.parse(localStorage.getItem('token'));
     const {
         REACT_APP_HOST,
         REACT_APP_PORT,

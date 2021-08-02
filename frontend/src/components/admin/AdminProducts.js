@@ -17,8 +17,7 @@ export default function AdminProducts() {
         fetchBackend(
             'GET',
             `api/products`,
-            undefined,
-            state.token
+            undefined
         ).then(async (response) => {
             const data = await response.json();
             if (!response.ok) {

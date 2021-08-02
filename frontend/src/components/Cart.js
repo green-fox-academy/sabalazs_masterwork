@@ -32,8 +32,7 @@ export const Cart = () => {
                 {
                     items: cart,
                     sum: sum
-                },
-                token
+                }
             ).then(async (response) => {
                 const data = await response.json();
                 if (!response.ok) {

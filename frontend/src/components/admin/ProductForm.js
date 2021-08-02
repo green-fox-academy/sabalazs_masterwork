@@ -32,8 +32,7 @@ export default function ProductForm({ productId }) {
             fetchBackend(
                 'GET',
                 `api/products/${productId}`,
-                undefined,
-                state.token
+                undefined
             ).then(async (response) => {
                 const data = await response.json();
                 if (!response.ok) {
@@ -70,8 +69,7 @@ export default function ProductForm({ productId }) {
             {
                 name: values.name,
                 price: values.price
-            },
-            state.token
+            }
         ).then(async (response) => {
             const data = await response.json();
             if (!response.ok) {

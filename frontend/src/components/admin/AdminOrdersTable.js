@@ -41,8 +41,7 @@ export default function AdminOrdersTable({ orders, setOrders }) {
             `api/orders/${orderId}`,
             {
                 status: newStatus
-            },
-            state.token
+            }
         ).then(async (response) => {
             const data = await response.json();
             if (!response.ok) {

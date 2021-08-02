@@ -15,8 +15,7 @@ export const PreviousOrders = () => {
         fetchBackend(
             'GET',
             `api/orders`,
-            undefined,
-            state.token
+            undefined
         ).then(async (response) => {
             const data = await response.json();
             if (!response.ok) {

@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Container, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Container, Button, Col, Row } from "react-bootstrap";
 import fetchBackend from '../../utils/fetchBackend';
 import { AuthContext } from '../../App';
 import AdminProductsTable from './AdminProductsTable';
+import { useHistory } from 'react-router-dom';
 
-export default function AdminProducts () {
+export default function AdminProducts() {
+    const history = useHistory();
 
     const [products, setProducts] = useState([]);
     const { dispatch, state } = useContext(AuthContext);
@@ -39,8 +41,18 @@ export default function AdminProducts () {
 
     return (
         <Container>
-            <h1>Termékek</h1>
-            <AdminProductsTable products={products}/>
+            <h1 className='text-center my-5'>Termékek</h1>
+            <Col xs={12} sm={12} md={10} xl={8} className="m-auto">
+                <AdminProductsTable products={products} />
+                <Row className='mt-5'>
+                    <Col></Col>
+                    <Col xs={5} md={4} xl={2} className='text-center' >
+                        <Button onClick={() => history.push('/admin/new-product')}>
+                            Új termék
+                        </Button>
+                    </Col>
+                </Row>
+            </Col>
         </Container>
     );
 };

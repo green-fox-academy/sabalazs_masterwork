@@ -10,6 +10,7 @@ import PrivateRoute from './components/PrivateRoute';
 import AdminOrders from "./components/admin/AdminOrders";
 import AdminProducts from "./components/admin/AdminProducts";
 import Dashboard from "./components/Dashboard";
+import AdminNewProduct from './components/admin/AdminNewProduct';
 
 export const AuthContext = createContext();
 
@@ -95,6 +96,7 @@ export default function App() {
           <PrivateRoute path="/previous-orders" component={PreviousOrders} />
           <PrivateRoute path="/admin/orders" component={AdminOrders} />
           <PrivateRoute path="/admin/products" component={AdminProducts} />
+          <PrivateRoute path="/admin/new-product" component={AdminNewProduct} />
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={Login} />
           <Route path="/password-reset" component={PasswordReset} />

@@ -39,7 +39,7 @@ export default function AdminOrders () {
 
     return (
         <Container>
-            <h1>Rendelések</h1>
+            <h1 className='text-center my-5'>Rendelések</h1>
             <AdminOrdersTable orders={orders} setOrders={setOrders}/>
         </Container>
     );

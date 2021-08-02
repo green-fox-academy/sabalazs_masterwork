@@ -2,6 +2,8 @@
 import Order from '../models/Order';
 import Product from '../models/Product';
 import ValidationError from '../utils/ValidationError';
+import mongoose from 'mongoose';
+
 
 export const ordersService = {
   async createNew(order) {
@@ -32,12 +34,9 @@ export const ordersService = {
           { $limit: itemsPerPage },
         ]);      
     } else {
-      console.log(await Order.find({ customer: user.id }));
-      //console.log(await Order.aggregate([{ $match: { $expr: { customer: user.id } } }]));
-      //console.log(await Order.aggregate([{ $match: { customer: user.id } }]));
       result = await Order
         .aggregate([
-          //{ $match: { customer: user.id } },
+          { $match: { customer: mongoose.Types.ObjectId(user.id) } },
           {
             $lookup:
             {

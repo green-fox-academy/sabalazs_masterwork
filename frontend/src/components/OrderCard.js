@@ -27,7 +27,7 @@ export default function OrderCard({ order }) {
             case 'pending': return 'Feldolgozás alatt';
             case 'accepted': return 'Átvehető';
             case 'fulfilled': return 'Átvéve';
-            case 'refused': return 'Visszautasítva';
+            case 'refused': return 'Elutasítva';
         }
     }
 

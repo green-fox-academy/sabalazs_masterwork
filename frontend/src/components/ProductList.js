@@ -31,7 +31,7 @@ export default function ProductList({ products }) {
                     .map((product) => {
                         if ((searchTerm.length < 1) || product.name.toLowerCase().includes(searchTerm.toLowerCase()))
                             return (
-                                <Col xs={6} md={4} lg={3} className="my-2 px-1" key={product.name}>
+                                <Col xs={12} sm={6} md={4} lg={3} className="my-2 px-1" key={product.name}>
                                     <ProductCard product={product} />
                                 </Col>
                             );

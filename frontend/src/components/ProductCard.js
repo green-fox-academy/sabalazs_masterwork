@@ -30,25 +30,15 @@ export default function ProductCard({ product }) {
             <Card
                 className="p-1"
             >
-                <Container className="d-flex flex-column" style={{ "minHeight": '16rem' }}>
-                    <Row>
-                        <h6 className="p-2 w-100 text-center">
-                            {product.name}
-                        </h6>
-                    </Row>
-                    <Row>
-                        <span className="w-100 text-center">
-                            {product.price},- Ft
-                        </span>
-                    </Row>
-                    <Row className="my-auto">
-                        <img
-                            src={"holder.js/100px180"}
-                            style={{ "objectFit": "contain", "width": "100%", "maxHeight": "9rem", "maxWidth": "10rem" }}
-                            className="m-auto"
-                        />
-                    </Row>
-                    <Row className="mt-auto justify-content-end">
+                <Card.Header>
+                    {product.name}
+                </Card.Header>
+                <Card.Body>
+                    <Card.Title className="text-end">
+                        {product.price},- Ft
+                    </Card.Title>
+                    <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
+                    <Container className="mt-auto justify-content-end p-0">
                         <InputGroup className="mb-3">
                             <FormControl
                                 aria-label="Mennyiség"
@@ -67,8 +57,8 @@ export default function ProductCard({ product }) {
                                 <span className="d-none d-md-block">Kosárba</span>
                             </Button>
                         </InputGroup>
-                    </Row>
-                </Container>
+                    </Container>
+                </Card.Body>
             </Card>
         </>
     )

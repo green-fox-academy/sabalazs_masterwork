@@ -11,10 +11,10 @@ export default function AdminOrdersTable({ orders, setOrders }) {
 
     function getBgColor(status) {
         switch (status) {
-            case 'pending': return 'bg-warning';
-            case 'accepted': return 'bg-success';
-            case 'fulfilled': return 'bg-light';
-            case 'refused': return 'bg-danger';
+            case 'pending': return 'bg-warning text-white';
+            case 'accepted': return 'bg-success text-white';
+            case 'fulfilled': return 'bg-light text-dark';
+            case 'refused': return 'bg-danger text-white';
         }
     }
     function getIcon(status) {
@@ -67,10 +67,11 @@ export default function AdminOrdersTable({ orders, setOrders }) {
 
     return (
         <Container>
-            <Table striped bordered hover responsive='xs'>
+            <Table bordered hover responsive='xs'>
                 <thead>
-                    <tr>
+                    <tr className='text-center'>
                         <th>Vásárló</th>
+                        <th>Rendelés</th>
                         <th>Dátum</th>
                         <th>Összeg</th>
                         <th>Státusz</th>
@@ -79,19 +80,28 @@ export default function AdminOrdersTable({ orders, setOrders }) {
                 <tbody>
                     {
                         orders.map((order, index) => (
-                            <tr key={order._id}>
+                            <tr key={order._id} className={getBgColor(order.status)}>
                                 <th>{order.customer.email}</th>
+                                <td>
+                                    <ul>
+                                        {
+                                            order.items.map((item) => {
+                                                return <li>{item.quantity} db {item.product.name}</li>
+                                            })
+                                        }
+                                    </ul>
+                                </td>
                                 <td>{new Date(order.datePosted).toLocaleDateString()}</td>
                                 <td>{order.sum},- Ft</td>
-                                <td className='text-center'>
+                                <td className={`p-0`}>
                                     <select
-                                        className={`p-1 text-center ${getBgColor(order.status)}`}
+                                        className={`p-2 text-center w-100 border-0 text-center ${getBgColor(order.status)}`}
                                         value={order.status}
                                         onChange={(e) => handleChange(e, order._id, index)}>
-                                        <option value='pending'>Feldolgozás alatt</option>
-                                        <option value='accepted'>Átvehető</option>
-                                        <option value='fulfilled'>Átvéve</option>
-                                        <option value='refused'>Visszautasítva</option>
+                                        <option value='pending' className="bg-light text-dark">Feldolgozás alatt</option>
+                                        <option value='accepted' className="bg-light text-dark">Átvehető</option>
+                                        <option value='fulfilled' className="bg-light text-dark">Átvéve</option>
+                                        <option value='refused' className="bg-white text-dark">Visszautasítva</option>
                                     </select>
                                 </td>
                             </tr>

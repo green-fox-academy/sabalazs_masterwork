@@ -40,7 +40,7 @@ export default function AdminOrders () {
     return (
         <Container>
             <h1>Rendelések</h1>
-            <AdminOrdersTable orders={orders}/>
+            <AdminOrdersTable orders={orders} setOrders={setOrders}/>
         </Container>
     );
 };

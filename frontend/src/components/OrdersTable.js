@@ -43,7 +43,7 @@ export default function OrdersTable({ orders }) {
             <Table striped bordered hover responsive='xs'>
                 <thead>
                     <tr>
-                        <th>Státusz</th>
+                        <th style={{'width': '5%'}}>Státusz</th>
                         <th>Dátum</th>
                         <th>Összeg</th>
                     </tr>
@@ -51,8 +51,8 @@ export default function OrdersTable({ orders }) {
                 <tbody>
                     {
                         orders.map((order) => (
-                            <tr key={order.id}>
-                                <td className={getBgColor(order.status)}>
+                            <tr key={order._id}>
+                                <td className={`text-center ${getBgColor(order.status)}`}>
                                     <OverlayTrigger
                                         placement="right"
                                         delay={{ show: 250, hide: 400 }}

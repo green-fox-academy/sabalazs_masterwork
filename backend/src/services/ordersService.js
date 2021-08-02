@@ -19,6 +19,35 @@ export const ordersService = {
     if (user.role === 'admin') {
       result = await Order
         .aggregate([
+          { $unwind: { path: '$items' } },
+          {
+            $lookup: {
+              from: 'products',
+              localField: 'items.product',
+              foreignField: '_id',
+              as: 'items.product'
+            }
+          },
+          { $unwind: { path: '$items.product' } },
+          {
+            $group: {
+              _id: '$_id',
+              items: {
+                $push: '$items'
+              }
+            }
+          },
+          {
+            $lookup: {
+              from: 'orders',
+              localField: '_id',
+              foreignField: '_id',
+              as: 'orderDetails'
+            }
+          },
+          { $unwind: { path: '$orderDetails' } },
+          { $addFields: { 'orderDetails.items': '$items' } },
+          { $replaceRoot: { newRoot: '$orderDetails' } },
           {
             $lookup:
             {
@@ -32,9 +61,54 @@ export const ordersService = {
           { $sort: { [sortBy]: sortDirection } },
           { $skip: pageNumber * itemsPerPage },
           { $limit: itemsPerPage },
-        ]);  
-    } else {      
-      result = await Order.find({ customer: user.id }).populate('customer').populate('items.product');
+        ]);
+    } else {
+      result = await Order
+        .aggregate([
+          { $match: { customer: mongoose.Types.ObjectId(user.id) } },
+          { $unwind: { path: '$items' } },
+          {
+            $lookup: {
+              from: 'products',
+              localField: 'items.product',
+              foreignField: '_id',
+              as: 'items.product'
+            }
+          },
+          { $unwind: { path: '$items.product' } },
+          {
+            $group: {
+              _id: '$_id',
+              items: {
+                $push: '$items'
+              }
+            }
+          },
+          {
+            $lookup: {
+              from: 'orders',
+              localField: '_id',
+              foreignField: '_id',
+              as: 'orderDetails'
+            }
+          },
+          { $unwind: { path: '$orderDetails' } },
+          { $addFields: { 'orderDetails.items': '$items' } },
+          { $replaceRoot: { newRoot: '$orderDetails' } },
+          {
+            $lookup:
+            {
+              from: 'users',
+              localField: 'customer',
+              foreignField: '_id',
+              as: 'customer',
+            },
+          },
+          { $unwind: '$customer' },
+          { $sort: { [sortBy]: sortDirection } },
+          { $skip: pageNumber * itemsPerPage },
+          { $limit: itemsPerPage },
+        ]);
     }
     return result;
   },

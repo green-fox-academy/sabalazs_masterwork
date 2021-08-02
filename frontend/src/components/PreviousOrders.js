@@ -38,8 +38,8 @@ export const PreviousOrders = () => {
 
     return (
         <Container>
-            <h1>Rendeléseim</h1>
-            <OrdersTable orders={orders}/>
+            <h1 className='text-center my-5'>Rendeléseim</h1>
+            <OrdersTable orders={orders} />
         </Container>
     );
 };

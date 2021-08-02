@@ -1,7 +1,9 @@
 import React, { useState, useContext } from 'react';
-import { Table, Container, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Table, Container, OverlayTrigger, Tooltip, Row, Col } from 'react-bootstrap';
 import { AuthContext } from '../App';
 import { BagCheckFill, HourglassSplit, CheckCircleFill, XCircleFill } from 'react-bootstrap-icons';
+import OrderCard from './OrderCard';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function OrdersTable({ orders }) {
 
@@ -40,67 +42,29 @@ export default function OrdersTable({ orders }) {
 
     return (
         <Container>
-            <Table striped bordered hover responsive='xs'>
-                <thead>
-                    <tr>
-                        <th style={{ 'width': '5%' }}>Státusz</th>
-                        <th>Dátum</th>
-                        <th>Összeg</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        orders
-                            .filter((order) => order.status === 'accepted' || order.status === 'pending')
-                            .map((order) => (
-                                <tr key={order._id}>
-                                    <td className={`text-center ${getBgColor(order.status)}`}>
-                                        <OverlayTrigger
-                                            placement="right"
-                                            delay={{ show: 250, hide: 400 }}
-                                            overlay={renderTooltip(order.status)}
-                                        >
-                                            {getIcon(order.status)}
-                                        </OverlayTrigger>
-                                    </td>
-                                    <td>{new Date(order.datePosted).toLocaleDateString()}</td>
-                                    <td>{order.sum},- Ft</td>
-                                </tr>
-                            ))
-                    }
-                </tbody>
-            </Table>
-            <h2>Lezárt rendelések</h2>
-            <Table striped bordered hover responsive='xs'>
-                <thead>
-                    <tr>
-                        <th style={{ 'width': '5%' }}>Státusz</th>
-                        <th>Dátum</th>
-                        <th>Összeg</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        orders
-                            .filter((order) => order.status === 'fulfilled' || order.status === 'refused')
-                            .map((order) => (
-                                <tr key={order._id}>
-                                    <td className={`text-center ${getBgColor(order.status)}`}>
-                                        <OverlayTrigger
-                                            placement="right"
-                                            delay={{ show: 250, hide: 400 }}
-                                            overlay={renderTooltip(order.status)}
-                                        >
-                                            {getIcon(order.status)}
-                                        </OverlayTrigger>
-                                    </td>
-                                    <td>{new Date(order.datePosted).toLocaleDateString()}</td>
-                                    <td>{order.sum},- Ft</td>
-                                </tr>
-                            ))
-                    }
-                </tbody>
-            </Table>
+            <Row className="mt-3 justify-content-center">
+                {orders
+                .filter((order) => order.status === 'accepted' || order.status === 'pending')
+                .map((order) => {
+                    return (
+                        <Col xs={12} sm={6} md={4} lg={3} className="my-2 px-1" key={uuidv4()}>
+                            <OrderCard order={order} />
+                        </Col>
+                    );
+                })}
+            </Row>
+            <h2 className='mt-5 text-center'>Lezárt rendelések</h2>
+            <Row className="mt-3 justify-content-center">
+                {orders
+                .filter((order) => order.status === 'fulfilled' || order.status === 'refused')
+                .map((order) => {
+                    return (
+                        <Col xs={12} sm={6} md={4} lg={3} className="my-2 px-1" key={uuidv4()}>
+                            <OrderCard order={order} />
+                        </Col>
+                    );
+                })}
+            </Row>
         </Container>
     )
 }

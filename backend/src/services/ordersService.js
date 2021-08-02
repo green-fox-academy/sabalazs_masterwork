@@ -32,25 +32,9 @@ export const ordersService = {
           { $sort: { [sortBy]: sortDirection } },
           { $skip: pageNumber * itemsPerPage },
           { $limit: itemsPerPage },
-        ]);      
-    } else {
-      result = await Order
-        .aggregate([
-          { $match: { customer: mongoose.Types.ObjectId(user.id) } },
-          {
-            $lookup:
-            {
-              from: 'users',
-              localField: 'customer',
-              foreignField: '_id',
-              as: 'customer',
-            },
-          },
-          { $unwind: '$customer' },
-          { $sort: { [sortBy]: sortDirection } },
-          { $skip: pageNumber * itemsPerPage },
-          { $limit: itemsPerPage },
-        ]);
+        ]);  
+    } else {      
+      result = await Order.find({ customer: user.id }).populate('customer').populate('items.product');
     }
     return result;
   },

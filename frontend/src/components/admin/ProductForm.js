@@ -85,6 +85,7 @@ export default function ProductForm({ productId }) {
                     message: 'Sikeres mentés'
                 }
             });
+            resetForm();
             if (editing) history.push(`/admin/products`);
         }).catch(error => {
             console.log(error);

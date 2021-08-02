@@ -39,7 +39,7 @@ export const PreviousOrders = () => {
 
     return (
         <Container>
-            <h1>Korábbi rendeléseim</h1>
+            <h1>Rendeléseim</h1>
             <OrdersTable orders={orders}/>
         </Container>
     );

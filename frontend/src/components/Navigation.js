@@ -45,7 +45,7 @@ export default function Navigation() {
           <Link to="/order" className="nav-link">Új rendelés</Link>
         </Nav>
         <Nav className="mr-auto">
-          <Link to="/previous-orders" className="nav-link">Korábbi rendeléseim</Link>
+          <Link to="/previous-orders" className="nav-link">Rendeléseim</Link>
         </Nav>
         <Button className="" variant="outline-primary" onClick={handleLogout}>Kijelentkezés</Button>
       </Navbar.Collapse>

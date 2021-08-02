@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Container, ListGroup, ListGroupItem } from "react-bootstrap";
-import fetchBackend from '../utils/fetchBackend';
-import { AuthContext } from '../App';
+import fetchBackend from '../../utils/fetchBackend';
+import { AuthContext } from '../../App';
 import AdminOrdersTable from './AdminOrdersTable';
 
-export default function AdminProducts () {
+export default function AdminOrders () {
 
-    const [products, setProducts] = useState([]);
+    const [orders, setOrders] = useState([]);
     const { dispatch, state } = useContext(AuthContext);
     useEffect(() => {
         dispatch({
@@ -14,7 +14,7 @@ export default function AdminProducts () {
         });
         fetchBackend(
             'GET',
-            `api/products`,
+            `api/orders`,
             undefined,
             state.token
         ).then(async (response) => {
@@ -23,8 +23,8 @@ export default function AdminProducts () {
                 const error = (data && data.message) || response.status;
                 throw new Error(error);
             }
-            setProducts(data.products);
-            console.log(data.products);
+            setOrders(data.orders);
+            console.log(data.orders);
         }).catch(error => {
             console.log(error);
             return dispatch({
@@ -39,7 +39,8 @@ export default function AdminProducts () {
 
     return (
         <Container>
-            <h1>Termékek</h1>
+            <h1>Rendelések</h1>
+            <AdminOrdersTable orders={orders}/>
         </Container>
     );
 };

@@ -7,8 +7,8 @@ import PreviousOrders from "./components/PreviousOrders";
 import { SignUp } from "./components/SignUp";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from './components/PrivateRoute';
-import AdminOrders from "./components/AdminOrders";
-import AdminProducts from "./components/AdminProducts";
+import AdminOrders from "./components/admin/AdminOrders";
+import AdminProducts from "./components/admin/AdminProducts";
 import Dashboard from "./components/Dashboard";
 
 export const AuthContext = createContext();

@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { Table, Container, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { AuthContext } from '../App';
+import { AuthContext } from '../../App';
 import { BagCheckFill, HourglassSplit, CheckCircleFill, XCircleFill } from 'react-bootstrap-icons';
 
-export default function OrdersTable({ orders }) {
+export default function AdminOrdersTable({ orders }) {
 
     const { dispatch, state } = useContext(AuthContext);
 
@@ -45,6 +45,7 @@ export default function OrdersTable({ orders }) {
                     <tr>
                         <th>Státusz</th>
                         <th>Dátum</th>
+                        <th>Vásárló</th>
                         <th>Összeg</th>
                     </tr>
                 </thead>
@@ -62,6 +63,7 @@ export default function OrdersTable({ orders }) {
                                     </OverlayTrigger>
                                 </td>
                                 <td>{new Date(order.datePosted).toLocaleDateString()}</td>
+                                <td>{order.customer.email}</td>
                                 <td>{order.sum},- Ft</td>
                             </tr>
                         ))

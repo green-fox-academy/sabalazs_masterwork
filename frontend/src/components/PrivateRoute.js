@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { AuthContext } from "../App";
-import AdminNavigation from './AdminNavigation';
+import AdminNavigation from './admin/AdminNavigation';
 import Feedback from './Feedback';
 import Navigation from './Navigation';
 

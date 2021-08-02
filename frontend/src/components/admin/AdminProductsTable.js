@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
-import { Table, Container } from 'react-bootstrap';
-import ProductCard from './ProductCard';
-import { AuthContext } from '../App';
+import { Table, Container, Button } from 'react-bootstrap';
+import { AuthContext } from '../../App';
+import { Trash, Pencil } from 'react-bootstrap-icons';
 
-export default function AdminOrdersTable({ orders }) {
+export default function AdminProductsTable({ products }) {
 
     const { dispatch, state } = useContext(AuthContext);
 
@@ -29,20 +29,21 @@ export default function AdminOrdersTable({ orders }) {
             <Table striped bordered hover responsive='xs'>
                 <thead>
                     <tr>
-                        <th>Dátum</th>
-                        <th>Vásárló</th>
-                        <th>Összeg</th>
-                        <th>Státusz</th>
+                        <th>Név</th>
+                        <th>Ár</th>
+                        <th>Lehetőségek</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        orders.map((order) => (
-                            <tr key={order.id}>
-                                <td>{new Date(order.datePosted).toLocaleDateString()}</td>
-                                <td>{order.customer.email}</td>
-                                <td>{order.sum},- Ft</td>
-                                <td className={getBgColor(order.status)}>{getOrderStatus(order.status)}</td>
+                        products.map((product) => (
+                            <tr key={product.id}>
+                                <td>{product.name}</td>
+                                <td>{product.price}</td>
+                                <td>
+                                    <Button variant='primary'><Pencil /></Button>
+                                    <Button variant='danger'><Trash /></Button>
+                                </td>
                             </tr>
                         ))
                     }

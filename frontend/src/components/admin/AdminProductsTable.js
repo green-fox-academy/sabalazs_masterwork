@@ -40,7 +40,7 @@ export default function AdminProductsTable({ products }) {
                             <tr key={product.id}>
                                 <td>{product.name}</td>
                                 <td>{product.price}</td>
-                                <td>
+                                <td className='d-flex justify-content-around'>
                                     <Button variant='primary'><Pencil /></Button>
                                     <Button variant='danger'><Trash /></Button>
                                 </td>

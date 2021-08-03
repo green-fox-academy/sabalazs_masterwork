@@ -27,6 +27,7 @@ export default function ProductList({ products }) {
             <Row className="mt-3 no-gutters">
 
                 {products
+                    .filter(product => product.isAvailable)
                     .filter(product => !state.cart.filter(item => item.product === product._id).length)
                     .map((product) => {
                         if ((searchTerm.length < 1) || product.name.toLowerCase().includes(searchTerm.toLowerCase()))

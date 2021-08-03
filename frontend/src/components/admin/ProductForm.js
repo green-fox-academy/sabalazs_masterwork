@@ -18,11 +18,13 @@ export default function ProductForm({ productId }) {
         price: Yup.number()
             .min(1, 'Hibás ár')
             .required('Hiányzó ár'),
+        isAvailable: Yup.boolean()
     });
 
     const [product, setProduct] = useState({
         name: '',
-        price: ''
+        price: '',
+        isAvailable: true
     });
 
     const { dispatch, state } = useContext(AuthContext);
@@ -41,7 +43,8 @@ export default function ProductForm({ productId }) {
                 }
                 setProduct({
                     name: data.name,
-                    price: data.price
+                    price: data.price,
+                    isAvailable: data.isAvailable
                 });
                 console.log(data);
             }).catch(error => {
@@ -68,14 +71,15 @@ export default function ProductForm({ productId }) {
             endpoint,
             {
                 name: values.name,
-                price: values.price
+                price: values.price,
+                isAvailable: values.isAvailable
             }
         ).then(async (response) => {
             const data = await response.json();
             if (!response.ok) {
                 const error = (data && data.message) || response.status;
                 throw new Error(error);
-            }            
+            }
             dispatch({
                 type: 'SET_FEEDBACK',
                 payload: {
@@ -112,11 +116,11 @@ export default function ProductForm({ productId }) {
             <Col xs={12} sm={12} md={10} xl={8} className="m-auto">
                 <Formik
                     enableReinitialize
-                    initialValues={{ name: product.name, price: product.price }}
+                    initialValues={{ name: product.name, price: product.price, isAvailable: product.isAvailable }}
                     validationSchema={ProductSchema}
                     onSubmit={handleSubmit}
                 >
-                    {({ touched, errors, isSubmitting }) => (
+                    {({ values, touched, errors, isSubmitting }) => (
                         <Form>
                             <div className='form-group mb-3'>
                                 <label htmlFor='name'>Név:</label>
@@ -146,6 +150,12 @@ export default function ProductForm({ productId }) {
                                     name='price'
                                     className='invalid-feedback'
                                 />
+                            </div>
+                            <div className='form-group mb-3'>
+                                <label>
+                                    <Field type="checkbox" name="isAvailable" />
+                                    <span className='mx-2'>Rendelhető</span>
+                                </label>
                             </div>
                             <Row className='mt-5'>
                                 <Col xs={5} md={4} xl={2}>

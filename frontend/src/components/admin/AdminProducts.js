@@ -42,7 +42,7 @@ export default function AdminProducts() {
         <Container>
             <h1 className='text-center my-5'>Termékek</h1>
             <Col xs={12} sm={12} md={10} xl={8} className="m-auto">
-                <AdminProductsTable products={products} />
+                <AdminProductsTable products={products} setProducts={setProducts}/>
                 <Row className='mt-5'>
                     <Col></Col>
                     <Col xs={5} md={4} xl={2} className='text-center' >

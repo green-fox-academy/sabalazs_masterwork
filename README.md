@@ -41,7 +41,13 @@ Customers can register, then place pre-orders for available products, and view t
 
 ## Getting Started
 
-Instructions regarding dependencies, installation and execution of frontend, backend and documentation are found in separate README.md files in the corresponding folders:
+To see the application in action, run
+```
+docker-compose up
+```
+then open ```http://localhost:3000/``` in your browser.
+
+Instructions regarding dependencies, installation and execution of frontend, backend and documentation separately:
 - [Frontend](frontend/README.md)
 - [Backend](backend/README.md)
 - [API Documentation](api-documentation/README.md)

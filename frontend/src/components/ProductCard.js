@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Card, Container, Button, InputGroup, FormControl } from 'react-bootstrap';
 import { AuthContext } from '../App';
 import { CartPlus } from 'react-bootstrap-icons';
+import placeholder from './../placeholder-image.jpg';
 
 export default function ProductCard({ product }) {
 
@@ -35,7 +36,7 @@ export default function ProductCard({ product }) {
                     <Card.Title className="text-end">
                         {product.price},- Ft
                     </Card.Title>
-                    <Card.Img className="rounded-1 border-1 border-dark" variant="top" src={product.image.url}/>
+                    <Card.Img className="rounded-1 border-1 border-dark" variant="top" src={product.image?.url || placeholder}/>
                     <Container className="mt-auto justify-content-end p-0">
                         <InputGroup className="my-4">
                             <FormControl

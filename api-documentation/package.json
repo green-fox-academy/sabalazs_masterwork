@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "nodemon -e yaml src/index.js"
+    "start": "node src/index.js"
   },
   "name": "bakery-docs",
   "version": "1.0.0",

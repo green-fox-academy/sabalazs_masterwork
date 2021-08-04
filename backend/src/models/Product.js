@@ -12,7 +12,13 @@ const ProductSchema = new mongoose.Schema({
   },
   isAvailable: {
     type: Boolean,
-    default: true
+    default: true,
+    required: false,
+  },
+  image: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'ProductImage',
+    required: false,
   },
 });
 

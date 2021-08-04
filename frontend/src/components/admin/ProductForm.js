@@ -66,6 +66,7 @@ export default function ProductForm({ productId }) {
         });
         const method = editing ? 'PUT' : 'POST';
         const endpoint = editing ? `api/products/${productId}` : 'api/products';
+        console.log(values);
         fetchBackend(
             method,
             endpoint,
@@ -79,6 +80,25 @@ export default function ProductForm({ productId }) {
             if (!response.ok) {
                 const error = (data && data.message) || response.status;
                 throw new Error(error);
+            }
+            return data;
+        }).then(async (data) => {
+            if (values.file) {
+                const formData = new FormData();
+                formData.append('file', values.file);
+                //console.log(formData.get('file'));
+                await fetchBackend(
+                    'POST',
+                    `api/images/${data.id}`,
+                    formData,
+                    true
+                ).then(async (response) => {
+                    const data = await response.json();
+                    if (!response.ok) {
+                        const error = (data && data.message) || response.status;
+                        throw new Error(error);
+                    }
+                });
             }
             dispatch({
                 type: 'SET_FEEDBACK',
@@ -120,7 +140,7 @@ export default function ProductForm({ productId }) {
                     validationSchema={ProductSchema}
                     onSubmit={handleSubmit}
                 >
-                    {({ values, touched, errors, isSubmitting }) => (
+                    {({ values, touched, errors, isSubmitting, setFieldValue }) => (
                         <Form>
                             <div className='form-group mb-3'>
                                 <label htmlFor='name'>Név:</label>
@@ -150,6 +170,12 @@ export default function ProductForm({ productId }) {
                                     name='price'
                                     className='invalid-feedback'
                                 />
+                            </div>
+                            <div className='form-group mb-3'>
+                                <label htmlFor='file'>Kép:</label>
+                                <input id="file" name="image" type="file" className='form-control' onChange={(event) => {
+                                    setFieldValue("file", event.currentTarget.files[0]);
+                                }} />
                             </div>
                             <div className='form-group mb-3'>
                                 <label>

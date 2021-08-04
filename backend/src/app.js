@@ -8,9 +8,11 @@ import {
   ordersController,
   productsController,
   authController,
+  imageController
 } from './controllers';
 import tokenCheck from './middlewares/tokenCheck';
 import roleCheck from './middlewares/roleCheck';
+import fileUpload from 'express-fileupload';
 
 const cors = require('cors');
 
@@ -38,6 +40,8 @@ router.put('/products/:productId', tokenCheck, roleCheck, productsController.upd
 router.delete('/products/:productId', tokenCheck, roleCheck, productsController.deleteOne);
 
 router.post('/auth', authController.login);
+
+router.post('/images/:productId', fileUpload({ debug: true }), tokenCheck, roleCheck, imageController.save);
 
 app.use('/api', router);
 

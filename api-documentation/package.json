@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node index.js"
   },
   "name": "bakery-docs",
   "version": "1.0.0",

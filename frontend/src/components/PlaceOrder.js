@@ -37,7 +37,7 @@ export default function PlaceOrder() {
 
     return (
         <>
-            <h1 className='text-center my-5'>Mit szeretnél enni?</h1>
+            <h1 className='text-center my-5'>Mit ennél holnap?</h1>
             {state.cart?.length > 0 && <Cart />}
             <Container>
                 <ProductList products={products} />

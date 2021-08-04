@@ -27,9 +27,7 @@ export default function ProductCard({ product }) {
 
     return (
         <>
-            <Card
-                className="p-1"
-            >
+            <Card className="shadow-sm mb-5 bg-body rounded">
                 <Card.Header>
                     {product.name}
                 </Card.Header>
@@ -37,9 +35,9 @@ export default function ProductCard({ product }) {
                     <Card.Title className="text-end">
                         {product.price},- Ft
                     </Card.Title>
-                    <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
+                    <Card.Img className="rounded-1 border-1 border-dark" variant="top" src={product.image.url}/>
                     <Container className="mt-auto justify-content-end p-0">
-                        <InputGroup className="mb-3">
+                        <InputGroup className="my-4">
                             <FormControl
                                 aria-label="Mennyiség"
                                 type="number"

@@ -84,12 +84,13 @@ export default function ProductForm({ productId }) {
             return data;
         }).then(async (data) => {
             if (values.file) {
+                console.log(data);
                 const formData = new FormData();
                 formData.append('file', values.file);
                 //console.log(formData.get('file'));
                 await fetchBackend(
                     'POST',
-                    `api/images/${data.id}`,
+                    `api/images/${data.id || data._id}`,
                     formData,
                     true
                 ).then(async (response) => {

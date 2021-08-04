@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../App';
-import AdminProductsTable from './AdminProductsTable';
-import { Container, Card, Col, Row, Alert, Image } from 'react-bootstrap';
+import { Container, Col, Row } from 'react-bootstrap';
 import fetchBackend from '../../utils/fetchBackend';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -27,7 +26,7 @@ export default function ProductForm({ productId }) {
         isAvailable: true
     });
 
-    const { dispatch, state } = useContext(AuthContext);
+    const { dispatch } = useContext(AuthContext);
 
     useEffect(() => {
         if (editing) {

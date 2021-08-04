@@ -1,12 +1,11 @@
 import React, { useState, useContext } from 'react';
-import { Card, Col, Form, Row, Container, CardGroup } from 'react-bootstrap';
+import { Col, Form, Row, Container, CardGroup } from 'react-bootstrap';
 import ProductCard from './ProductCard';
 import { AuthContext } from '../App';
 
 export default function ProductList({ products }) {
 
-    const { dispatch, state } = useContext(AuthContext);
-    const { cart } = state;
+    const { state } = useContext(AuthContext);
 
     const [searchTerm, setSearchTerm] = useState('');
     function handleSearchChange(event) {
@@ -37,6 +36,7 @@ export default function ProductList({ products }) {
                                         <ProductCard product={product} />
                                     </Col>
                                 );
+                            else return '';
                         })}
                 </CardGroup>
             </Row>

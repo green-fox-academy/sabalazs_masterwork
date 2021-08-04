@@ -1,44 +1,9 @@
-import React, { useState, useContext } from 'react';
-import { Table, Container, OverlayTrigger, Tooltip, Row, Col } from 'react-bootstrap';
-import { AuthContext } from '../App';
-import { BagCheckFill, HourglassSplit, CheckCircleFill, XCircleFill } from 'react-bootstrap-icons';
+import React from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import OrderCard from './OrderCard';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function OrdersTable({ orders }) {
-
-    const { dispatch, state } = useContext(AuthContext);
-
-    const renderTooltip = (status) => (
-        <Tooltip id="button-tooltip">
-            {getOrderStatus(status)}
-        </Tooltip>
-    );
-
-    function getBgColor(status) {
-        switch (status) {
-            case 'pending': return 'bg-warning';
-            case 'accepted': return 'bg-success';
-            case 'fulfilled': return 'bg-light';
-            case 'refused': return 'bg-danger';
-        }
-    }
-    function getIcon(status) {
-        switch (status) {
-            case 'pending': return <HourglassSplit />;
-            case 'accepted': return <BagCheckFill />;
-            case 'fulfilled': return <CheckCircleFill />;
-            case 'refused': return <XCircleFill />;
-        }
-    }
-    function getOrderStatus(status) {
-        switch (status) {
-            case 'pending': return 'Feldolgozás alatt';
-            case 'accepted': return 'Átvehető';
-            case 'fulfilled': return 'Átvéve';
-            case 'refused': return 'Visszautasítva';
-        }
-    }
 
     return (
         <Container>

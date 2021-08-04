@@ -9,7 +9,7 @@ export default function AdminProducts() {
     const history = useHistory();
 
     const [products, setProducts] = useState([]);
-    const { dispatch, state } = useContext(AuthContext);
+    const { dispatch } = useContext(AuthContext);
     useEffect(() => {
         dispatch({
             type: 'CLEAR_FEEDBACK'

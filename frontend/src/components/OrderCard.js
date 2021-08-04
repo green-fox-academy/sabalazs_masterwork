@@ -1,7 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { AuthContext } from '../App';
-import { Card, Row, Col, Container, Table, OverlayTrigger, Tooltip, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { BagCheckFill, HourglassSplit, CheckCircleFill, XCircleFill } from 'react-bootstrap-icons';
+import React from 'react';
+import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function OrderCard({ order }) {
@@ -12,14 +10,7 @@ export default function OrderCard({ order }) {
             case 'accepted': return 'success';
             case 'fulfilled': return 'light';
             case 'refused': return 'danger';
-        }
-    }
-    function getIcon(status) {
-        switch (status) {
-            case 'pending': return <HourglassSplit />;
-            case 'accepted': return <BagCheckFill />;
-            case 'fulfilled': return <CheckCircleFill />;
-            case 'refused': return <XCircleFill />;
+            default: return '';
         }
     }
     function getOrderStatusLabel(status) {
@@ -28,6 +19,7 @@ export default function OrderCard({ order }) {
             case 'accepted': return 'Átvehető';
             case 'fulfilled': return 'Átvéve';
             case 'refused': return 'Elutasítva';
+            default: return '';
         }
     }
 

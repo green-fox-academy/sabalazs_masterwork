@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Card, Row, Container, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Card, Container, Button, InputGroup, FormControl } from 'react-bootstrap';
 import { AuthContext } from '../App';
 import { CartPlus } from 'react-bootstrap-icons';
 

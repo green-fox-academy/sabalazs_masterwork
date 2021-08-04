@@ -9,7 +9,7 @@ import fetchBackend from '../utils/fetchBackend';
 export const Cart = () => {
 
     const { dispatch, state } = useContext(AuthContext);
-    const { cart, token } = state;
+    const { cart } = state;
     const [sum, setSum] = useState(0);
 
     useEffect(() => {

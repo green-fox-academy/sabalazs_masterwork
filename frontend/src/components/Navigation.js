@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Navbar, Nav, Button, Alert, Row, Col, Container } from 'react-bootstrap';
+import { Navbar, Nav, Button, Row, Col } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 import logo from '../bakery-logo.png';
 import { useHistory, Link } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { AuthContext } from '../App';
 export default function Navigation() {
 
   const history = useHistory();
-  const { dispatch, state } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
 
   async function handleLogout() {
     try {

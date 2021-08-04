@@ -1,13 +1,13 @@
-import React, { useState, useContext } from 'react';
-import { Table, Container, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import { Table, Container } from 'react-bootstrap';
 import { AuthContext } from '../../App';
-import { BagCheckFill, HourglassSplit, CheckCircleFill, XCircleFill } from 'react-bootstrap-icons';
 import fetchBackend from '../../utils/fetchBackend';
+import { v4 as uuidv4 } from 'uuid';
 
 
 export default function AdminOrdersTable({ orders, setOrders }) {
 
-    const { dispatch, state } = useContext(AuthContext);
+    const { dispatch } = useContext(AuthContext);
 
     function getBgColor(status) {
         switch (status) {
@@ -15,22 +15,7 @@ export default function AdminOrdersTable({ orders, setOrders }) {
             case 'accepted': return 'bg-success text-white';
             case 'fulfilled': return 'bg-light text-dark';
             case 'refused': return 'bg-danger text-white';
-        }
-    }
-    function getIcon(status) {
-        switch (status) {
-            case 'pending': return <HourglassSplit />;
-            case 'accepted': return <BagCheckFill />;
-            case 'fulfilled': return <CheckCircleFill />;
-            case 'refused': return <XCircleFill />;
-        }
-    }
-    function getOrderStatus(status) {
-        switch (status) {
-            case 'pending': return 'Feldolgozás alatt';
-            case 'accepted': return 'Átvehető';
-            case 'fulfilled': return 'Átvéve';
-            case 'refused': return 'Visszautasítva';
+            default: return '';
         }
     }
 
@@ -86,7 +71,7 @@ export default function AdminOrdersTable({ orders, setOrders }) {
                                     <ul>
                                         {
                                             order.items.map((item) => {
-                                                return <li>{item.quantity} db {item.product.name}</li>
+                                                return <li key={uuidv4()}>{item.quantity} db {item.product.name}</li>
                                             })
                                         }
                                     </ul>

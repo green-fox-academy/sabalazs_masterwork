@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Container, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import fetchBackend from '../../utils/fetchBackend';
 import { AuthContext } from '../../App';
 import AdminOrdersTable from './AdminOrdersTable';
@@ -7,7 +7,7 @@ import AdminOrdersTable from './AdminOrdersTable';
 export default function AdminOrders () {
 
     const [orders, setOrders] = useState([]);
-    const { dispatch, state } = useContext(AuthContext);
+    const { dispatch } = useContext(AuthContext);
     useEffect(() => {
         dispatch({
             type: 'CLEAR_FEEDBACK'

@@ -7,7 +7,7 @@ import fetchBackend from '../../utils/fetchBackend';
 
 export default function AdminProductsTable({ products, setProducts }) {
 
-    const { dispatch, state } = useContext(AuthContext);
+    const { dispatch } = useContext(AuthContext);
     const history = useHistory();
 
     function handleDelete(productId, index, setShow) {

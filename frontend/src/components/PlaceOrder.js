@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Container, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import fetchBackend from '../utils/fetchBackend';
 import ProductList from "./ProductList";
 import { AuthContext } from '../App';

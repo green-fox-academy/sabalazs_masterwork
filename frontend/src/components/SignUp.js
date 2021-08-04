@@ -65,7 +65,7 @@ export const SignUp = () => {
                         onSubmit={handleSubmit}
                     >
                         {({ touched, errors, isSubmitting }) => (
-                            <Card className="p-3 my-3">
+                            <Card className="p-3 my-3 shadow-sm bg-body rounded">
                                 <div className="w-100 text-center mb-2">
                                     <Image className="align-self-center" src={logo} fluid/>
                                 </div>

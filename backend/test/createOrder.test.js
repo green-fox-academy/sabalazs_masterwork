@@ -5,7 +5,7 @@ import connectDB from '../src/db';
 import Order from '../src/models/Order';
 import User from '../src/models/User';
 import Product from '../src/models/Product';
-
+let token;
 let userId;
 let productId;
 beforeEach(async () => {
@@ -14,6 +14,13 @@ beforeEach(async () => {
     email: 'firstuser@email.xyz',
     password: 'Password123',
   });
+  token = await request(app)
+    .post('/api/auth')
+    .send({
+      email: 'firstuser@email.xyz',
+      password: 'Password123',
+    })
+    .then(async (response) => response.body.token);
   userId = user.id;
   const product = await Product.create({
     name: 'Vajas croissant',
@@ -47,6 +54,7 @@ describe('POST /api/orders - Creating new order with', () => {
     let orderId;
     await request(app)
       .post('/api/orders')
+      .set('Authorization', `Bearer ${token}`)
       .send(order)
       .expect(201)
       .then((response) => {
@@ -80,6 +88,7 @@ describe('POST /api/orders - Creating new order with', () => {
 
     await request(app)
       .post('/api/orders')
+      .set('Authorization', `Bearer ${token}`)
       .send(order)
       .expect(400)
       .then((response) => {

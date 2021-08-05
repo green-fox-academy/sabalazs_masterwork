@@ -26,7 +26,7 @@ afterEach(async () => {
 });
 
 describe('GET /api/products - Gets', () => {
-  test('list of products with default order and pagination', async () => {
+  test('list of products', async () => {
     await request(app)
       .get('/api/products')
       .expect(200)
@@ -35,8 +35,8 @@ describe('GET /api/products - Gets', () => {
         expect(data.numberOfDoc).toEqual(3);
         expect(data.products.length).toEqual(3);
         expect(data.products[0].price).toEqual(1000);
-        expect(data.products[1].price).toEqual(800);
-        expect(data.products[2].price).toEqual(200);
+        expect(data.products[1].price).toEqual(200);
+        expect(data.products[2].price).toEqual(800);
       });
   });
 });

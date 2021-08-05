@@ -66,7 +66,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/user'
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    format: uuid
+                    example: 123e4567-e89b-12d3-a456-426614174000
+                  email:
+                    type: email
+                    example: john.doe@email.com
+                  role:
+                    type: string
+                    enum: [customer, admin]
+                    example: customer
         404:
           description: User not found
         401:
@@ -167,8 +179,7 @@ paths:
                 type: array
                 items:
                   type: object
-                  schema:
-                    $ref: '#/components/schemas/product'
+                  $ref: '#/components/schemas/product'
         401:
           $ref: '#/components/responses/AuthenticationError'
         403:
@@ -190,7 +201,12 @@ paths:
           format: uuid
       responses:
         200:
-          description: 'Product has been successfully deleted'
+          description: 'Product has been successfully deleted, returning the deleted product'
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/product'
         400:
           $ref: '#/components/responses/InvalidInput'
         401:
@@ -217,8 +233,7 @@ paths:
                   type: array
                   items:
                     type: object
-                    schema:
-                      $ref: '#/components/schemas/orderItem'
+                    $ref: '#/components/schemas/orderItem'
                 sum:
                   type: number
       responses:
@@ -254,8 +269,7 @@ paths:
                 type: array
                 items:
                   type: object
-                  schema:
-                    $ref: '#/components/schemas/order'
+                  $ref: '#/components/schemas/order'
         400:
           $ref: '#/components/responses/InvalidInput'
         401:
@@ -268,7 +282,7 @@ paths:
     put:
       tags:
         - Orders
-      summary: Update an order by ID
+      summary: Update an order's status by ID
       parameters:
       - name: id
         in: path
@@ -278,11 +292,15 @@ paths:
           type: string
           format: uuid
       requestBody:
-        description: Updated order object
+        description: Object, containing updated status
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/order'
+              type: object
+              properties:
+                status:
+                  type: string
+                  example: fulfilled
         required: true
       responses:
         200:
@@ -301,29 +319,6 @@ paths:
           description: Order not found
       security:
         - bakery_auth: []
-    delete:
-      tags:
-        - Orders
-      summary: Delete order by ID
-      parameters:
-      - name: id
-        in: path
-        description: ID of the order that needs to be deleted
-        required: true
-        schema:
-          type: string
-          format: uuid
-      responses:
-        200:
-          description: 'Order has been successfully deleted'
-        401:
-          $ref: '#/components/responses/AuthenticationError'
-        403:
-          $ref: '#/components/responses/Forbidden'
-        404:
-          description: Product not found
-      security:
-        - bakery_auth: [] 
   /auth/login:
     post:
       tags:
@@ -348,11 +343,15 @@ paths:
                   example: supersecretpassword
       responses:
         201:
-          description: 'Successful login, returning user.'
+          description: 'Successful login, returning JWT  token containing user info.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/user'
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwZmJlYjA5OTY3OTk5NDM4NDUwNzRmOSIsImVtYWlsIjoidGVzdEB0ZXN0Z3R0Lnh5emFzZCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTYyODE0Nzc3OSwiZXhwIjoxNjI4MjM0MTc5fQ.U9Dse_ZofydUUgXCkCuVS1UP9Mu5G66EDbrpQktLBw
         401:
           $ref: '#/components/responses/LoginFailed'
 components:
@@ -368,15 +367,9 @@ components:
         id:
           type: string
           format: uuid
-          example: id
-        firstname:
-          type: string
-          example: John
-        lastname:
-          type: string
-          example: Doe
+          example: 123e4567-e89b-12d3-a456-426614174000
         email:
-          type: string
+          type: email
           example: john.doe@email.com
         role:
           type: string
@@ -388,26 +381,30 @@ components:
         id:
           type: string
           format: uuid
-          example: id
+          example: 123e4567-e89b-12d3-a456-426614174000
         name:
           type: string
           example: Vajas croissant
         price:
           type: number
           example: 800
+        isAvailable:
+          type: boolean
+          example: true
+        image:
+          type: object
+          $ref: '#/components/schemas/productImage'
     order:
       type: object
       properties:
         customer:
           type: object
-          schema:
-            $ref: '#/components/schemas/user'
+          $ref: '#/components/schemas/user'
         items:
           type: array
           items:
             type: object
-            schema:
-              $ref: '#/components/schemas/orderItem'
+            $ref: '#/components/schemas/orderItem'
         sum:
           type: number
         status:
@@ -421,16 +418,26 @@ components:
       properties:
         product:
           type: object
-          schema:
-            $ref: '#/components/schemas/product'
+          $ref: '#/components/schemas/product'
         quantity:
           type: number
+    productImage:
+      type: object
+      properties:
+        product:
+          type: object
+          schema:
+          $ref: '#/components/schemas/product'
+        path:
+          type: string
+        url:
+          type: string
     error_response:
       type: object
       properties:
         message:
           type: string
-          description: error message
+          example: Validation error
   responses:
     AuthenticationError:
       description: Access token is missing or invalid

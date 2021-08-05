@@ -319,7 +319,7 @@ paths:
           description: Order not found
       security:
         - bakery_auth: []
-  /auth/login:
+  /auth:
     post:
       tags:
         - Authentication

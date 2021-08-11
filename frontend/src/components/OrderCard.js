@@ -42,7 +42,7 @@ export default function OrderCard({ order }) {
                             {
                                 order.items.map((orderItem, index) => (
                                     <ListGroupItem className="d-flex justify-content-between align-items-center" key={uuidv4()}>
-                                        <span>{orderItem.quantity} db {orderItem.product.name}</span>
+                                        <span>{orderItem.quantity} db {orderItem.name}</span>
                                     </ListGroupItem>
                                 )
                                 )

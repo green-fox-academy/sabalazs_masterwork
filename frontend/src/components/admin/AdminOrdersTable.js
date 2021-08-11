@@ -71,7 +71,7 @@ export default function AdminOrdersTable({ orders, setOrders }) {
                                     <ul>
                                         {
                                             order.items.map((item) => {
-                                                return <li key={uuidv4()}>{item.quantity} db {item.product.name}</li>
+                                                return <li key={uuidv4()}>{item.quantity} db {item.name}</li>
                                             })
                                         }
                                     </ul>

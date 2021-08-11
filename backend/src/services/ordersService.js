@@ -19,35 +19,6 @@ export const ordersService = {
     if (user.role === 'admin') {
       result = await Order
         .aggregate([
-          { $unwind: { path: '$items' } },
-          {
-            $lookup: {
-              from: 'products',
-              localField: 'items.product',
-              foreignField: '_id',
-              as: 'items.product'
-            }
-          },
-          { $unwind: { path: '$items.product' } },
-          {
-            $group: {
-              _id: '$_id',
-              items: {
-                $push: '$items'
-              }
-            }
-          },
-          {
-            $lookup: {
-              from: 'orders',
-              localField: '_id',
-              foreignField: '_id',
-              as: 'orderDetails'
-            }
-          },
-          { $unwind: { path: '$orderDetails' } },
-          { $addFields: { 'orderDetails.items': '$items' } },
-          { $replaceRoot: { newRoot: '$orderDetails' } },
           {
             $lookup:
             {
@@ -66,35 +37,6 @@ export const ordersService = {
       result = await Order
         .aggregate([
           { $match: { customer: mongoose.Types.ObjectId(user.id) } },
-          { $unwind: { path: '$items' } },
-          {
-            $lookup: {
-              from: 'products',
-              localField: 'items.product',
-              foreignField: '_id',
-              as: 'items.product'
-            }
-          },
-          { $unwind: { path: '$items.product' } },
-          {
-            $group: {
-              _id: '$_id',
-              items: {
-                $push: '$items'
-              }
-            }
-          },
-          {
-            $lookup: {
-              from: 'orders',
-              localField: '_id',
-              foreignField: '_id',
-              as: 'orderDetails'
-            }
-          },
-          { $unwind: { path: '$orderDetails' } },
-          { $addFields: { 'orderDetails.items': '$items' } },
-          { $replaceRoot: { newRoot: '$orderDetails' } },
           {
             $lookup:
             {

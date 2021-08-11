@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Table, Container, Button, Modal } from 'react-bootstrap';
+import { Table, Container, Button } from 'react-bootstrap';
 import { AuthContext } from '../../App';
 import fetchBackend from '../../utils/fetchBackend';
 import { v4 as uuidv4 } from 'uuid';

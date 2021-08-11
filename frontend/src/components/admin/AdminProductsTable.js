@@ -1,13 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Table, Container, Button } from 'react-bootstrap';
-import { AuthContext } from '../../App';
 import { Trash, Pencil, CheckCircleFill, XCircleFill } from 'react-bootstrap-icons';
 import { useHistory } from 'react-router-dom';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 export default function AdminProductsTable({ products, setProducts }) {
 
-    const { dispatch } = useContext(AuthContext);
     const history = useHistory();
 
     function handleEdit(productId) {

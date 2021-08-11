@@ -1,8 +1,10 @@
-import React, { useContext } from 'react';
-import { Table, Container } from 'react-bootstrap';
+import React, { useState, useContext } from 'react';
+import { Table, Container, Button, Modal } from 'react-bootstrap';
 import { AuthContext } from '../../App';
 import fetchBackend from '../../utils/fetchBackend';
 import { v4 as uuidv4 } from 'uuid';
+import { Trash } from 'react-bootstrap-icons';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 
 export default function AdminOrdersTable({ orders, setOrders }) {
@@ -50,6 +52,15 @@ export default function AdminOrdersTable({ orders, setOrders }) {
         });
     }
 
+    const [show, setShow] = useState(false);
+    const [index, setIndex] = useState('');
+    const [id, setId] = useState('');
+    const handleShow = (e) => {
+        setIndex(e.currentTarget.dataset.index);
+        setId(e.currentTarget.dataset.id);
+        setShow(true)
+    };
+
     return (
         <Container>
             <Table bordered hover responsive='xs'>
@@ -60,6 +71,7 @@ export default function AdminOrdersTable({ orders, setOrders }) {
                         <th>Dátum</th>
                         <th>Összeg</th>
                         <th>Státusz</th>
+                        <th>Törlés</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -89,11 +101,31 @@ export default function AdminOrdersTable({ orders, setOrders }) {
                                         <option value='refused' className="bg-white text-dark">Visszautasítva</option>
                                     </select>
                                 </td>
+                                <td className="bg-light text-center">
+                                    <Button
+                                        variant='danger'
+                                        onClick={handleShow}
+                                        data-id={order._id}
+                                        data-index={index}
+                                    >
+                                        <Trash />
+                                    </Button>
+                                </td>
                             </tr>
                         ))
                     }
                 </tbody>
             </Table>
+            <ConfirmDeleteModal
+                collection='orders'
+                itemId={id}
+                index={index}
+                items={orders}
+                setItems={setOrders}
+                setShow={setShow}
+                show={show}
+            />
         </Container>
+
     )
 }

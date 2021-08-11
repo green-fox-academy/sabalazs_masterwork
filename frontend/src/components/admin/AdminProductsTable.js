@@ -1,55 +1,27 @@
 import React, { useState, useContext } from 'react';
-import { Table, Container, Button, Modal } from 'react-bootstrap';
+import { Table, Container, Button } from 'react-bootstrap';
 import { AuthContext } from '../../App';
 import { Trash, Pencil, CheckCircleFill, XCircleFill } from 'react-bootstrap-icons';
 import { useHistory } from 'react-router-dom';
-import fetchBackend from '../../utils/fetchBackend';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 export default function AdminProductsTable({ products, setProducts }) {
 
     const { dispatch } = useContext(AuthContext);
     const history = useHistory();
 
-    function handleDelete(productId, index, setShow) {
-        setShow(false);
-        fetchBackend(
-            'DELETE',
-            `api/products/${productId}`,
-            undefined
-        ).then(async (response) => {
-            const data = await response.json();
-            if (!response.ok) {
-                const error = (data && data.message) || response.status;
-                throw new Error(error);
-            }
-            const productsCopy = [...products];
-            productsCopy.splice(index, 1);
-            setProducts(productsCopy);
-        }).catch(error => {
-            dispatch({
-                type: 'SET_FEEDBACK',
-                payload: {
-                    variant: 'danger',
-                    message: 'Hoppá, valami elromlott. :( '
-                }
-            });
-        });
-    }
     function handleEdit(productId) {
         history.push(`/admin/edit-product/${productId}`);
     }
 
-
     const [show, setShow] = useState(false);
     const [index, setIndex] = useState('');
     const [id, setId] = useState('');
-    const handleClose = () => setShow(false);
     const handleShow = (e) => {
         setIndex(e.currentTarget.dataset.index);
         setId(e.currentTarget.dataset.id);
         setShow(true)
     };
-
 
     return (
         <Container>
@@ -88,21 +60,16 @@ export default function AdminProductsTable({ products, setProducts }) {
                         ))
                     }
                 </tbody>
-            </Table>
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Termék törlése</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Biztosan törölni szeretnéd?</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Mégse
-                    </Button>
-                    <Button variant="danger" onClick={() => handleDelete(id, index, setShow)}>
-                        Törlés
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+            </Table>            
+            <ConfirmDeleteModal
+                collection='products'
+                itemId={id}
+                index={index}
+                items={products}
+                setItems={setProducts}
+                setShow={setShow}
+                show={show}
+            />
         </Container>
     )
 }

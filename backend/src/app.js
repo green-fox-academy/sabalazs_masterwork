@@ -8,7 +8,8 @@ import {
   ordersController,
   productsController,
   authController,
-  imageController
+  imageController,
+  productLabelsController
 } from './controllers';
 import tokenCheck from './middlewares/tokenCheck';
 import roleCheck from './middlewares/roleCheck';
@@ -32,6 +33,10 @@ router.post('/orders', tokenCheck, ordersController.createNew);
 router.get('/orders/', tokenCheck, ordersController.getList);
 router.put('/orders/:orderId', tokenCheck, roleCheck, ordersController.updateOne);
 router.delete('/orders/:orderId', tokenCheck, roleCheck, ordersController.deleteOne);
+
+router.post('/labels', tokenCheck, roleCheck, productLabelsController.createNew);
+router.get('/labels', tokenCheck, productLabelsController.getList);
+router.delete('/labels/:labelId', tokenCheck, roleCheck, productLabelsController.deleteOne);
 
 router.post('/products', tokenCheck, roleCheck, productsController.createNew);
 router.get('/products', productsController.getList);

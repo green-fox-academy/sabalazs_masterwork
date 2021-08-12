@@ -3,3 +3,4 @@ export * from './ordersController';
 export * from './productsController';
 export * from './usersController';
 export * from './imageController';
+export * from './productLabelsController';

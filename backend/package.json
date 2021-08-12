@@ -11,6 +11,7 @@
     "test": "jest --watchAll --detectOpenHandles --setupFiles ./test/test-setup.js",
     "test:ci": "jest --ci --collectCoverage --reporters=default --detectOpenHandles --setupFiles ./test/test-setup-ci.js",
     "start": "nodemon --exec babel-node -r ./node_modules/dotenv/config src/index.js",
+    "start:seed": "yarn seed && nodemon --exec babel-node -r ./node_modules/dotenv/config src/index.js",
     "seed": "babel-node -r ./node_modules/dotenv/config seed.js"
   },
   "keywords": [],

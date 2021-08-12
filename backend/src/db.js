@@ -8,7 +8,6 @@ const connectionData = {
 };
 
 const URI = `mongodb://${connectionData.host}:${connectionData.port}/${connectionData.db}`;
-
 const connectDB = async () => {
   try {
     const db = await mongoose.connect(URI, {

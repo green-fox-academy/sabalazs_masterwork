@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Card, Container, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Card, Container, Button, InputGroup, FormControl, Badge } from 'react-bootstrap';
 import { AuthContext } from '../App';
 import { CartPlus } from 'react-bootstrap-icons';
 import placeholder from './../placeholder-image.jpg';
@@ -30,7 +30,8 @@ export default function ProductCard({ product }) {
         <>
             <Card className="shadow-sm mb-5 bg-body rounded">
                 <Card.Header>
-                    {product.name}
+                    <div>{product.name}</div>
+                    {product.labels.map((label) => <Badge key={label} pill bg="info">{label}</Badge>)}
                 </Card.Header>
                 <Card.Body>
                     <Card.Title className="text-end">

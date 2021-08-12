@@ -20,6 +20,7 @@ const ProductSchema = new mongoose.Schema({
     ref: 'ProductImage',
     required: false,
   },
+  labels: [String],
 });
 
 const Product = mongoose.model('Product', ProductSchema);

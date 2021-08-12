@@ -26,5 +26,9 @@ export const productLabelsService = {
     if (!label.name) {
       throw new ValidationError('Missing label name.');
     }
+    const labelExists = await ProductLabel.find({ name : label.name })
+    if (labelExists) {
+      throw new ValidationError('This label already exists.');
+    }
   },
 };

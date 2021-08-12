@@ -11,6 +11,8 @@ export default function ProductForm({ productId }) {
     const history = useHistory();
     const editing = !!productId;
 
+    const [labels, setLabels] = useState([]);
+
     const ProductSchema = Yup.object().shape({
         name: Yup.string()
             .required('Hiányzó név'),
@@ -23,12 +25,33 @@ export default function ProductForm({ productId }) {
     const [product, setProduct] = useState({
         name: '',
         price: '',
-        isAvailable: true
+        isAvailable: true,
+        labels: []
     });
 
     const { dispatch } = useContext(AuthContext);
 
     useEffect(() => {
+        fetchBackend(
+            'GET',
+            `api/labels`,
+            undefined
+        ).then(async (response) => {
+            const data = await response.json();
+            if (!response.ok) {
+                const error = (data && data.message) || response.status;
+                throw new Error(error);
+            }
+            setLabels(data.map(item => item.name));
+        }).catch(error => {
+            dispatch({
+                type: 'SET_FEEDBACK',
+                payload: {
+                    variant: 'danger',
+                    message: 'Hoppá, valami elromlott. :( '
+                }
+            });
+        });
         if (editing) {
             fetchBackend(
                 'GET',
@@ -43,7 +66,8 @@ export default function ProductForm({ productId }) {
                 setProduct({
                     name: data.name,
                     price: data.price,
-                    isAvailable: data.isAvailable
+                    isAvailable: data.isAvailable,
+                    labels: [...data.labels]
                 });
                 console.log(data);
             }).catch(error => {
@@ -72,7 +96,8 @@ export default function ProductForm({ productId }) {
             {
                 name: values.name,
                 price: values.price,
-                isAvailable: values.isAvailable
+                isAvailable: values.isAvailable,
+                labels: [...values.labels]
             }
         ).then(async (response) => {
             const data = await response.json();
@@ -136,7 +161,7 @@ export default function ProductForm({ productId }) {
             <Col xs={12} sm={12} md={10} xl={8} className="m-auto">
                 <Formik
                     enableReinitialize
-                    initialValues={{ name: product.name, price: product.price, isAvailable: product.isAvailable }}
+                    initialValues={{ name: product.name, price: product.price, isAvailable: product.isAvailable, labels: product.labels }}
                     validationSchema={ProductSchema}
                     onSubmit={handleSubmit}
                 >
@@ -182,6 +207,16 @@ export default function ProductForm({ productId }) {
                                     <Field type="checkbox" name="isAvailable" />
                                     <span className='mx-2'>Rendelhető</span>
                                 </label>
+                            </div>
+                            <div className='form-group mb-3'>
+                                <h3>Címkék:</h3>
+                                {labels.map((label) => (
+                                    <label key={label}>
+                                        <Field type="checkbox" name="labels" value={label} />
+                                        <span className='mx-2'>{label}</span>
+                                    </label>
+                                )
+                                )}
                             </div>
                             <Row className='mt-5'>
                                 <Col xs={5} md={4} xl={2}>

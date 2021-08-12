@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Container, Button } from 'react-bootstrap';
+import { Table, Container, Button, Badge } from 'react-bootstrap';
 import { Trash, Pencil, CheckCircleFill, XCircleFill } from 'react-bootstrap-icons';
 import { useHistory } from 'react-router-dom';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
@@ -36,7 +36,10 @@ export default function AdminProductsTable({ products, setProducts }) {
                     {
                         products.map((product, index) => (
                             <tr key={product._id}>
-                                <td>{product.name}</td>
+                                <td>
+                                    {product.name}
+                                    {product.labels.map((label) => <Badge key={label} pill bg="info" className="mx-1">{label}</Badge>)}
+                                </td>
                                 <td>{product.price}</td>
                                 <td className="text-center">{product.isAvailable ? <CheckCircleFill color={'green'} size={25} /> : <XCircleFill color={'red'} size={25} />}</td>
                                 <td className='d-flex justify-content-around'>
@@ -58,7 +61,7 @@ export default function AdminProductsTable({ products, setProducts }) {
                         ))
                     }
                 </tbody>
-            </Table>            
+            </Table>
             <ConfirmDeleteModal
                 collection='products'
                 itemId={id}

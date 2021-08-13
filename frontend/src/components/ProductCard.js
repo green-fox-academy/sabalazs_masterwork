@@ -30,14 +30,16 @@ export default function ProductCard({ product }) {
         <>
             <Card className="shadow-sm mb-5 bg-body rounded">
                 <Card.Header>
-                    <div>{product.name}</div>
-                    {product.labels.map((label) => <Badge key={label} pill bg="info">{label}</Badge>)}
+                    {product.name}
+                    {product.labels.map((label) =>
+                        <Badge key={label} pill bg="info" className="mx-1">{label}</Badge>
+                    )}
                 </Card.Header>
                 <Card.Body>
                     <Card.Title className="text-end">
                         {product.price},- Ft
                     </Card.Title>
-                    <Card.Img className="rounded-1 border-1 border-dark" variant="top" src={product.image?.url || placeholder}/>
+                    <Card.Img className="rounded-1 border-1 border-dark" variant="top" src={product.image?.url || placeholder} />
                     <Container className="mt-auto justify-content-end p-0">
                         <InputGroup className="my-4">
                             <FormControl

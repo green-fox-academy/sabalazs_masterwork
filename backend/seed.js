@@ -4,48 +4,69 @@ import User from './src/models/User';
 import Product from './src/models/Product';
 import ProductImage from './src/models/ProductImage';
 import Order from './src/models/Order';
+import ProductLabel from './src/models/ProductLabel';
 
 let customerId;
 let products = [
     {
         name: 'Vajas croissant',
         price: 450,
-        imageFile: 'example-vajas-croissant.jpg'
+        imageFile: 'example-vajas-croissant.jpg',
+        labels: ["új termék"]
     },
     {
         name: 'Sós perec',
         price: 390,
-        imageFile: 'example-sos-perec.jpg'
+        imageFile: 'example-sos-perec.jpg',
+        labels: ["vegán", "akciós"]
     },
     {
         name: 'Kenyér - 1kg',
         price: 690,
-        imageFile: 'example-kenyer-1kg.jpg'
+        imageFile: 'example-kenyer-1kg.jpg',
+        labels: []
     },
     {
         name: 'Magos vekni',
         price: 750,
-        imageFile: 'example-magos-vekni.jpg'
+        imageFile: 'example-magos-vekni.jpg',
+        labels: []
     },
     {
         name: 'Kakaós csiga',
         price: 350,
-        imageFile: 'example-kakaos-csiga.jpg'
+        imageFile: 'example-kakaos-csiga.jpg',
+        labels: []
     },
     {
         name: 'Fánk',
         price: 390,
-        imageFile: 'example-fank.jpg'
+        imageFile: 'example-fank.jpg',
+        labels: ["akciós"]
     },
     {
         name: 'Túrós batyu',
         price: 450,
-        imageFile: 'example-turos-batyu.jpg'
+        imageFile: 'example-turos-batyu.jpg',
+        labels: ["új termék", "akciós"]
     },
     {
         name: 'Meglepetés kosár',
         price: 1990,
-        imageFile: 'example-meglepetes-kosar.jpg'
+        imageFile: 'example-meglepetes-kosar.jpg',
+        labels: []
+    },
+];
+
+const productLabels = [
+    {
+        name: "vegán"
+    },
+    {
+        name: "akciós"
+    },
+    {
+        name: "új termék"
     },
 ];
 
@@ -67,12 +88,20 @@ async function createUsers() {
     console.log(`customer test user created. email: ${customer.email} | password: ${customer.password} `);
 }
 
+async function createProductLabels() {
+    for (const label of productLabels) {
+        await ProductLabel.create(label);
+        console.log(`${label.name} product label created.`);
+    }
+}
+
 async function createProducts() {
 
     for (const product of products) {
         const createdProduct = await Product.create({
             name: product.name,
             price: product.price,
+            labels: [...product.labels],
         });
         product.id = createdProduct._id;
 
@@ -135,9 +164,11 @@ try {
         mongoose.connection.db.dropDatabase().then(() => {
             connectDB().then(() => {
                 createUsers().then(() => {
-                    createProducts().then(() => {
-                        createOrders().then(() => {
-                            mongoose.connection.close();
+                    createProductLabels().then(() => {
+                        createProducts().then(() => {
+                            createOrders().then(() => {
+                                mongoose.connection.close();
+                            });
                         });
                     });
                 });

@@ -28,7 +28,7 @@ export default function ProductCard({ product }) {
 
     return (
         <>
-            <Card className="shadow-sm mb-5 bg-body rounded">
+            <Card className="shadow mb-5 bg-body rounded">
                 <Card.Header>
                     {product.name}
                     {product.labels.map((label) =>

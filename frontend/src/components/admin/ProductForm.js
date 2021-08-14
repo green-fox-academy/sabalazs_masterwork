@@ -226,7 +226,7 @@ export default function ProductForm({ productId }) {
                                             className='btn btn-outline-primary w-100 my-2 mx-auto'
                                             disabled={isSubmitting}
                                         >
-                                            Mégse
+                                            Vissza
                                         </button>
                                     </Link>
                                 </Col>

@@ -26,7 +26,7 @@ export default function OrderCard({ order }) {
     return (
         <>
             <Card
-                className="text-center"
+                className="text-center shadow"
                 bg={getBgColor(order.status)}
                 text={getBgColor(order.status) === 'light' ? 'dark' : 'white'}
             >

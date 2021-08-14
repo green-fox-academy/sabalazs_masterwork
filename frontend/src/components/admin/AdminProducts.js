@@ -25,9 +25,7 @@ export default function AdminProducts() {
                 throw new Error(error);
             }
             setProducts(data.products);
-            console.log(data.products);
         }).catch(error => {
-            console.log(error);
             return dispatch({
                 type: 'SET_FEEDBACK',
                 payload: {

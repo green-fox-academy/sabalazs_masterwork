@@ -1,9 +1,8 @@
 /* eslint-disable no-underscore-dangle */
+import mongoose from 'mongoose';
 import Order from '../models/Order';
 import Product from '../models/Product';
 import ValidationError from '../utils/ValidationError';
-import mongoose from 'mongoose';
-
 
 export const ordersService = {
   async createNew(order) {
@@ -14,43 +13,38 @@ export const ordersService = {
     };
   },
   async getList(user, sortBy, sortDirection, pageNumber, itemsPerPage) {
-    console.log(user);
     let result;
     if (user.role === 'admin') {
-      result = await Order
-        .aggregate([
-          {
-            $lookup:
-            {
-              from: 'users',
-              localField: 'customer',
-              foreignField: '_id',
-              as: 'customer',
-            },
+      result = await Order.aggregate([
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'customer',
+            foreignField: '_id',
+            as: 'customer',
           },
-          { $unwind: '$customer' },
-          { $sort: { [sortBy]: sortDirection } },
-          { $skip: (pageNumber - 1) * itemsPerPage },
-          { $limit: itemsPerPage },
-        ]);
+        },
+        { $unwind: '$customer' },
+        { $sort: { [sortBy]: sortDirection } },
+        { $skip: (pageNumber - 1) * itemsPerPage },
+        { $limit: itemsPerPage },
+      ]);
     } else {
-      result = await Order
-        .aggregate([
-          { $match: { customer: mongoose.Types.ObjectId(user.id) } },
-          {
-            $lookup:
-            {
-              from: 'users',
-              localField: 'customer',
-              foreignField: '_id',
-              as: 'customer',
-            },
+      result = await Order.aggregate([
+        { $match: { customer: mongoose.Types.ObjectId(user.id) } },
+        {
+          $lookup: {
+            from: 'users',
+            localField: 'customer',
+            foreignField: '_id',
+            as: 'customer',
           },
-          { $unwind: '$customer' },
-          { $sort: { [sortBy]: sortDirection } },
-          { $skip: (pageNumber - 1) * itemsPerPage },
-          { $limit: itemsPerPage },
-        ]);
+        },
+        { $unwind: '$customer' },
+        { $sort: { [sortBy]: sortDirection } },
+        { $skip: (pageNumber - 1) * itemsPerPage },
+        { $limit: itemsPerPage },
+      ]);
     }
     return result;
   },
@@ -75,7 +69,6 @@ export const ordersService = {
     return data;
   },
   async numberOfPages(user, itemsPerPage) {
-    console.log(user);
     let result;
     if (user.role === 'admin') {
       const numberOfDocs = await Order.find().countDocuments();
@@ -94,12 +87,15 @@ export const ordersService = {
       throw new ValidationError('Missing items.');
     }
     let sum = 0;
-    for (const item of order.items) {
-      await Product.findOne({ _id: item.product })
-        .then((product) => {
-          sum += product.price * item.quantity;
-        });
-    }
+
+    const results = [];
+    order.items.forEach((item) => {
+      results.push(Product.findOne({ _id: item.product }).then((product) => {
+        sum += product.price * item.quantity;
+      }));
+    });
+    await Promise.all(results);
+
     if (order.sum !== sum) {
       throw new ValidationError('Wrong sum.');
     }

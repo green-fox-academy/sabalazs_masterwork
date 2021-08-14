@@ -23,8 +23,7 @@ export default function PlaceOrder() {
                 throw new Error(error);
             }
             setProducts(data.products);
-            console.log(data.products);
-        }).catch(error => {
+        }).catch(() => {
             return dispatch({
                 type: 'SET_FEEDBACK',
                 payload: {

@@ -23,9 +23,7 @@ export const PreviousOrders = () => {
                 throw new Error(error);
             }
             setOrders(data.orders);
-            console.log(data.orders);
-        }).catch(error => {
-            console.log(error);
+        }).catch(() => {
             return dispatch({
                 type: 'SET_FEEDBACK',
                 payload: {

@@ -27,9 +27,7 @@ export default function AdminOrders () {
             }
             setOrders(data.orders);
             setNumberOfPages(data.numberOfPages);
-            console.log(data);
         }).catch(error => {
-            console.log(error);
             return dispatch({
                 type: 'SET_FEEDBACK',
                 payload: {

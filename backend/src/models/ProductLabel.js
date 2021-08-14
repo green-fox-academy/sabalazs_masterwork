@@ -5,7 +5,7 @@ const ProductLabelSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-  }
+  },
 });
 
 const ProductLabel = mongoose.model('ProductLabel', ProductLabelSchema);

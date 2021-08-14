@@ -69,9 +69,7 @@ export default function ProductForm({ productId }) {
                     isAvailable: data.isAvailable,
                     labels: [...data.labels]
                 });
-                console.log(data);
             }).catch(error => {
-                console.log(error);
                 dispatch({
                     type: 'SET_FEEDBACK',
                     payload: {
@@ -89,7 +87,6 @@ export default function ProductForm({ productId }) {
         });
         const method = editing ? 'PUT' : 'POST';
         const endpoint = editing ? `api/products/${productId}` : 'api/products';
-        console.log(values);
         fetchBackend(
             method,
             endpoint,
@@ -108,10 +105,8 @@ export default function ProductForm({ productId }) {
             return data;
         }).then(async (data) => {
             if (values.file) {
-                console.log(data);
                 const formData = new FormData();
                 formData.append('file', values.file);
-                //console.log(formData.get('file'));
                 await fetchBackend(
                     'POST',
                     `api/images/${data.id || data._id}`,
@@ -135,7 +130,6 @@ export default function ProductForm({ productId }) {
             resetForm();
             if (editing) history.push(`/admin/products`);
         }).catch(error => {
-            console.log(error);
             if (error.message === 'Validation error: A product with the same name already exists.') {
                 dispatch({
                     type: 'SET_FEEDBACK',

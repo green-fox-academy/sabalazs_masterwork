@@ -15,14 +15,14 @@ export const productsService = {
     const result = await Product.find().populate('image');
     return result;
   },
-  /*async getList(categoryToFilterBy, sortBy, sortDirection, pageNumber, itemsPerPage) {
+  /* async getList(categoryToFilterBy, sortBy, sortDirection, pageNumber, itemsPerPage) {
     const result = await Product
       .find(categoryToFilterBy ? { category: categoryToFilterBy } : {})
       .sort({ [sortBy]: sortDirection })
       .skip(itemsPerPage * pageNumber)
       .limit(Number(itemsPerPage));
     return result;
-  },*/
+  }, */
   async getNumberOfDocs() {
     const result = await Product.find().countDocuments();
     return result;

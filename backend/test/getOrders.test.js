@@ -26,8 +26,9 @@ beforeEach(async () => {
   const user1Id = await User.create(user1);
   const user2Id = await User.create(user2);
   const productId = await Product.create(product);
-  for (let i = 0; i < numberOfTestItems; i++) {
-    await Order.create({
+  const results = [];
+  for (let i = 0; i < numberOfTestItems; i += 1) {
+    results.push(Order.create({
       customer: i % 2 ? user1Id : user2Id,
       items: [
         {
@@ -36,8 +37,9 @@ beforeEach(async () => {
         },
       ],
       sum: (i + 1) * product.price,
-    });
+    }));
   }
+  await Promise.all(results);
   const admin = {
     email: 'xyz@xyz.xyz',
     password: 'Password123456789',

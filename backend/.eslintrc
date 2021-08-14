@@ -2,7 +2,9 @@
   "root": true,
   "extends": ["eslint:recommended", "airbnb"],
   "rules": {
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "no-underscore-dangle": "off",
+    "prefer-destructuring": ["error", {"object": true, "array": false}]
   },
   "parserOptions": {
     "ecmaVersion": 2021,

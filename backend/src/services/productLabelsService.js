@@ -11,8 +11,7 @@ export const productLabelsService = {
     };
   },
   async getList() {
-    let result;
-    result = await ProductLabel.find();
+    const result = await ProductLabel.find();
     return result;
   },
   async deleteOne(labelId) {
@@ -26,7 +25,7 @@ export const productLabelsService = {
     if (!label.name) {
       throw new ValidationError('Missing label name.');
     }
-    const labelExists = await ProductLabel.findOne({ name : label.name })
+    const labelExists = await ProductLabel.findOne({ name: label.name });
     if (labelExists) {
       throw new ValidationError('This label already exists.');
     }

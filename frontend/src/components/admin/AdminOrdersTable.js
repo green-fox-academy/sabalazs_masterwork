@@ -35,7 +35,6 @@ export default function AdminOrdersTable({ orders, setOrders }) {
                 const error = (data && data.message) || response.status;
                 throw new Error(error);
             }
-            console.log(data);
             let ordersCopy = [...orders];
             let itemCopy = { ...orders[index] };
             itemCopy.status = newStatus;

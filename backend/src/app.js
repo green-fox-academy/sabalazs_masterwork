@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 
+import fileUpload from 'express-fileupload';
 import logger from './logger';
 import errorHandler from './middlewares/error-handler';
 import {
@@ -9,11 +10,10 @@ import {
   productsController,
   authController,
   imageController,
-  productLabelsController
+  productLabelsController,
 } from './controllers';
 import tokenCheck from './middlewares/tokenCheck';
 import roleCheck from './middlewares/roleCheck';
-import fileUpload from 'express-fileupload';
 
 const cors = require('cors');
 

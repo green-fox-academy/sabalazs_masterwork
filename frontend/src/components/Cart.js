@@ -25,7 +25,6 @@ export const Cart = () => {
     }
     function handleSubmit() {
         try {
-            console.log(cart, sum);
             fetchBackend(
                 'POST',
                 'api/orders',
@@ -39,7 +38,6 @@ export const Cart = () => {
                     const error = (data && data.message) || response.status;
                     throw new Error(error);
                 }
-                console.log(data);
                 dispatch({
                     type: 'EMPTY_CART'
                 });
@@ -50,8 +48,7 @@ export const Cart = () => {
                         message: (<>Köszönjük a rendelést! Rendelésed státuszát követheted {<Link to="/previous-orders">itt</Link>}.</>)
                     }
                 });
-            }).catch(error => {
-                console.log(error);
+            }).catch(() => {
                 return dispatch({
                     type: 'SET_FEEDBACK',
                     payload: {

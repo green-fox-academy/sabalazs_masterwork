@@ -1,14 +1,13 @@
 import path from 'path';
 import * as fs from 'fs';
+import mongoose from 'mongoose';
 import ValidationError from '../utils/ValidationError';
 import Product from '../models/Product';
 import ProductImage from '../models/ProductImage';
-import mongoose from 'mongoose';
 
 export const imageService = {
   async save(files, id) {
     await this.validateFile(files);
-    console.log('validated');
 
     const { file } = files;
     file.name = `${id}${path.parse(file.name).ext}`;
@@ -20,10 +19,8 @@ export const imageService = {
     const isExists = await ProductImage.exists({ product: id });
 
     if (isExists) {
-        console.log('exists');
-        result = await this.updateOne(file, id, url, uploadPath);
+      result = await this.updateOne(file, id, url, uploadPath);
     } else {
-        console.log('doesnt exist');
       result = await this.createOne(file, id, url, uploadPath);
     }
 

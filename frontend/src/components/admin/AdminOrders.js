@@ -3,18 +3,21 @@ import { Container } from "react-bootstrap";
 import fetchBackend from '../../utils/fetchBackend';
 import { AuthContext } from '../../App';
 import AdminOrdersTable from './AdminOrdersTable';
+import PaginationComponent from '../PaginationComponent';
 
 export default function AdminOrders () {
 
     const [orders, setOrders] = useState([]);
+    const [numberOfPages, setNumberOfPages] = useState(0);
     const { dispatch } = useContext(AuthContext);
-    useEffect(() => {
+
+    async function fetchOrders(page) {
         dispatch({
             type: 'CLEAR_FEEDBACK'
         });
         fetchBackend(
             'GET',
-            `api/orders`,
+            `api/orders?pageNumber=${page}`,
             undefined
         ).then(async (response) => {
             const data = await response.json();
@@ -23,7 +26,8 @@ export default function AdminOrders () {
                 throw new Error(error);
             }
             setOrders(data.orders);
-            console.log(data.orders);
+            setNumberOfPages(data.numberOfPages);
+            console.log(data);
         }).catch(error => {
             console.log(error);
             return dispatch({
@@ -34,12 +38,23 @@ export default function AdminOrders () {
                 }
             });
         });
+    }
+
+    useEffect(() => {
+        fetchOrders(1);
     }, []);
+
+    const [activePage, setActivePage] = useState(1);
+    function loadPage(pageNum) {
+        setActivePage(pageNum);
+        fetchOrders(pageNum);
+    }
 
     return (
         <Container>
             <h1 className='text-center my-5'>Rendelések</h1>
             <AdminOrdersTable orders={orders} setOrders={setOrders}/>
+            <PaginationComponent active={activePage} numberOfPages={numberOfPages} className="mx-auto my-3" loadPage={loadPage}/>
         </Container>
     );
 };

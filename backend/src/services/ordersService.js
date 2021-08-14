@@ -30,7 +30,7 @@ export const ordersService = {
           },
           { $unwind: '$customer' },
           { $sort: { [sortBy]: sortDirection } },
-          { $skip: pageNumber * itemsPerPage },
+          { $skip: (pageNumber - 1) * itemsPerPage },
           { $limit: itemsPerPage },
         ]);
     } else {
@@ -48,7 +48,7 @@ export const ordersService = {
           },
           { $unwind: '$customer' },
           { $sort: { [sortBy]: sortDirection } },
-          { $skip: pageNumber * itemsPerPage },
+          { $skip: (pageNumber - 1) * itemsPerPage },
           { $limit: itemsPerPage },
         ]);
     }
@@ -74,13 +74,15 @@ export const ordersService = {
     }
     return data;
   },
-  async getNumberOfDocs(user) {
+  async numberOfPages(user, itemsPerPage) {
     console.log(user);
     let result;
     if (user.role === 'admin') {
-      result = await Order.find().countDocuments();
+      const numberOfDocs = await Order.find().countDocuments();
+      result = Math.ceil(numberOfDocs / itemsPerPage);
     } else {
-      result = await Order.find({ customer: user.id }).countDocuments();
+      const numberOfDocs = await Order.find({ customer: user.id }).countDocuments();
+      result = Math.ceil(numberOfDocs / itemsPerPage);
     }
     return result;
   },

@@ -115,7 +115,7 @@ export default function AdminOrdersTable({ orders, setOrders }) {
                         ))
                     }
                 </tbody>
-            </Table>
+            </Table>       
             <ConfirmDeleteModal
                 collection='orders'
                 itemId={id}

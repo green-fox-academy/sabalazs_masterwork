@@ -13,7 +13,7 @@ export const ordersController = {
   },
   async getList(req, res, next) {
     const {
-      sortBy = 'datePosted', sortDirection = '1', pageNumber = '0', itemsPerPage = '20',
+      sortBy = 'datePosted', sortDirection = '-1', pageNumber = '1', itemsPerPage = '20'
     } = req.query;
     const { user } = req;
     try {
@@ -24,8 +24,8 @@ export const ordersController = {
         parseInt(pageNumber),
         parseInt(itemsPerPage),
       );
-      const numberOfDoc = await ordersService.getNumberOfDocs(user);
-      res.status(200).json({ orders, numberOfDoc });
+      const numberOfPages = await ordersService.numberOfPages(user, itemsPerPage);
+      res.status(200).json({ orders, numberOfPages });
     } catch (err) {
       next(err);
     }

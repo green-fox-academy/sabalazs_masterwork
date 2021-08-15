@@ -18,7 +18,7 @@ const product = {
   name: 'Vajas croissant',
   price: 800,
 };
-const numberOfTestItems = 20;
+const numberOfTestItems = 10;
 let token;
 
 beforeEach(async () => {
@@ -27,16 +27,18 @@ beforeEach(async () => {
   const user2Id = await User.create(user2);
   const productId = await Product.create(product);
   const results = [];
-  for (let i = 0; i < numberOfTestItems; i += 1) {
+  for (let i = 1; i <= numberOfTestItems; i += 1) {
     results.push(Order.create({
       customer: i % 2 ? user1Id : user2Id,
       items: [
         {
           product: productId,
-          quantity: i + 1,
+          quantity: i,
+          name: product.name,
+          price: product.price,
         },
       ],
-      sum: (i + 1) * product.price,
+      sum: (i) * product.price,
     }));
   }
   await Promise.all(results);
@@ -65,49 +67,10 @@ describe('GET /api/orders - Gets', () => {
       .expect(200)
       .then((response) => {
         const data = response.body;
-        expect(data.numberOfDoc).toEqual(numberOfTestItems);
-        expect(data.orders.length).toEqual(20);
-        expect(data.orders[0].customer.email).toEqual(user2.email);
-        expect(data.orders[1].customer.email).toEqual(user1.email);
-        data.orders.forEach((order, index) => {
-          expect(order.items[0].quantity).toEqual(index + 1);
-        });
-      });
-  });
-
-  test('orders sorted by email, descending', async () => {
-    await request(app)
-      .get('/api/orders?sortBy=customer.email&sortDirection=-1')
-      .set('Authorization', `Bearer ${token}`)
-      .expect(200)
-      .then((response) => {
-        const data = response.body;
-        expect(data.numberOfDoc).toEqual(numberOfTestItems);
-        expect(data.orders.length).toEqual(20);
-        data.orders.forEach((order, index) => {
-          if (index < 10) {
-            expect(order.customer.email).toEqual(user2.email);
-          } else {
-            expect(order.customer.email).toEqual(user1.email);
-          }
-        });
-      });
-  });
-
-  test('second page of orders sorted by sum, ascending, with a limit of 5', async () => {
-    await request(app)
-      .get('/api/orders?sortBy=sum&sortDirection=1&pageNumber=1&itemsPerPage=5')
-      .set('Authorization', `Bearer ${token}`)
-      .expect(200)
-      .then((response) => {
-        const data = response.body;
-        expect(data.numberOfDoc).toEqual(numberOfTestItems);
-        expect(data.orders.length).toEqual(5);
-        expect(data.orders[0].sum).toEqual((5 + 1) * 800);
-        expect(data.orders[0].sum <= data.orders[1].sum).toBeTruthy();
-        expect(data.orders[1].sum <= data.orders[2].sum).toBeTruthy();
-        expect(data.orders[2].sum <= data.orders[3].sum).toBeTruthy();
-        expect(data.orders[3].sum <= data.orders[4].sum).toBeTruthy();
+        expect(data.numberOfPages).toEqual(numberOfTestItems / 10);
+        expect(data.orders.length).toEqual(10);
+        expect(data.orders[0].customer.email).toEqual(user1.email);
+        expect(data.orders[1].customer.email).toEqual(user2.email);
       });
   });
 });

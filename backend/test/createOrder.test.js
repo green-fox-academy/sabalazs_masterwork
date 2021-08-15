@@ -9,6 +9,8 @@ import Product from '../src/models/Product';
 let token;
 let userId;
 let productId;
+let productName;
+let productPrice;
 beforeEach(async () => {
   connectDB();
   const user = await User.create({
@@ -28,6 +30,8 @@ beforeEach(async () => {
     price: 800,
   });
   productId = product.id;
+  productName = product.name;
+  productPrice = product.price;
 });
 
 afterEach(async () => {
@@ -47,6 +51,8 @@ describe('POST /api/orders - Creating new order with', () => {
         {
           product: productId,
           quantity,
+          name: productName,
+          price: productPrice,
         },
       ],
       sum: correctSum,
@@ -82,6 +88,8 @@ describe('POST /api/orders - Creating new order with', () => {
         {
           product: productId,
           quantity,
+          name: productName,
+          price: productPrice,
         },
       ],
       sum: incorrectSum,

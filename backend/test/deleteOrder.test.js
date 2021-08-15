@@ -27,6 +27,8 @@ beforeEach(async () => {
       {
         product: productId,
         quantity: 1,
+        price: 800,
+        name: 'Vajas croissant',
       },
     ],
     sum: 800,

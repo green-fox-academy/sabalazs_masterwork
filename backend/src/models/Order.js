@@ -41,7 +41,7 @@ const OrderSchema = new mongoose.Schema({
   datePosted: Date,
 });
 
-OrderSchema.pre('save', async function () {
+OrderSchema.pre('save', async () => {
   if (this.isNew) {
     this.datePosted = new Date();
   }

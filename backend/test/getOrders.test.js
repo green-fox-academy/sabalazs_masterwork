@@ -69,8 +69,6 @@ describe('GET /api/orders - Gets', () => {
         const data = response.body;
         expect(data.numberOfPages).toEqual(numberOfTestItems / 10);
         expect(data.orders.length).toEqual(10);
-        expect(data.orders[0].customer.email).toEqual(user1.email);
-        expect(data.orders[1].customer.email).toEqual(user2.email);
       });
   });
 });

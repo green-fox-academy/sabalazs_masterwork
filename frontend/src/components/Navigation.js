@@ -1,19 +1,20 @@
 import React, { useContext } from 'react';
-import { Navbar, Nav, Button, Row, Col } from 'react-bootstrap';
+import {
+  Navbar, Nav, Button, Row, Col,
+} from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
-import logo from '../bakery-logo.png';
 import { useHistory, Link } from 'react-router-dom';
-import { AuthContext } from '../App';
+import logo from '../bakery-logo.png';
+import AuthContext from '../AuthContext';
 
 export default function Navigation() {
-
   const history = useHistory();
   const { dispatch } = useContext(AuthContext);
 
   async function handleLogout() {
     try {
       dispatch({
-        type: 'LOGOUT'
+        type: 'LOGOUT',
       });
       history.push('/login');
     } catch (err) {
@@ -21,8 +22,8 @@ export default function Navigation() {
         type: 'SET_FEEDBACK',
         payload: {
           variant: 'danger',
-          message: 'Hoppá, valami elromlott. :( '
-        }
+          message: 'Hoppá, valami elromlott. :( ',
+        },
       });
     }
   }
@@ -50,5 +51,5 @@ export default function Navigation() {
         <Button className="" variant="outline-primary" onClick={handleLogout}>Kijelentkezés</Button>
       </Navbar.Collapse>
     </Navbar>
-  )
+  );
 }

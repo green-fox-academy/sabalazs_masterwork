@@ -30,7 +30,7 @@ router.get('/users/:userId', tokenCheck, roleCheck, usersController.getOne);
 
 router.post('/products', tokenCheck, roleCheck, productsController.createNew);
 router.get('/products', tokenCheck, productsController.getList);
-router.get('/products/:productId', productsController.getOne);
+router.get('/products/:productId', tokenCheck, productsController.getOne);
 router.put('/products/:productId', tokenCheck, roleCheck, productsController.updateOne);
 router.delete('/products/:productId', tokenCheck, roleCheck, productsController.deleteOne);
 

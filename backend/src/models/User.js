@@ -21,9 +21,7 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-// new user's password is automatically hashed before it will be saved into the database
 UserSchema.pre('save', async function (next) {
-  // only hash the password if it has been modified (or is new)
   if (!this.isModified('password')) {
     next();
   }
@@ -32,7 +30,6 @@ UserSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-// TODO: include all property from User object
 UserSchema.methods.createToken = function () {
   return jwt.sign({
     id: this._id,
@@ -48,10 +45,6 @@ UserSchema.methods.matchPassword = async function (enteredPassword) {
   return isMatch;
 };
 
-/*
-Mongoose automatically looks for the plural, lowercased version of your model name.
-The model User is for the users collection in the database.
-*/
 const User = mongoose.model('User', UserSchema);
 
 export { UserSchema };

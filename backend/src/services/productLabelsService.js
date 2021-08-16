@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import ProductLabel from '../models/ProductLabel';
+import validateObjectId from '../utils/validateObjectId';
 import ValidationError from '../utils/ValidationError';
 
 export const productLabelsService = {
@@ -15,9 +16,10 @@ export const productLabelsService = {
     return result;
   },
   async deleteOne(labelId) {
+    validateObjectId(labelId);
     const data = await ProductLabel.findOneAndDelete({ _id: labelId });
     if (!data) {
-      throw new ValidationError('Invalid label ID.');
+      throw new ValidationError('Label not found.');
     }
     return data;
   },

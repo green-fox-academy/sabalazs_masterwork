@@ -8,6 +8,8 @@ tags:
   - name: Users
   - name: Products
   - name: Orders
+  - name: Labels
+  - name: Images
 paths:
   /users:
     post:
@@ -15,7 +17,7 @@ paths:
         - Users
       summary: Add a new user
       requestBody:
-        description: User info
+        description: User data
         content:
           application/json:
             schema:
@@ -41,7 +43,7 @@ paths:
                 properties:
                   id:
                     type: string
-                    format: uuid
+                    example: 611a79822bfa1857e423ad75
                     description: ID of the created user
         400:
           $ref: '#/components/responses/InvalidInput'
@@ -59,7 +61,7 @@ paths:
         required: true
         schema:
           type: string
-          format: uuid
+          example: 611a79822bfa1857e423ad75
       responses:
         200:
           description: 'Returning requested user data.'
@@ -70,8 +72,7 @@ paths:
                 properties:
                   _id:
                     type: string
-                    format: uuid
-                    example: 123e4567-e89b-12d3-a456-426614174000
+                    example: 611a6b796e6c525220d330d7
                   email:
                     type: email
                     example: john.doe@email.com
@@ -81,44 +82,16 @@ paths:
                     example: customer
         404:
           description: User not found
-        401:
-          $ref: '#/components/responses/AuthenticationError'
-        403:
-          $ref: '#/components/responses/Forbidden'
-      security:
-        - bakery_auth: []
-    put:
-      tags:
-        - Users
-      summary: Update a user
-      parameters:
-      - name: id
-        in: path
-        description: Id of the user that needs to be updated
-        required: true
-        schema:
-          type: string
-          format: uuid
-      requestBody:
-        description: Updated user object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/user'
-        required: true
-      responses:
-        200:
-          description: 'Successfully updated user.'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/user'
-        400:
-          $ref: '#/components/responses/InvalidInput'
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Validation error: User not found.
         401:
           $ref: '#/components/responses/AuthenticationError'
-        404:
-          description: User not found
         403:
           $ref: '#/components/responses/Forbidden'
       security:
@@ -144,6 +117,9 @@ paths:
                 price:
                   type: number
                   example: 800
+                labels:
+                  type: array
+                  example: ["akciós"]
       responses:
         201:
           description: 'Product has been created, returning the id of the new product.'
@@ -154,7 +130,7 @@ paths:
                 properties:
                   id:
                     type: string
-                    format: uuid
+                    example: 611a79822bfa1857e423ad75
                     description: ID of the created product
         400:
           $ref: '#/components/responses/InvalidInput'
@@ -171,7 +147,7 @@ paths:
         - Products
       summary: Get a list of all products
       responses:
-        201:
+        200:
           description: 'Returning the list of products'
           content:
             application/json:
@@ -182,11 +158,45 @@ paths:
                   $ref: '#/components/schemas/product'
         401:
           $ref: '#/components/responses/AuthenticationError'
-        403:
-          $ref: '#/components/responses/Forbidden'
       security:
         - bakery_auth: []  
   /products/{id}:
+    get:
+      tags:
+        - Products
+      summary: Get a product
+      parameters:
+      - name: id
+        in: path
+        description: Id of the product that needs to be returned
+        required: true
+        schema:
+          type: string
+          example: 611a79822bfa1857e423ad75
+      responses:
+        200:
+          description: 'Returning requested product data.'
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/product'
+        404:
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Validation error: Product not found.
+        401:
+          $ref: '#/components/responses/AuthenticationError'
+        403:
+          $ref: '#/components/responses/Forbidden'
+      security:
+        - bakery_auth: []
     delete:
       tags:
         - Products
@@ -198,7 +208,7 @@ paths:
         required: true
         schema:
           type: string
-          format: uuid
+          example: 611a79822bfa1857e423ad75
       responses:
         200:
           description: 'Product has been successfully deleted, returning the deleted product'
@@ -207,16 +217,78 @@ paths:
               schema:
                 type: object
                 $ref: '#/components/schemas/product'
-        400:
-          $ref: '#/components/responses/InvalidInput'
         401:
           $ref: '#/components/responses/AuthenticationError'
         403:
           $ref: '#/components/responses/Forbidden'
         404:
           description: Product not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Validation error: Product not found.
       security:
         - bakery_auth: [] 
+  /labels:
+    post:
+      tags:
+        - Labels
+      summary: Create a new label
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                  name:
+                    type: string
+                    example: laktózmentes
+      responses:
+        201:
+          description: Label has been created.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 611a79822bfa1857e423ad75
+                    description: ID of the order
+        400:
+          $ref: '#/components/responses/InvalidInput'
+        401:
+          $ref: '#/components/responses/AuthenticationError'
+        403:
+          $ref: '#/components/responses/Forbidden'
+      security:
+        - bakery_auth: []
+    get:
+      tags:
+        - Orders
+      summary: Get a list of all orders
+      responses:
+        201:
+          description: Returning the list of orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: '#/components/schemas/order'
+        400:
+          $ref: '#/components/responses/InvalidInput'
+        401:
+          $ref: '#/components/responses/AuthenticationError'
+        403:
+          $ref: '#/components/responses/Forbidden'
+      security:
+        - bakery_auth: []
   /orders:
     post:
       tags:
@@ -246,7 +318,7 @@ paths:
                 properties:
                   id:
                     type: string
-                    format: uuid
+                    example: 611a79822bfa1857e423ad75
                     description: ID of the order
         400:
           $ref: '#/components/responses/InvalidInput'
@@ -290,7 +362,7 @@ paths:
         required: true
         schema:
           type: string
-          format: uuid
+          example: 611a79822bfa1857e423ad75
       requestBody:
         description: Object, containing updated status
         content:
@@ -342,7 +414,7 @@ paths:
                   format: password
                   example: supersecretpassword
       responses:
-        201:
+        200:
           description: 'Successful login, returning JWT  token containing user info.'
           content:
             application/json:
@@ -366,8 +438,7 @@ components:
       properties:
         id:
           type: string
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426614174000
+          example: 611a79822bfa1857e423ad75
         email:
           type: email
           example: john.doe@email.com
@@ -378,10 +449,9 @@ components:
     product:
       type: object
       properties:
-        id:
+        _id:
           type: string
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426614174000
+          example: 611a79822bfa1857e423ad75
         name:
           type: string
           example: Vajas croissant
@@ -394,6 +464,20 @@ components:
         image:
           type: object
           $ref: '#/components/schemas/productImage'
+        labels:
+          type: array
+          items:
+            type: string
+            example: új termék
+    label:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 611a79822bfa1857e423ad75
+        name:
+          type: string
+          example: laktózmentes
     order:
       type: object
       properties:
@@ -430,8 +514,13 @@ components:
           $ref: '#/components/schemas/product'
         path:
           type: string
+          example: ../image-server/public/example-vajas-croissant.jpg
         url:
           type: string
+          example: http://localhost:4001/example-vajas-croissant.jpg   
+        _id:
+          type: string
+          example: 611a79822bfa1857e423ad75
     error_response:
       type: object
       properties:
@@ -441,15 +530,63 @@ components:
   responses:
     AuthenticationError:
       description: Access token is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Authentication error: No token found.
     LoginFailed:
       description: Login failed, invalid credentials.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Authentication error: Invalid password.
     InternalServerError:
       description: Internal server error. Something has gone terribly wrong. :(
     InvalidInput:
       description: Invalid input
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Validation error: Missing field.
     Forbidden:
       description: Forbidden
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Authorization error: Unauthorized
     ProductExists:      
-      description: Product name is already registered
+      description: Product name exists
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Validation error: A product with the same name already exists.
     UserExists:      
       description: Email is already registered
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Validation error: Email is already registered.

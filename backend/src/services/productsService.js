@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import Product from '../models/Product';
+import validateObjectId from '../utils/validateObjectId';
 import ValidationError from '../utils/ValidationError';
 
 export const productsService = {
@@ -15,23 +16,17 @@ export const productsService = {
     const result = await Product.find().populate('image');
     return result;
   },
-  /* async getList(categoryToFilterBy, sortBy, sortDirection, pageNumber, itemsPerPage) {
-    const result = await Product
-      .find(categoryToFilterBy ? { category: categoryToFilterBy } : {})
-      .sort({ [sortBy]: sortDirection })
-      .skip(itemsPerPage * pageNumber)
-      .limit(Number(itemsPerPage));
-    return result;
-  }, */
   async getNumberOfDocs() {
     const result = await Product.find().countDocuments();
     return result;
   },
   async getOne(id) {
+    validateObjectId(id);
     const product = await Product.findOne({ _id: id });
     return product;
   },
   async updateOne(id, updatedProduct) {
+    validateObjectId(id);
     const product = await Product.findById(id);
     const fieldsToBeUpdated = Object.keys(updatedProduct);
     fieldsToBeUpdated.forEach((field) => {
@@ -42,18 +37,18 @@ export const productsService = {
     return result;
   },
   async deleteOne(productId) {
+    validateObjectId(productId);
     const data = await Product.findOneAndDelete({ _id: productId });
     if (!data) {
-      throw new ValidationError('Invalid product ID.');
+      throw new ValidationError('Product not found.');
     }
     return data;
   },
-
   async validate(product) {
     if (!product.name) {
       throw new ValidationError('Missing name field.');
     }
-    if (!(product.price >= 0)) {
+    if (!(product.price > 0)) {
       throw new ValidationError('Missing or invalid price field.');
     }
     if (await Product.exists({ name: product.name })) {

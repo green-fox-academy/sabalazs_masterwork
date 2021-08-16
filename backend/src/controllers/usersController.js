@@ -19,13 +19,4 @@ export const usersController = {
       next(err);
     }
   },
-  async deleteOne(req, res, next) {
-    const { userId } = req.params;
-    try {
-      const data = await usersService.deleteOne(userId);
-      res.status(200).json(data);
-    } catch (err) {
-      next(err);
-    }
-  },
 };

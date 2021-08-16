@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import isEmail from 'validator/lib/isEmail';
 import User from '../models/User';
+import validateObjectId from '../utils/validateObjectId';
 import ValidationError from '../utils/ValidationError';
 
 export const usersService = {
@@ -13,17 +14,10 @@ export const usersService = {
     };
   },
   async getOne(id) {
-    try {
-      const result = await User.findOne({ _id: id });
-      return result;
-    } catch (error) {
-      throw new ValidationError('Invalid user ID.');
-    }
-  },
-  async deleteOne(userId) {
-    const result = await User.findOneAndDelete({ _id: userId });
+    validateObjectId(id);
+    const result = await User.findOne({ _id: id });
     if (!result) {
-      throw new ValidationError('Invalid user ID.');
+      throw new ValidationError('User not found.');
     }
     return result;
   },

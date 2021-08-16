@@ -3,7 +3,9 @@ import mongoose from 'mongoose';
 import app from '../src/app';
 import connectDB from '../src/db';
 import Product from '../src/models/Product';
+import User from '../src/models/User';
 
+let token;
 beforeEach(async () => {
   connectDB();
   await Product.create({
@@ -18,6 +20,17 @@ beforeEach(async () => {
     name: 'Vajas croissant 3',
     price: 800,
   });
+
+  const admin = {
+    email: 'xyz@xyz.xyz',
+    password: 'Password123456789',
+    role: 'admin',
+  };
+  await User.create(admin);
+  token = await request(app)
+    .post('/api/auth')
+    .send(admin)
+    .then(async (response) => response.body.token);
 });
 
 afterEach(async () => {
@@ -29,6 +42,7 @@ describe('GET /api/products - Gets', () => {
   test('list of products', async () => {
     await request(app)
       .get('/api/products')
+      .set('Authorization', `Bearer ${token}`)
       .expect(200)
       .then((response) => {
         const data = response.body;

@@ -19,16 +19,6 @@ export const usersController = {
       next(err);
     }
   },
-  async updateOne(req, res, next) {
-    const updatedUser = req.body;
-    const { userId } = req.params;
-    try {
-      const data = await usersService.updateOne(userId, updatedUser);
-      res.status(200).json(data);
-    } catch (err) {
-      next(err);
-    }
-  },
   async deleteOne(req, res, next) {
     const { userId } = req.params;
     try {

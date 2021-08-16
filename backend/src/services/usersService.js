@@ -13,25 +13,19 @@ export const usersService = {
     };
   },
   async getOne(id) {
-    const user = await User.findOne({ _id: id });
-    return user;
-  },
-  async updateOne(id, updatedUser) {
-    const user = await User.findById(id);
-    const fieldsToBeUpdated = Object.keys(updatedUser);
-    fieldsToBeUpdated.forEach((field) => {
-      user[field] = updatedUser[field];
-    });
-    await user.save();
-    const result = await User.findById(id);
-    return result;
-  },
-  async deleteOne(userId) {
-    const data = await User.findOneAndDelete({ _id: userId });
-    if (!data) {
+    try {
+      const result = await User.findOne({ _id: id });
+      return result;
+    } catch (error) {
       throw new ValidationError('Invalid user ID.');
     }
-    return data;
+  },
+  async deleteOne(userId) {
+    const result = await User.findOneAndDelete({ _id: userId });
+    if (!result) {
+      throw new ValidationError('Invalid user ID.');
+    }
+    return result;
   },
   async validate(user) {
     if (!user.password) {

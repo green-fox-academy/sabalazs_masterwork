@@ -23,18 +23,11 @@ app.use(morgan('combined', { stream: logger.stream }));
 router.use(cors());
 router.use(express.json());
 
+router.post('/auth', authController.login);
+
 router.post('/users', usersController.createNew);
 router.get('/users/:userId', tokenCheck, roleCheck, usersController.getOne);
 router.delete('/users/:userId', tokenCheck, roleCheck, usersController.deleteOne);
-
-router.post('/orders', tokenCheck, ordersController.createNew);
-router.get('/orders/', tokenCheck, ordersController.getList);
-router.put('/orders/:orderId', tokenCheck, roleCheck, ordersController.updateOne);
-router.delete('/orders/:orderId', tokenCheck, roleCheck, ordersController.deleteOne);
-
-router.post('/labels', tokenCheck, roleCheck, productLabelsController.createNew);
-router.get('/labels', tokenCheck, productLabelsController.getList);
-router.delete('/labels/:labelId', tokenCheck, roleCheck, productLabelsController.deleteOne);
 
 router.post('/products', tokenCheck, roleCheck, productsController.createNew);
 router.get('/products', productsController.getList);
@@ -42,7 +35,14 @@ router.get('/products/:productId', productsController.getOne);
 router.put('/products/:productId', tokenCheck, roleCheck, productsController.updateOne);
 router.delete('/products/:productId', tokenCheck, roleCheck, productsController.deleteOne);
 
-router.post('/auth', authController.login);
+router.post('/labels', tokenCheck, roleCheck, productLabelsController.createNew);
+router.get('/labels', tokenCheck, productLabelsController.getList);
+router.delete('/labels/:labelId', tokenCheck, roleCheck, productLabelsController.deleteOne);
+
+router.post('/orders', tokenCheck, ordersController.createNew);
+router.get('/orders/', tokenCheck, ordersController.getList);
+router.put('/orders/:orderId', tokenCheck, roleCheck, ordersController.updateOne);
+router.delete('/orders/:orderId', tokenCheck, roleCheck, ordersController.deleteOne);
 
 router.post('/images/:productId', fileUpload({ debug: true }), tokenCheck, roleCheck, imageController.save);
 

@@ -12,18 +12,6 @@ export const usersService = {
       id: result._id,
     };
   },
-  async getList(roleToFilterBy, sortBy, sortDirection, pageNumber, itemsPerPage) {
-    const result = await User
-      .find(roleToFilterBy ? { role: roleToFilterBy } : {})
-      .sort({ [sortBy]: sortDirection })
-      .skip(itemsPerPage * pageNumber)
-      .limit(Number(itemsPerPage));
-    return result;
-  },
-  async getNumberOfDocs() {
-    const result = await User.find().countDocuments();
-    return result;
-  },
   async getOne(id) {
     const user = await User.findOne({ _id: id });
     return user;

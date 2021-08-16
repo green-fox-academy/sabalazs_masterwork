@@ -24,7 +24,6 @@ router.use(cors());
 router.use(express.json());
 
 router.post('/users', usersController.createNew);
-router.get('/users', tokenCheck, roleCheck, usersController.getList);
 router.get('/users/:userId', tokenCheck, roleCheck, usersController.getOne);
 router.put('/users/:userId', tokenCheck, roleCheck, usersController.updateOne);
 router.delete('/users/:userId', tokenCheck, roleCheck, usersController.deleteOne);

@@ -10,28 +10,6 @@ export const usersController = {
       next(err);
     }
   },
-  async getList(req, res, next) {
-    const {
-      roleToFilterBy = undefined,
-      sortBy = 'email',
-      sortDirection = 1,
-      pageNumber = 0,
-      itemsPerPage = 15,
-    } = req.query;
-    try {
-      const users = await usersService.getList(
-        roleToFilterBy,
-        sortBy,
-        sortDirection,
-        pageNumber,
-        itemsPerPage,
-      );
-      const numberOfDoc = await usersService.getNumberOfDocs();
-      res.status(200).json({ users, numberOfDoc });
-    } catch (err) {
-      next(err);
-    }
-  },
   async getOne(req, res, next) {
     const { userId } = req.params;
     try {

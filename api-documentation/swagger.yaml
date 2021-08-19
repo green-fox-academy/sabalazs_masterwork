@@ -1,14 +1,14 @@
 openapi: 3.0.0
 info:
   title: Bakery App API
-  description: Simple API for the Bakery App. Resources: users, products, orders
+  description: Simple API for the Bakery App. Resources: users, products, label, orders, images
   version: 1.0.0
 tags:
   - name: Authentication
   - name: Users
   - name: Products
-  - name: Orders
   - name: Labels
+  - name: Orders
   - name: Images
 paths:
   /users:
@@ -94,8 +94,6 @@ paths:
           $ref: '#/components/responses/AuthenticationError'
         403:
           $ref: '#/components/responses/Forbidden'
-      security:
-        - bakery_auth: []
   /products:
     post:
       tags:
@@ -140,8 +138,6 @@ paths:
           $ref: '#/components/responses/Forbidden'
         409:
           $ref: '#/components/responses/ProductExists'
-      security:
-        - bakery_auth: []
     get:
       tags:
         - Products
@@ -158,8 +154,6 @@ paths:
                   $ref: '#/components/schemas/product'
         401:
           $ref: '#/components/responses/AuthenticationError'
-      security:
-        - bakery_auth: []  
   /products/{id}:
     get:
       tags:
@@ -195,8 +189,6 @@ paths:
           $ref: '#/components/responses/AuthenticationError'
         403:
           $ref: '#/components/responses/Forbidden'
-      security:
-        - bakery_auth: []
     delete:
       tags:
         - Products
@@ -231,8 +223,54 @@ paths:
                   message:
                     type: string
                     example: Validation error: Product not found.
-      security:
-        - bakery_auth: [] 
+    put:
+      tags:
+        - Products
+      summary: Update a product by ID
+      parameters:
+      - name: id
+        in: path
+        description: Id of the product that needs to be updated
+        required: true
+        schema:
+          type: string
+          example: 611a79822bfa1857e423ad75
+      requestBody:
+        description: Object, containing updated product
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Vajas croissant
+                price:
+                  type: number
+                  example: 800
+                isAvailable:
+                  type: boolean
+                  example: true
+                labels:
+                  type: array
+                  items:
+                    type: string
+                    example: új termék
+      responses:
+        200:
+          description: 'Successfully updated product.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+        400:
+          $ref: '#/components/responses/InvalidInput'
+        401:
+          $ref: '#/components/responses/AuthenticationError'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          description: Order not found
   /labels:
     post:
       tags:
@@ -265,30 +303,24 @@ paths:
           $ref: '#/components/responses/AuthenticationError'
         403:
           $ref: '#/components/responses/Forbidden'
-      security:
-        - bakery_auth: []
     get:
       tags:
-        - Orders
-      summary: Get a list of all orders
+        - Labels
+      summary: Get a list of all labels
       responses:
-        201:
-          description: Returning the list of orders
+        200:
+          description: Returning the list of labels
           content:
             application/json:
               schema:
                 type: array
                 items:
                   type: object
-                  $ref: '#/components/schemas/order'
-        400:
-          $ref: '#/components/responses/InvalidInput'
+                  $ref: '#/components/schemas/label'
         401:
           $ref: '#/components/responses/AuthenticationError'
         403:
           $ref: '#/components/responses/Forbidden'
-      security:
-        - bakery_auth: []
   /orders:
     post:
       tags:
@@ -326,8 +358,6 @@ paths:
           $ref: '#/components/responses/AuthenticationError'
         403:
           $ref: '#/components/responses/Forbidden'
-      security:
-        - bakery_auth: []
     get:
       tags:
         - Orders
@@ -348,8 +378,6 @@ paths:
           $ref: '#/components/responses/AuthenticationError'
         403:
           $ref: '#/components/responses/Forbidden'
-      security:
-        - bakery_auth: []
   /orders/{id}:
     put:
       tags:
@@ -376,7 +404,7 @@ paths:
         required: true
       responses:
         200:
-          description: 'Successfully updated order.'
+          description: 'Successfully updated order, returning the order.'
           content:
             application/json:
               schema:
@@ -389,8 +417,108 @@ paths:
           $ref: '#/components/responses/Forbidden'
         404:
           description: Order not found
-      security:
-        - bakery_auth: []
+    delete:
+      tags:
+        - Orders
+      summary: Delete an order by ID
+      parameters:
+      - name: id
+        in: path
+        description: Id of the order that needs to be deleted
+        required: true
+        schema:
+          type: string
+          example: 611a79822bfa1857e423ad75
+      responses:
+        200:
+          description: 'Successfully deleted order, returning the deleted order.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order'
+        400:
+          $ref: '#/components/responses/InvalidInput'
+        401:
+          $ref: '#/components/responses/AuthenticationError'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          description: Order not found
+  /images/{id}:
+    post:
+      tags:
+        - Images
+      summary: Save a product image by productId
+      parameters:
+      - name: id
+        in: path
+        description: Id of the product
+        required: true
+        schema:
+          type: string
+          example: 611a79822bfa1857e423ad75
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+        required: true
+      responses:
+        200:
+          description: 'Successfully updated product image, returning the product.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+        400:
+          $ref: '#/components/responses/InvalidInput'
+        401:
+          $ref: '#/components/responses/AuthenticationError'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          description: Product not found
+    put:
+      tags:
+        - Images
+      summary: Update a product image by productId
+      parameters:
+      - name: id
+        in: path
+        description: Id of the product that needs to be updated
+        required: true
+        schema:
+          type: string
+          example: 611a79822bfa1857e423ad75
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+        required: true
+      responses:
+        200:
+          description: 'Successfully updated product image, returning the product.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+        400:
+          $ref: '#/components/responses/InvalidInput'
+        401:
+          $ref: '#/components/responses/AuthenticationError'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          description: Product not found
   /auth:
     post:
       tags:
@@ -427,11 +555,6 @@ paths:
         401:
           $ref: '#/components/responses/LoginFailed'
 components:
-  securitySchemes:
-    bakery_auth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
   schemas:
     user:
       type: object
@@ -481,6 +604,9 @@ components:
     order:
       type: object
       properties:
+        _id:
+          type: string
+          example: 611a79822bfa1857e423ad75
         customer:
           type: object
           $ref: '#/components/schemas/user'
@@ -501,10 +627,16 @@ components:
       type: object
       properties:
         product:
-          type: object
-          $ref: '#/components/schemas/product'
+          type: string
+          example: 611a79822bfa1857e423ad75
         quantity:
           type: number
+        name:
+          type: string
+          example: Vajas croissant
+        price:
+          type: number
+          example: 800
     productImage:
       type: object
       properties:

@@ -26,10 +26,15 @@ export const productsService = {
     return product;
   },
   async updateOne(id, updatedProduct) {
+    const updatableFields = ['name', 'price', 'isAvailable', 'image', 'labels'];
     validateObjectId(id);
     const product = await Product.findById(id);
+    if (!product) {
+      throw new ValidationError('Product not found.');
+    }
     const fieldsToBeUpdated = Object.keys(updatedProduct);
     fieldsToBeUpdated.forEach((field) => {
+      if (!updatableFields.includes(field)) throw new Error(`Not allowed to update ${field}`);
       product[field] = updatedProduct[field];
     });
     await product.save();
@@ -38,11 +43,11 @@ export const productsService = {
   },
   async deleteOne(productId) {
     validateObjectId(productId);
-    const data = await Product.findOneAndDelete({ _id: productId });
-    if (!data) {
+    const product = await Product.findOneAndDelete({ _id: productId });
+    if (!product) {
       throw new ValidationError('Product not found.');
     }
-    return data;
+    return product;
   },
   async validate(product) {
     if (!product.name) {

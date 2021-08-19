@@ -26,7 +26,7 @@ export const productsService = {
     return product;
   },
   async updateOne(id, updatedProduct) {
-    const updatableFields = ['name', 'price', 'isAvailable', 'image', 'labels'];
+    const updatableFields = ['name', 'price', 'isAvailable', 'labels'];
     validateObjectId(id);
     const product = await Product.findById(id);
     if (!product) {

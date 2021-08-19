@@ -43,7 +43,8 @@ router.get('/orders/', tokenCheck, ordersController.getList);
 router.put('/orders/:orderId', tokenCheck, roleCheck, ordersController.updateOne);
 router.delete('/orders/:orderId', tokenCheck, roleCheck, ordersController.deleteOne);
 
-router.post('/images/:productId', fileUpload({ debug: true }), tokenCheck, roleCheck, imageController.save);
+router.post('/images/:productId', fileUpload({ debug: true }), tokenCheck, roleCheck, imageController.createOne);
+router.put('/images/:productId', fileUpload({ debug: true }), tokenCheck, roleCheck, imageController.updateOne);
 
 app.use('/api', router);
 

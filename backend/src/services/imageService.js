@@ -6,27 +6,6 @@ import Product from '../models/Product';
 import ProductImage from '../models/ProductImage';
 
 export const imageService = {
-  async save(files, id) {
-    await this.validateFile(files);
-
-    const { file } = files;
-    file.name = `${id}${path.parse(file.name).ext}`;
-    const url = `${process.env.IMG_SERVER_BASE_URL}/${file.name}`;
-    const uploadPath = process.env.IMG_SERVER_STORAGE_PATH + file.name;
-
-    let result;
-
-    const isExists = await ProductImage.exists({ product: id });
-
-    if (isExists) {
-      result = await this.updateOne(file, id, url, uploadPath);
-    } else {
-      result = await this.createOne(file, id, url, uploadPath);
-    }
-
-    return { result };
-  },
-
   async validateFile(files) {
     if (!files || Object.keys(files).length === 0) {
       throw new ValidationError('Missing file');
@@ -45,7 +24,14 @@ export const imageService = {
     }
   },
 
-  async updateOne(file, id, url, uploadPath) {
+  async updateOne(files, id) {
+    await this.validateFile(files);
+
+    const { file } = files;
+    file.name = `${id}${path.parse(file.name).ext}`;
+    const url = `${process.env.IMG_SERVER_BASE_URL}/${file.name}`;
+    const uploadPath = process.env.IMG_SERVER_STORAGE_PATH + file.name;
+
     const currentImage = await ProductImage.findOne({ product: id });
     fs.unlink(currentImage.path, (err) => {
       if (err) {
@@ -63,7 +49,14 @@ export const imageService = {
     return updatedProduct;
   },
 
-  async createOne(file, id, url, uploadPath) {
+  async createOne(files, id) {
+    await this.validateFile(files);
+
+    const { file } = files;
+    file.name = `${id}${path.parse(file.name).ext}`;
+    const url = `${process.env.IMG_SERVER_BASE_URL}/${file.name}`;
+    const uploadPath = process.env.IMG_SERVER_STORAGE_PATH + file.name;
+
     await this.saveFile(file, uploadPath);
     const productImage = await ProductImage.create({
       url,

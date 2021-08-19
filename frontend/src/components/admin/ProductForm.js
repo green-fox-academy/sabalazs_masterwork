@@ -109,7 +109,7 @@ export default function ProductForm({ productId }) {
         const formData = new FormData();
         formData.append('file', values.file);
         await fetchBackend(
-          'POST',
+          method,
           `api/images/${data.id || data._id}`,
           formData,
           true,
@@ -129,7 +129,7 @@ export default function ProductForm({ productId }) {
         },
       });
       resetForm();
-      if (editing) history.push('/admin/products');
+      if (editing) setTimeout(() => history.push('/admin/products'), 1000);
     }).catch((error) => {
       if (error.message === 'Validation error: A product with the same name already exists.') {
         dispatch({

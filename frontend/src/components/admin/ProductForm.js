@@ -28,6 +28,7 @@ export default function ProductForm({ productId }) {
     price: '',
     isAvailable: true,
     labels: [],
+    image: ''
   });
 
   const { dispatch } = useContext(AuthContext);
@@ -69,6 +70,7 @@ export default function ProductForm({ productId }) {
           price: data.price,
           isAvailable: data.isAvailable,
           labels: [...data.labels],
+          image: data.image,
         });
       }).catch(() => {
         dispatch({
@@ -108,8 +110,9 @@ export default function ProductForm({ productId }) {
       if (values.file) {
         const formData = new FormData();
         formData.append('file', values.file);
+        const methodImg = editing && product.image ? 'PUT' : 'POST';
         await fetchBackend(
-          method,
+          methodImg,
           `api/images/${data.id || data._id}`,
           formData,
           true,
@@ -131,23 +134,19 @@ export default function ProductForm({ productId }) {
       resetForm();
       if (editing) setTimeout(() => history.push('/admin/products'), 1000);
     }).catch((error) => {
+        let errorMessage = 'Hoppá, valami elromlott. :( ';
       if (error.message === 'Validation error: A product with the same name already exists.') {
-        dispatch({
-          type: 'SET_FEEDBACK',
-          payload: {
-            variant: 'danger',
-            message: 'A mentés nem sikerült, mert már létezik termék ezen a néven.',
-          },
-        });
-      } else {
-        dispatch({
-          type: 'SET_FEEDBACK',
-          payload: {
-            variant: 'danger',
-            message: 'Hoppá, valami elromlott. :( ',
-          },
-        });
+        errorMessage = 'A mentés nem sikerült, mert már létezik termék ezen a néven.';
+      } else if (error.message === 'Validation error: File size is over the limit') {
+        errorMessage = 'A kép feltöltés nem sikerült, a fájl mérete túl nagy.';
       }
+    dispatch({
+      type: 'SET_FEEDBACK',
+      payload: {
+        variant: 'danger',
+        message: errorMessage,
+      },
+    });
     })
       .finally(() => setSubmitting(false));
   }

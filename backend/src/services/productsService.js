@@ -38,7 +38,7 @@ export const productsService = {
       product[field] = updatedProduct[field];
     });
     await product.save();
-    const result = await Product.findById(id);
+    const result = await Product.findById(id).populate('image');
     return result;
   },
   async deleteOne(productId) {

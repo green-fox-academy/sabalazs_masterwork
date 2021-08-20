@@ -28,7 +28,7 @@ export default function ProductForm({ productId }) {
     price: '',
     isAvailable: true,
     labels: [],
-    image: ''
+    image: '',
   });
 
   const { dispatch } = useContext(AuthContext);
@@ -134,19 +134,19 @@ export default function ProductForm({ productId }) {
       resetForm();
       if (editing) setTimeout(() => history.push('/admin/products'), 1000);
     }).catch((error) => {
-        let errorMessage = 'Hoppá, valami elromlott. :( ';
+      let errorMessage = 'Hoppá, valami elromlott. :( ';
       if (error.message === 'Validation error: A product with the same name already exists.') {
         errorMessage = 'A mentés nem sikerült, mert már létezik termék ezen a néven.';
       } else if (error.message === 'Validation error: File size is over the limit') {
         errorMessage = 'A kép feltöltés nem sikerült, a fájl mérete túl nagy.';
       }
-    dispatch({
-      type: 'SET_FEEDBACK',
-      payload: {
-        variant: 'danger',
-        message: errorMessage,
-      },
-    });
+      dispatch({
+        type: 'SET_FEEDBACK',
+        payload: {
+          variant: 'danger',
+          message: errorMessage,
+        },
+      });
     })
       .finally(() => setSubmitting(false));
   }

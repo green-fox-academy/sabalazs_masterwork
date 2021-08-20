@@ -45,7 +45,7 @@ To see the application in action, run
 ```
 docker-compose up
 ```
-then open ```http://localhost:3000/``` in your browser. You can log-in with the following credentials to test features:
+then open ```http://localhost:3000/``` in your browser. The database is loaded with some sample data (users, products and orders). You can log-in with the following credentials to test features:
 
 Customer:
 ```

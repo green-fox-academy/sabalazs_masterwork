@@ -11,7 +11,7 @@ Masterwork for GFA Full-stack training. It's a simple full-stack application for
 
 ## Description
 
-Customers can register, then place pre-orders for available products, and view the status of their previous orders. The administrators can edit products, and accept, or reject pre-orders from customers.
+Customers can register, then place pre-orders for available products, and view the status of their previous orders. The administrators can add, delete and edit products, and accept, or reject pre-orders from customers.
 
 ## Features
 ### Customers can:
@@ -22,7 +22,7 @@ Customers can register, then place pre-orders for available products, and view t
 ### Administrators can:
 - log in and log out
 - see a list of all products
-- edit a product
+- add, delete and edit a product
 - see a list of all orders
 - change the status of an order
 
@@ -45,7 +45,19 @@ To see the application in action, run
 ```
 docker-compose up
 ```
-then open ```http://localhost:3000/``` in your browser.
+then open ```http://localhost:3000/``` in your browser. You can log-in with the following credentials to test features:
+
+Customer:
+```
+customer@customer.customer
+Password123
+```
+Admin:
+```
+admin@admin.admin
+Password123
+```
+You can access the API documentation, at ```http://localhost:4000/``` in your browser.
 
 Instructions regarding dependencies, installation and execution of frontend, backend and documentation separately:
 - [Frontend](frontend/README.md)

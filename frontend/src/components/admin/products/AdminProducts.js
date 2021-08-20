@@ -3,8 +3,8 @@ import {
   Container, Button, Col, Row,
 } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import fetchBackend from '../../utils/fetchBackend';
-import AuthContext from '../../AuthContext';
+import fetchBackend from '../../../utils/fetchBackend';
+import AuthContext from '../../../AuthContext';
 import AdminProductsTable from './AdminProductsTable';
 
 export default function AdminProducts() {

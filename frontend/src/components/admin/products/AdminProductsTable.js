@@ -6,7 +6,7 @@ import {
   Trash, Pencil, CheckCircleFill, XCircleFill,
 } from 'react-bootstrap-icons';
 import { useHistory } from 'react-router-dom';
-import ConfirmDeleteModal from './ConfirmDeleteModal';
+import ConfirmDeleteModal from '../ConfirmDeleteModal';
 
 export default function AdminProductsTable({ products, setProducts }) {
   const history = useHistory();

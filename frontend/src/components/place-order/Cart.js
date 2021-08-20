@@ -5,8 +5,8 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { Trash } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
-import AuthContext from '../AuthContext';
-import fetchBackend from '../utils/fetchBackend';
+import AuthContext from '../../AuthContext';
+import fetchBackend from '../../utils/fetchBackend';
 
 export default function Cart() {
   const { dispatch, state } = useContext(AuthContext);

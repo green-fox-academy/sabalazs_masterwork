@@ -7,8 +7,8 @@ import {
 } from 'formik';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
-import fetchBackend from '../utils/fetchBackend';
-import logo from '../bakery-logo.png';
+import fetchBackend from '../../utils/fetchBackend';
+import logo from '../../bakery-logo.png';
 
 export const SignUp = () => {
   const SignUpSchema = Yup.object().shape({

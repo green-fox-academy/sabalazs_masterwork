@@ -1,16 +1,16 @@
 import React, { useReducer } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Login from './components/Login';
-import PlaceOrder from './components/PlaceOrder';
-import PreviousOrders from './components/PreviousOrders';
-import { SignUp } from './components/SignUp';
+import Login from './components/auth/Login';
+import PlaceOrder from './components/place-order/PlaceOrder';
+import PreviousOrders from './components/previous-orders/PreviousOrders';
+import { SignUp } from './components/auth/SignUp';
 import PrivateRoute from './components/PrivateRoute';
-import AdminOrders from './components/admin/AdminOrders';
-import AdminProducts from './components/admin/AdminProducts';
+import AdminOrders from './components/admin/orders/AdminOrders';
+import AdminProducts from './components/admin/products/AdminProducts';
 import Dashboard from './components/Dashboard';
-import AdminNewProduct from './components/admin/AdminNewProduct';
-import AdminEditProduct from './components/admin/AdminEditProduct';
+import AdminNewProduct from './components/admin/products/AdminNewProduct';
+import AdminEditProduct from './components/admin/products/AdminEditProduct';
 import { initialState, reducer } from './reducer';
 import AuthContext from './AuthContext';
 

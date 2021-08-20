@@ -3,8 +3,8 @@ import {
   Card, Container, Button, InputGroup, FormControl, Badge,
 } from 'react-bootstrap';
 import { CartPlus } from 'react-bootstrap-icons';
-import AuthContext from '../AuthContext';
-import placeholder from '../placeholder-image.jpg';
+import AuthContext from '../../AuthContext';
+import placeholder from '../../placeholder-image.jpg';
 
 export default function ProductCard({ product }) {
   const [quantity, setQuantity] = useState(1);

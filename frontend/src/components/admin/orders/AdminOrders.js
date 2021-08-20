@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Container } from 'react-bootstrap';
-import fetchBackend from '../../utils/fetchBackend';
-import AuthContext from '../../AuthContext';
+import fetchBackend from '../../../utils/fetchBackend';
+import AuthContext from '../../../AuthContext';
 import AdminOrdersTable from './AdminOrdersTable';
-import PaginationComponent from '../PaginationComponent';
+import PaginationComponent from './PaginationComponent';
 
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);

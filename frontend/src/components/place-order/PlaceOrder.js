@@ -1,27 +1,27 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Container } from 'react-bootstrap';
-import fetchBackend from '../utils/fetchBackend';
-import AuthContext from '../AuthContext';
-import OrdersTable from './OrdersTable';
+import fetchBackend from '../../utils/fetchBackend';
+import ProductList from './ProductList';
+import AuthContext from '../../AuthContext';
+import Cart from './Cart';
 
-export default function PreviousOrders() {
-  const [orders, setOrders] = useState([]);
-  const { dispatch } = useContext(AuthContext);
+export default function PlaceOrder() {
+  const [products, setProducts] = useState([]);
+  const { dispatch, state } = useContext(AuthContext);
   useEffect(() => {
     dispatch({
       type: 'CLEAR_FEEDBACK',
     });
     fetchBackend(
       'GET',
-      'api/orders',
-      undefined,
+      'api/products',
     ).then(async (response) => {
       const data = await response.json();
       if (!response.ok) {
         const error = (data && data.message) || response.status;
         throw new Error(error);
       }
-      setOrders(data.orders);
+      setProducts(data.products);
     }).catch(() => dispatch({
       type: 'SET_FEEDBACK',
       payload: {
@@ -32,9 +32,12 @@ export default function PreviousOrders() {
   }, []);
 
   return (
-    <Container>
-      <h1 className="text-center my-5">Rendeléseim</h1>
-      <OrdersTable orders={orders} />
-    </Container>
+    <>
+      <h1 className="text-center my-5">Mit süssünk neked?</h1>
+      {state.cart?.length > 0 && <Cart />}
+      <Container>
+        <ProductList products={products} />
+      </Container>
+    </>
   );
 }

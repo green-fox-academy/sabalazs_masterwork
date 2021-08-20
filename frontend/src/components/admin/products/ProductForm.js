@@ -5,8 +5,8 @@ import {
 } from 'formik';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
-import fetchBackend from '../../utils/fetchBackend';
-import AuthContext from '../../AuthContext';
+import fetchBackend from '../../../utils/fetchBackend';
+import AuthContext from '../../../AuthContext';
 
 export default function ProductForm({ productId }) {
   const history = useHistory();

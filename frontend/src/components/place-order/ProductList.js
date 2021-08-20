@@ -3,7 +3,7 @@ import {
   Col, Form, Row, Container, CardGroup,
 } from 'react-bootstrap';
 import ProductCard from './ProductCard';
-import AuthContext from '../AuthContext';
+import AuthContext from '../../AuthContext';
 
 export default function ProductList({ products }) {
   const { state } = useContext(AuthContext);

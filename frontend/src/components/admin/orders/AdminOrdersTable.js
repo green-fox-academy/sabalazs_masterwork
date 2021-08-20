@@ -2,9 +2,9 @@ import React, { useState, useContext } from 'react';
 import { Table, Container, Button } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 import { Trash } from 'react-bootstrap-icons';
-import AuthContext from '../../AuthContext';
-import fetchBackend from '../../utils/fetchBackend';
-import ConfirmDeleteModal from './ConfirmDeleteModal';
+import AuthContext from '../../../AuthContext';
+import fetchBackend from '../../../utils/fetchBackend';
+import ConfirmDeleteModal from '../ConfirmDeleteModal';
 
 export default function AdminOrdersTable({ orders, setOrders }) {
   const { dispatch } = useContext(AuthContext);

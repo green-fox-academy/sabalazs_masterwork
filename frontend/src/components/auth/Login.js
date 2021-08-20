@@ -8,9 +8,9 @@ import {
 } from 'formik';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
-import fetchBackend from '../utils/fetchBackend';
-import AuthContext from '../AuthContext';
-import logo from '../bakery-logo.png';
+import fetchBackend from '../../utils/fetchBackend';
+import AuthContext from '../../AuthContext';
+import logo from '../../bakery-logo.png';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()

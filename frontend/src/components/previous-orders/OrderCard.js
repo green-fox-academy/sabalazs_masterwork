@@ -3,6 +3,7 @@ import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function OrderCard({ order }) {
+  console.log(JSON.stringify(order));
   function getBgColor(status) {
     switch (status) {
       case 'pending': return 'warning';
@@ -40,18 +41,18 @@ export default function OrderCard({ order }) {
           </Card.Title>
           <ListGroup>
             {
-                                order.items.map((orderItem) => (
-                                  <ListGroupItem className="d-flex justify-content-between align-items-center" key={uuidv4()}>
-                                    <span>
-                                      {orderItem.quantity}
-                                      {' '}
-                                      db
-                                      {' '}
-                                      {orderItem.name}
-                                    </span>
-                                  </ListGroupItem>
-                                ))
-                            }
+                order.items.map((orderItem) => (
+                  <ListGroupItem className="d-flex justify-content-between align-items-center" key={uuidv4()}>
+                    <span>
+                      {orderItem.quantity}
+                      {' '}
+                      db
+                      {' '}
+                      {orderItem.name}
+                    </span>
+                  </ListGroupItem>
+                ))
+            }
           </ListGroup>
         </Card.Body>
       </Card>

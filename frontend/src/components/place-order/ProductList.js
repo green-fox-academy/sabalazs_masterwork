@@ -34,7 +34,7 @@ export default function ProductList({ products }) {
               if ((searchTerm.length < 1) || match) {
                 return (
                   <Col xs={12} sm={6} md={4} lg={3} className="my-2 px-1 d-flex" key={product.name}>
-                    <ProductCard product={product}/>
+                    <ProductCard product={product} />
                   </Col>
                 );
               }

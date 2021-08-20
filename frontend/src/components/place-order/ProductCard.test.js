@@ -8,12 +8,13 @@ describe('Product Card', () => {
     const { queryByText } = render(
       <ContextWrapper>
         <ProductCard product={{
-            isAvailable: true,
-            labels: ['új termék'],
-            _id: '6118c257d371de51c8bc7c41',
-            name: 'Vajas croissant',
-            price: 1000,
-        }} />
+          isAvailable: true,
+          labels: ['új termék'],
+          _id: '6118c257d371de51c8bc7c41',
+          name: 'Vajas croissant',
+          price: 1000,
+        }}
+        />
       </ContextWrapper>,
     );
     expect(queryByText('Vajas croissant')).toBeTruthy();

@@ -47,7 +47,7 @@ describe('Products', () => {
             _id: '6118c257d371de51c8bc7c41',
             name: 'Vajas croissant',
             price: 1000,
-          }
+          },
         ]}
         />
       </ContextWrapper>,
@@ -64,7 +64,7 @@ describe('Products', () => {
             _id: '6118c257d371de51c8bc7c41',
             name: 'Vajas croissant',
             price: 1000,
-          }
+          },
         ]}
         />
       </ContextWrapper>,
@@ -83,13 +83,13 @@ describe('Products', () => {
             _id: '6118c257d371de51c8bc7c41',
             name: 'Vajas croissant',
             price: 1000,
-          }
+          },
         ]}
         />
       </ContextWrapper>,
     );
     const searchInput = queryByPlaceholderText('Keresés...');
     fireEvent.change(searchInput, { target: { value: 'Keksz' } });
-    expect(queryAllByTestId('product-card').length).toBe(0);
+    expect(queryAllByTestId('product-card')).toHaveLength(0);
   });
 });

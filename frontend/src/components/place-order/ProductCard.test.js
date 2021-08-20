@@ -15,7 +15,7 @@ describe('Product Card', () => {
           price: 1000,
         }}
         />
-      </ContextWrapper>,
+      </ContextWrapper>
     );
     expect(queryByText('Vajas croissant')).toBeTruthy();
     expect(queryByText('új termék')).toBeTruthy();

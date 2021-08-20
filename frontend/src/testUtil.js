@@ -2,9 +2,9 @@ import React, { useReducer } from 'react';
 import { reducer } from './reducer';
 import AuthContext from './AuthContext';
 
-export default function ContextWrapper({ children }) {
+export default function ContextWrapper({ children, isAuthenticated = true }) {
   const initialState = {
-    isAuthenticated: true,
+    isAuthenticated: isAuthenticated,
     user: null,
     token: null,
     cart: [],

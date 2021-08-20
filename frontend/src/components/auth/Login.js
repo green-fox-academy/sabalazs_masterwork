@@ -79,11 +79,11 @@ export default function Login() {
                   </div>
                   <h2 className="text-center mb-4">Bejelentkezés</h2>
                   {formError
-                                        && (
-                                        <Alert variant="danger">
-                                          {formError}
-                                        </Alert>
-                                        )}
+                    && (
+                    <Alert variant="danger">
+                      {formError}
+                    </Alert>
+                    )}
                   <div className="form-group mb-3">
                     <label htmlFor="email">Email cím:</label>
                     <Field

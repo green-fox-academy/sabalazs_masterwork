@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import AdminOrdersTable from './AdminOrdersTable';
 import ContextWrapper from '../../../testUtil';
 
-describe('Order Card', () => {
+describe('Admin orders table', () => {
   it('renders correctly', () => {
     const { queryByText, queryAllByText } = render(
       <ContextWrapper>

@@ -49,6 +49,7 @@ export default function AdminProductsTable({ products, setProducts }) {
                               <Button
                                 variant="primary"
                                 onClick={() => handleEdit(product._id)}
+                                data-testid="edit-button"
                               >
                                 <Pencil />
                               </Button>
@@ -57,6 +58,7 @@ export default function AdminProductsTable({ products, setProducts }) {
                                 onClick={handleShow}
                                 data-id={product._id}
                                 data-index={productIndex}
+                                data-testid="delete-button"
                               >
                                 <Trash />
                               </Button>

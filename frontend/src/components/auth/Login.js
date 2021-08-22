@@ -73,7 +73,7 @@ export default function Login() {
             onSubmit={handleSubmit}
           >
             {({ touched, errors, isSubmitting }) => (
-              <Card className="p-3 my-3 shadow bg-body rounded">
+              <Card className="p-3 my-3 shadow rounded">
                 <Form>
                   <div className="w-100 text-center mb-2">
                     <Image className="align-self-center" src={logo} fluid />

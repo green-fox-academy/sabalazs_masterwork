@@ -29,7 +29,7 @@ export default function ProductCard({ product }) {
 
   return (
     <>
-      <Card className="shadow mb-5 bg-body rounded" data-testid="product-card">
+      <Card className="shadow mb-5 rounded" data-testid="product-card">
         <Card.Header>
           {product.name}
           {product.labels.map((label) => <Badge key={label} pill bg="info" className="mx-1">{label}</Badge>)}

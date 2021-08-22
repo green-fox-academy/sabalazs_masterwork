@@ -8,7 +8,7 @@ describe('Search box', () => {
     const { queryByPlaceholderText } = render(
       <ContextWrapper>
         <ProductList products={[]} />
-      </ContextWrapper>
+      </ContextWrapper>,
     );
     expect(queryByPlaceholderText('Keresés...')).toBeTruthy();
   });
@@ -18,7 +18,7 @@ describe('Search box', () => {
       const { queryByPlaceholderText } = render(
         <ContextWrapper>
           <ProductList products={[]} />
-        </ContextWrapper>
+        </ContextWrapper>,
       );
       const searchInput = queryByPlaceholderText('Keresés...');
       fireEvent.change(searchInput, { target: { value: 'test' } });
@@ -31,7 +31,7 @@ describe('Card group', () => {
     const { queryByTestId } = render(
       <ContextWrapper>
         <ProductList products={[]} />
-      </ContextWrapper>
+      </ContextWrapper>,
     );
     expect(queryByTestId('card-group')).toBeTruthy();
   });
@@ -50,7 +50,7 @@ describe('Products', () => {
           },
         ]}
         />
-      </ContextWrapper>
+      </ContextWrapper>,
     );
     expect(getAllByTestId('product-card')).toBeTruthy();
   });
@@ -67,7 +67,7 @@ describe('Products', () => {
           },
         ]}
         />
-      </ContextWrapper>
+      </ContextWrapper>,
     );
     const searchInput = queryByPlaceholderText('Keresés...');
     fireEvent.change(searchInput, { target: { value: 'Vajas' } });
@@ -86,7 +86,7 @@ describe('Products', () => {
           },
         ]}
         />
-      </ContextWrapper>
+      </ContextWrapper>,
     );
     const searchInput = queryByPlaceholderText('Keresés...');
     fireEvent.change(searchInput, { target: { value: 'Keksz' } });

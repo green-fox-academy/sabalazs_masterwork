@@ -48,7 +48,7 @@ describe('Admin orders table', () => {
           __v: 0,
         }]}
         />
-      </ContextWrapper>
+      </ContextWrapper>,
     );
     expect(queryByText('1 db Vajas croissant')).toBeTruthy();
     expect(queryByText('900,- Ft')).toBeTruthy();

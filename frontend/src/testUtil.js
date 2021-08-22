@@ -4,7 +4,7 @@ import AuthContext from './AuthContext';
 
 export default function ContextWrapper({ children, isAuthenticated = true }) {
   const initialState = {
-    isAuthenticated: isAuthenticated,
+    isAuthenticated,
     user: null,
     token: null,
     cart: [],

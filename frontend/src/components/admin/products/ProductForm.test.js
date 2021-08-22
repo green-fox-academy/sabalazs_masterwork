@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import ProductForm from './ProductForm';
 import ContextWrapper from '../../../testUtil';
-import { MemoryRouter } from 'react-router-dom';
 
 describe('Admin new product form', () => {
   it('renders correctly', () => {
@@ -11,7 +11,7 @@ describe('Admin new product form', () => {
         <MemoryRouter>
           <ProductForm />
         </MemoryRouter>
-      </ContextWrapper>
+      </ContextWrapper>,
     );
     expect(queryByText('Név:')).toBeTruthy();
     expect(queryByPlaceholderText('Termék neve')).toBeTruthy();

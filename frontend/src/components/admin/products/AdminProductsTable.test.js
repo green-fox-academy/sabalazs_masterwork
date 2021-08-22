@@ -15,7 +15,7 @@ describe('Admin products table', () => {
           price: 1000,
         }]}
         />
-      </ContextWrapper>
+      </ContextWrapper>,
     );
     expect(queryByText('Vajas croissant')).toBeTruthy();
     expect(queryByText('1000')).toBeTruthy();

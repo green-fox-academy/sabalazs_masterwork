@@ -2,24 +2,23 @@ import request from 'supertest';
 import mongoose from 'mongoose';
 import app from '../src/app';
 import connectDB from '../src/db';
+import Product from '../src/models/Product';
 import User from '../src/models/User';
 
-const user1 = {
-  email: 'firstuser@email.xyz',
-  password: 'Password123',
-};
-const user2 = {
-  email: 'seconduser@email.xyz',
-  password: 'Password123',
-};
-let user1Response;
-let user2Response;
 let token;
-
+let product1Response;
+let product2Response;
 beforeEach(async () => {
   connectDB();
-  user1Response = await User.create(user1);
-  user2Response = await User.create(user2);
+  product1Response = await Product.create({
+    name: 'Vajas croissant 1',
+    price: 1000,
+  });
+  product2Response = await Product.create({
+    name: 'Vajas croissant 2',
+    price: 200,
+  });
+
   const admin = {
     email: 'xyz@xyz.xyz',
     password: 'Password123456789',
@@ -37,27 +36,25 @@ afterEach(async () => {
   await mongoose.connection.close();
 });
 
-describe('GET /api/users/{id} -', () => {
-  test('Returns corresponding user', async () => {
+describe('GET /api/products/{id}', () => {
+  test('returns corresponding product', async () => {
     await request(app)
-      .get(`/api/users/${user1Response.id}`)
+      .get(`/api/products/${product1Response.id}`)
       .set('Authorization', `Bearer ${token}`)
       .expect(200)
       .then((response) => {
         const data = response.body;
-        expect(data._id).toEqual(user1Response.id);
-        expect(data.email).toEqual(user1.email);
-        expect(data.role).toEqual('customer');
+        expect(data.name).toEqual('Vajas croissant 1');
+        expect(data.price).toEqual(1000);
       });
     await request(app)
-      .get(`/api/users/${user2Response.id}`)
+      .get(`/api/products/${product2Response.id}`)
       .set('Authorization', `Bearer ${token}`)
       .expect(200)
       .then((response) => {
         const data = response.body;
-        expect(data._id).toEqual(user2Response.id);
-        expect(data.email).toEqual(user2.email);
-        expect(data.role).toEqual('customer');
+        expect(data.name).toEqual('Vajas croissant 2');
+        expect(data.price).toEqual(200);
       });
   });
 });

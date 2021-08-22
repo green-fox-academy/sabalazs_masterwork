@@ -1,4 +1,4 @@
-# Bakery Ordering App
+# Bakery pre-order
 Masterwork for GFA Full-stack training. It's a simple full-stack application for a Bakery and it's customers to place and manage pre-orders. [Link to original repository on Github](https://github.com/green-fox-academy/sabalazs_masterwork)
 
 ## Table of contents
@@ -45,7 +45,7 @@ To see the application in action, run
 ```
 docker-compose up
 ```
-then open ```http://localhost:3000/``` in your browser. The database is loaded with some sample data (users, products and orders). You can log-in with the following credentials to test features:
+then open ```http://localhost:3000/``` in your browser. The app is running for the (imaginary) "La Merienda" bakery. The database is loaded with some sample data (users, products and orders). You can log-in with the following credentials to test features:
 
 Customer:
 ```
@@ -59,9 +59,10 @@ Password123
 ```
 You can access the API documentation, at ```http://localhost:4000/``` in your browser.
 
-Instructions regarding dependencies, installation and execution of frontend, backend and documentation separately:
+Instructions regarding dependencies, installation and execution of frontend, backend, image-server and documentation separately:
 - [Frontend](frontend/README.md)
 - [Backend](backend/README.md)
+- [Image server](image-server/README.md)
 - [API Documentation](api-documentation/README.md)
 
 ## Authors

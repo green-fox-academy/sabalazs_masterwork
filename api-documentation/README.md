@@ -1,16 +1,12 @@
-# Bakery Ordering App API Docs (Swagger)
-Documentation of API endpoints for the Bakery Ordering App.
-## Getting Started
+# Bakery pre-order API Documentation 
+Documentation of endpoints for the Bakery pre-order API, using OpenAPI and Swagger.
 
-### Installing
+## Installing
+### `yarn install`
 
-```
-yarn install
-```
+## Available Scripts
 
-### Executing program
-First, run
-```
-yarn start
-```
-then open `http://localhost:4000/` in your browser.
+In the project directory, you can run:
+
+### `yarn start`
+Runs the documentation server. Open `http://localhost:4000/` to view the documentation in your browser.

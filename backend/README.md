@@ -1,27 +1,18 @@
-# Bakery Ordering App backend
-Backend API for Bakery Ordering App
+# Bakery pre-order backend
+Backend API for Bakery pre-order
 
-## Getting Started
+## Installing
+### `yarn install`
 
-### Installing
+## Available Scripts
 
-```
-yarn install
-```
+In the project directory, you can run:
 
-### Available Scripts
+### `yarn start`
+Runs the backend.
 
-```
-yarn start
-```
-to start the backend.
-<br></br>
-```
-yarn start:seed
-```
-to delete previous data from the database, seed sample products and orders, then start the backend.
-<br></br>
-```
-yarn test
-```
-to launch the test runner in the interactive watch mode.
+### `yarn start:seed`
+Deletes all previous data from the database, then seeds sample products and orders, then runs the backend.
+
+### `yarn test`
+Launches the test runner in the interactive watch mode.

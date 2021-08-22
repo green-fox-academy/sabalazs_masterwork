@@ -1,13 +1,12 @@
-## Steps
+# Bakery pre-order image server
+Image server for Bakery pre-order
 
-- `yarn install` - install the dependencies
-- `yarn start` - start server
+## Installing
+### `yarn install`
 
-## Postman
-### Upload image
-- POST a backend-re /api/images
-- Body -> form-data -> 
-  1. Key: file (dropdown: file, NOT text), Value: choose a file from your pc, Content Type: auto
+## Available Scripts
 
-## Test url
-`http://localhost:6000/images/test.jpg`
+In the project directory, you can run:
+
+### `yarn start`
+Runs the image server.

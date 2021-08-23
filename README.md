@@ -1,32 +1,32 @@
-# Bakery pre-order
-Masterwork for GFA Full-stack training. It's a simple full-stack application for a Bakery and it's customers to place and manage pre-orders. [Link to original repository on Github](https://github.com/green-fox-academy/sabalazs_masterwork)
+# Bakery pre-order vizsgaremek
+A Bakery pre-order egy full-stack alkalmazás egy pékség vásárlóinak és alkalmazottainak, az előrendelések kezelésére. [Link az eredeti GitHub repository-hoz](https://github.com/green-fox-academy/sabalazs_masterwork)
 
-## Table of contents
-* [Description](#description)
-* [Features](#features)
-* [Technologies](#technologies)
-* [Getting Started](#getting-started)
-* [Authors](#authors)
-* [License](#license)
+## Tartalomjegyzék
+* [Összefoglalás](#összefoglalás)
+* [Funkciók](#funkciók)
+* [Technológiák](#technológiák)
+* [Az alkalmazás használata](#az-alkalmazás-használata)
+* [Készítők](#készítők)
+* [Licensz](#licensz)
 
-## Description
+## Összefoglalás
 
-Customers can register, then place pre-orders for available products, and view the status of their previous orders. The administrators can add, delete and edit products, and accept, or reject pre-orders from customers.
+A pékség vásárlói, regisztráció után, leadhatnak előrendeléseket az elérhető termékekre, és megtekinthetik a korábban leadott előrendeléseiket. Az adminisztrátorok hozzáadhatnak, szerkeszthetnek és törölhetnek termékeket, látják a beérkezett előrendeléseket, illetve módosíthatják ezek státuszát.
 
-## Features
-### Customers can:
-- register, log in and log out
-- see a list of available products
-- place orders
-- see a list of their previously placed orders
-### Administrators can:
-- log in and log out
-- see a list of all products
-- add, delete and edit a product
-- see a list of all orders
-- change the status of an order
+## Funkciók
+### Vásárlók:
+- tudnak regisztrálni, bejelentkezni és kijelentkezni
+- megtekinthetik az elérhető termékek listáját
+- leadhatnak rendelést
+- megtekinthetik a korábban leadott rendeléseiket
+### Adminisztrátorok:
+- tudnak bejelentkezni, kijelentkezni
+- megtekinthetik az összes terméket tartalmazó listát
+- tudnak új terméket létrehozni, vagy meglévőt szerkeszteni illetve törölni
+- megtekinthetik az összes leadott rendelést
+- szerkeszthetik egy rendelés státuszát, illetve törölhetnek rendeléseket
 
-## Technologies
+## Technológiák
 ### Backend
 - Node
 - Express
@@ -36,40 +36,40 @@ Customers can register, then place pre-orders for available products, and view t
 ### Frontend
 - React
 
-### API documentation
+### API dokumentáció
 - Swagger
 
-## Getting Started
+## Az alkalmazás használata
 
-To see the application in action, run
+Az alkalmazás az alábbi paranccsal indítható:
 ```
 docker-compose up
 ```
-then open ```http://localhost:3000/``` in your browser. The app is running for the (imaginary) "La Merienda" bakery. The database is loaded with some sample data (users, products and orders). You can log-in with the following credentials to test features:
+Ezután az alkalmazás elérhető a böngészőből a ```http://localhost:3000/``` címen. Az alkalmazás a (képzeletbeli) "La Merienda" pékség nevében fut. Az adatbázis fel lett töltve példa adatokkal (felhasználók, termékek, rendelések). Az alábbi bejelentkezési adatokkal használható az alkalmazás:
 
-Customer:
+Vásárló:
 ```
 customer@customer.customer
 Password123
 ```
-Admin:
+Adminisztrátor:
 ```
 admin@admin.admin
 Password123
 ```
-You can access the API documentation, at ```http://localhost:4000/``` in your browser.
+Az API dokumentáció elérhető a böngészőből a```http://localhost:4000/``` címen.
 
-Instructions regarding dependencies, installation and execution of frontend, backend, image-server and documentation separately:
+A frontend, backend, image-server és documentáció külön-külön futtatásához itt találhatók instrukciók:
 - [Frontend](frontend/README.md)
 - [Backend](backend/README.md)
 - [Image server](image-server/README.md)
-- [API Documentation](api-documentation/README.md)
+- [API dokumentáció](api-documentation/README.md)
 
-## Authors
+## Készítők
 
 Balázs Sághy
 ex. [@sabalazs](https://github.com/sabalazs)
 
-## License
+## Licensz
 
-This project is licensed under the MIT License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the LICENSE.md file for details.
